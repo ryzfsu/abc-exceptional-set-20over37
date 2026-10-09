@@ -1,0 +1,66 @@
+{
+  "internal": 280036,
+  "leaves": 280190,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.0sub.0leaf.0final.json"
+}
+{
+  "internal": 281440,
+  "leaves": 281623,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.0sub.0final.json"
+}
+{
+  "internal": 198688,
+  "leaves": 198868,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.0sub.1final.json"
+}
+{
+  "internal": 357407,
+  "leaves": 357757,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.0final.json"
+}
+{
+  "internal": 156710,
+  "leaves": 156749,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.1sub.1final.json"
+}
+{
+  "internal": 156835,
+  "leaves": 156876,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group4_shard.1final.json"
+}
+{
+  "internal": 394243,
+  "leaves": 394633,
+  "max_depth": 49,
+  "output": "dynamic_tree_arch_group_full_merged.raw.json"
+}
+{
+  "input": "dynamic_tree_arch_group_full_merged.raw.json",
+  "internal": 394243,
+  "leaves": 394633,
+  "normalized_stats": {
+    "bad_cert": 0,
+    "infeas_exact": 0,
+    "max_depth": 49,
+    "nodes": 788876,
+    "open": 0,
+    "survivors": 0,
+    "upper_exact": 394633
+  },
+  "output": "dynamic_tree_arch_group_full_merged.normalized.json",
+  "raw_stats": {
+    "bad_cert": 0,
+    "infeas_exact": 0,
+    "max_depth": 49,
+    "nodes": 788876,
+    "open": 0,
+    "survivors": 0,
+    "upper_exact": 394633
+  }
+}

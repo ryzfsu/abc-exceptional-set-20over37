@@ -1,0 +1,172 @@
+EXACT_TREE_REPORT_CLEAN_PASS
+certified_leaves=394633
+internal_nodes=394243
+tree_nodes=788876
+max_depth=49
+upper_certificates=394633
+infeas_certificates=0
+un_clauses_used=17256
+un_tail_modulus_clauses=8127
+rho_multiplier_max=586/201
+rho_multiplier_max_certificate=95263
+rho_multiplier_max_kind=upper
+rho_multiplier_max_upper=586/201
+rho_multiplier_max_upper_certificate=95263
+worst_upper_rhs=20/37
+worst_upper_rhs_certificate=166
+tight_target_leaves=1358
+max_terms_per_leaf=28
+max_terms_certificate=17
+max_terms_certificate_kind=upper
+infeas_min_abs_margin=NONE
+infeas_closest_rhs=NONE
+infeas_min_margin_certificate=NONE
+infeas_min_margin_over_rho_weight=NONE
+infeas_min_ratio_certificate=NONE
+rho_multiplier_max_infeas=NONE
+rho_multiplier_max_infeas_certificate=NONE
+branch_ARCH=nodes:4972,distinct_clauses:1,distinct_arm_labels:2,arm_edge_occurrences:9944
+branch_G=nodes:27503,distinct_clauses:40,distinct_arm_labels:115,arm_edge_occurrences:55395
+branch_DET=nodes:0,distinct_clauses:0,distinct_arm_labels:0,arm_edge_occurrences:0
+branch_SP=nodes:15468,distinct_clauses:30,distinct_arm_labels:60,arm_edge_occurrences:30936
+branch_PS=nodes:61110,distinct_clauses:155,distinct_arm_labels:310,arm_edge_occurrences:122220
+branch_CS4=nodes:48765,distinct_clauses:10649,distinct_arm_labels:21298,arm_edge_occurrences:97530
+branch_POW=nodes:387,distinct_clauses:75,distinct_arm_labels:150,arm_edge_occurrences:774
+branch_GROUP12=nodes:0,distinct_clauses:0,distinct_arm_labels:0,arm_edge_occurrences:0
+branch_UN=nodes:236038,distinct_clauses:17256,distinct_arm_labels:34512,arm_edge_occurrences:472076
+terms_base=distinct_labels:29,occurrences:2061265,max_leaf_weight_sum:385/201
+terms_nonneg=distinct_labels:21,occurrences:2478333,max_leaf_weight_sum:708/77
+terms_ARCH=distinct_labels:2,occurrences:26673,max_leaf_weight_sum:11/25
+terms_G=distinct_labels:115,occurrences:678620,max_leaf_weight_sum:12565/18238
+terms_DET=distinct_labels:0,occurrences:0,max_leaf_weight_sum:0
+terms_SP=distinct_labels:60,occurrences:479423,max_leaf_weight_sum:734/1153
+terms_PS=distinct_labels:310,occurrences:673495,max_leaf_weight_sum:1
+terms_CS4=distinct_labels:21220,occurrences:644485,max_leaf_weight_sum:249738/290329
+terms_POW=distinct_labels:149,occurrences:1924,max_leaf_weight_sum:235/516
+terms_GROUP12=distinct_labels:0,occurrences:0,max_leaf_weight_sum:0
+terms_UN=distinct_labels:34116,occurrences:2417940,max_leaf_weight_sum:1
+FAIL_CLOSED_MUTATION_SUITE_PASS
+mutation_tests=46 names=incomplete-status,nonempty-open-stack,regular-free-flag-disabled,pow3c-flag-disabled,arch-flag-disabled,group12-flag-disabled,group12a-flag-disabled,group12b-flag-disabled,group1212a-flag-disabled,group1212b-flag-disabled,wrong-target,wrong-system,duplicate-json-object-key,unknown-row-label,free-tail-UN-label,double-empty-UN-label,powered-side-POW3b-slot,duplicate-POW3b-slot,powered-side-POW3a-slot,powered-side-POW3c-slot,unsafe-POW3a-descriptor,unknown-GROUP12-descriptor,forbidden-GROUP12-side,noncanonical-GROUP12a-singletons,noncanonical-GROUP12b-singletons,duplicate-GROUP1212a-singleton,duplicate-GROUP1212b-singleton,noncanonical-rational,unknown-path-arm,certificate-scope-leak,tampered-multiplier,zero-multiplier,duplicate-certificate-term,tampered-certificate-rhs,missing-OR-arm,missing-ARCH-arm,missing-GROUP12-arm,missing-GROUP12a-arm,missing-GROUP12b-arm,missing-GROUP1212a-arm,missing-GROUP1212b-arm,mixed-OR-clauses,duplicate-leaf,leaf-prefix-overlap,wrong-stats-node-count,wrong-stats-depth
+EXACT_TREE_REPORT_PASS
+certified_leaves=394633 internal_nodes=394243 search_nodes=788876
+EXACT_WITNESS_CLEAN_PASS
+profile=target-20/37
+D=20/37 L=1 values={'a': Fraction(1, 1), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}
+HB3=27/37 DET={2: Fraction(1, 1), 4: Fraction(33, 37), 5: Fraction(1, 1), 6: Fraction(1, 1)}
+geometry_count=13 minimum=('G1-a', Fraction(20, 37))
+spacing_count=30 minimum=(Fraction(20, 37), 'a', 'b', 'c', 2)
+PS23_count=381 minimum=(Fraction(20, 37), 'a', 2)
+regular_CS4_count=188595 minimum=(Fraction(20, 37), 'a', 1, ('b1', 'b2', 'c1', 'c4'))
+regular_POW3b_count=495 minimum=(Fraction(26, 37), ('a1', 'a3', 'c1', 'c4'))
+target_safe_POW3a_count=486 minimum=(Fraction(41, 74), ('b2', 'b3', 'c1', 'c4'))
+regular_POW3c_count=495 minimum=(Fraction(55, 74), ('a1', 'a2', 'a3', 'b1'))
+directional_6over11_canaries={'POW3b': Fraction(1, 2), 'POW3a': Fraction(1, 2), 'POW3c': Fraction(1, 2), 'saving': Fraction(1, 22)}
+fixed_GROUP12c_a={'powered_side': 'c', 'other_index': 4, 'side': 'a', 'retained': ('a1', 'a2', 'a4', 'b1', 'b4'), 'C': Fraction(13, 37), 'W': Fraction(13, 37), 'R': Fraction(24, 37), 'P': Fraction(9, 37), 'L': Fraction(7, 37), 'S': Fraction(65, 74), 'arms': (Fraction(65, 74), Fraction(113, 148), Fraction(33, 37)), 'bound': Fraction(33, 37)}
+fixed_GROUP12c_b={'powered_side': 'c', 'other_index': 4, 'side': 'b', 'retained': ('b1', 'b2', 'b4', 'a1', 'a4'), 'C': Fraction(13, 37), 'W': Fraction(13, 37), 'R': Fraction(24, 37), 'P': Fraction(9, 37), 'L': Fraction(2, 37), 'S': Fraction(65, 74), 'arms': (Fraction(65, 74), Fraction(113, 148), Fraction(28, 37)), 'bound': Fraction(65, 74)}
+exhaustive_GROUP12ab_families={'single_a': ((Fraction(21, 37), ('c3', 'c4', 'b1')), 120), 'double_a': ((Fraction(21, 37), ('b3', 'c4')), 28), 'single_b': ((Fraction(26, 37), ('c4', 'a1', 'a3')), 120), 'double_b': ((Fraction(26, 37), ('a3', 'c4')), 28)}
+balanced_139over257_GROUP12_canary={'profile_D': Fraction(139, 257), 'ARCH_values': {'a': Fraction(1, 1), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}, 'GROUP12a': {'powered_side': 'c', 'other_index': 4, 'side': 'a', 'retained': ('a1', 'a2', 'a4', 'b1', 'b4'), 'C': Fraction(8, 257), 'W': Fraction(44, 257), 'R': Fraction(178, 257), 'P': Fraction(178, 257), 'L': Fraction(197, 1285), 'S': Fraction(97, 257), 'arms': (Fraction(97, 257), Fraction(275, 514), Fraction(572, 1285)), 'bound': Fraction(275, 514)}, 'ordinary_POW3c': Fraction(139, 257), 'saving': Fraction(3, 514)}
+six_over_11_GROUP12a_c_canary={'profile_D': Fraction(6, 11), 'ARCH_values': {'a': Fraction(1, 1), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}, 'GROUP12a_c_b4': {'singletons': ('c4', 'b1', 'b4'), 'retained': ('c1', 'c2', 'c4', 'b1', 'b4'), 'C': Fraction(37, 1375), 'W': Fraction(1, 22), 'R': Fraction(926, 1375), 'P': Fraction(911, 1375), 'L': Fraction(7, 55), 'S': Fraction(203, 550), 'arms': (Fraction(203, 550), Fraction(2867, 5500), Fraction(521, 1100)), 'bound': Fraction(2867, 5500)}, 'second_profile_D': Fraction(110, 203), 'second_ARCH_values': {'a': Fraction(1, 1), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}, 'GROUP12a_c_b5': {'singletons': ('c4', 'b1', 'b5'), 'retained': ('c1', 'c2', 'c4', 'b1', 'b5'), 'C': Fraction(64, 609), 'W': Fraction(38, 203), 'R': Fraction(380, 609), 'P': Fraction(374, 609), 'L': Fraction(27, 203), 'S': Fraction(257, 609), 'arms': (Fraction(257, 609), Fraction(91, 174), Fraction(281, 609)), 'bound': Fraction(91, 174)}, 'target_GROUP12a_c': {'singletons': ('c4', 'b1', 'b4'), 'retained': ('c1', 'c2', 'c4', 'b1', 'b4'), 'C': Fraction(7, 37), 'W': Fraction(7, 37), 'R': Fraction(20, 37), 'P': Fraction(15, 37), 'L': Fraction(5, 37), 'S': Fraction(39, 74), 'arms': (Fraction(39, 74), Fraction(79, 148), Fraction(21, 37)), 'bound': Fraction(21, 37)}, 'third_profile_D': Fraction(46, 85), 'third_ARCH_values': {'a': Fraction(15, 17), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}, 'GROUP1212a': {'singletons': ('b4', 'c4'), 'retained': ('b1', 'b2', 'c1', 'c2', 'b4', 'c4'), 'C': Fraction(3, 85), 'W': Fraction(3, 85), 'R': Fraction(58, 85), 'P': Fraction(58, 85), 'Lb': Fraction(73, 425), 'Lc': Fraction(57, 425), 'S': Fraction(32, 85), 'arms': (Fraction(32, 85), Fraction(9, 17), Fraction(451, 850), Fraction(419, 850)), 'bound': Fraction(451, 850)}, 'target_GROUP1212a': {'singletons': ('b4', 'c4'), 'retained': ('b1', 'b2', 'c1', 'c2', 'b4', 'c4'), 'C': Fraction(7, 37), 'W': Fraction(7, 37), 'R': Fraction(20, 37), 'P': Fraction(15, 37), 'Lb': Fraction(2, 37), 'Lc': Fraction(5, 37), 'S': Fraction(39, 74), 'arms': (Fraction(39, 74), Fraction(79, 148), Fraction(18, 37), Fraction(21, 37)), 'bound': Fraction(21, 37)}, 'reflected_profile_D': Fraction(46, 85), 'reflected_ARCH_values': {'a': Fraction(1, 1), 'b': Fraction(15, 17), 'c': Fraction(1, 1)}, 'GROUP1212b': {'singletons': ('a4', 'c4'), 'retained': ('a1', 'a2', 'c1', 'c2', 'a4', 'c4'), 'C': Fraction(3, 85), 'W': Fraction(3, 85), 'R': Fraction(58, 85), 'P': Fraction(58, 85), 'La': Fraction(73, 425), 'Lc': Fraction(57, 425), 'S': Fraction(32, 85), 'arms': (Fraction(32, 85), Fraction(9, 17), Fraction(451, 850), Fraction(419, 850)), 'bound': Fraction(451, 850)}, 'target_GROUP1212b': {'singletons': ('a4', 'c4'), 'retained': ('a1', 'a2', 'c1', 'c2', 'a4', 'c4'), 'C': Fraction(7, 37), 'W': Fraction(1, 1), 'R': Fraction(30, 37), 'P': Fraction(20, 37), 'La': Fraction(7, 37), 'Lc': Fraction(5, 37), 'S': Fraction(27, 37), 'arms': (Fraction(27, 37), Fraction(57, 74), Fraction(31, 74), Fraction(27, 74)), 'bound': Fraction(57, 74)}, 'saving': Fraction(133, 5500), 'second_saving': Fraction(23, 1218), 'third_saving': Fraction(9, 850), 'reflected_saving': Fraction(9, 850)}
+regular_free_UN_count=1560195 minimum=(Fraction(20, 37), 'a', 0, 1, 2)
+fail_closed_mutations=19 names=unknown-profile-variable,negative-root-mass,tail7-underpayment,spacing-D-increase,empty-PS23-modulus-mask,free-tail-UN-mask,double-empty-UN-free-mask,duplicate-CS4-held-slot,powered-side-POW3b-held-slot,powered-side-POW3a-held-slot,unsafe-POW3a-held-tuple,powered-side-POW3c-held-slot,ARCH-value-cover-violation,forbidden-GROUP12-powered-grouped-pair,noncanonical-GROUP12a-singletons,noncanonical-GROUP12b-singletons,duplicate-GROUP1212a-singletons,duplicate-GROUP1212b-singletons,UN-D-increase
+EXACT_CLAUSE_COMPILER_AUDIT_PASS samples=500 forms=3500+PS+CS4+POW3abc+ARCH+GROUP12c+GROUP12ab+GROUP1212ab+geometry+DET+Spacing
+USED_ROW_COMPILER_DIFFERENTIAL_PASS
+used_distinct_labels=56497 path=56447 terms=56022
+used_dynamic_clauses=28162
+family_counts={'ARCH': 2, 'CS4': 21298, 'G': 115, 'POW': 150, 'PS': 310, 'SP': 60, 'UN': 34512, 'base': 29, 'nonneg': 21}
+pow3_exhaustive_counts={'a': 486, 'b': 495, 'c': 495} clauses=1476 arms=2952 rejected_pow3a=9
+fixed_group12c_clauses=('GROUP12c:a1a2sq+a4+b1+b4', 'GROUP12c:b1b2sq+b4+a1+a4') arms=6
+group12a_c_exhaustive_clauses=120 arms=360
+group12b_c_exhaustive_clauses=120 arms=360
+group1212a_exhaustive_clauses=28 arms=112
+group1212b_exhaustive_clauses=28 arms=112
+EXACT_79_139_SURVIVOR_PASS
+D=79/139 gap_over_20_37=143/5143
+HB3=187/278; DET={2: Fraction(1, 1), 4: Fraction(489, 556), 5: Fraction(691, 695), 6: Fraction(1, 1)}
+PS23 minimum=242/417 at ('c', 64)
+CS4(exact-seven-safe) minimum=159/278 at ('c', 64, Fraction(82, 139))
+Spacing CUTS survivor: minimum=37/139 at ('c', 'a', 'b', 3)
+UN minimum=79/139 at ('a', 16, 65, 8)
+CS1 minimum=339/556 at ('a', 4, 0, 8)
+CS2A minimum=161/278 at ('c', 8, 0, 64)
+CS2B minimum=81/139 at ('c', 0, 4, 64)
+CS3 minimum=325/556 at ('c', 0, 4, 64)
+RMA minimum=161/278 at ('c', 24, 0, 64)
+RMB minimum=159/278 at ('a', 0, 2, 8)
+EXACT_6_11_CANDIDATE_AUDIT_PASS
+D=6/11 gap_over_20_37=2/407
+values={'a': Fraction(1, 1), 'b': Fraction(1, 1), 'c': Fraction(1, 1)}; HB3=7/11; DET={2: Fraction(1, 1), 4: Fraction(10, 11), 5: Fraction(49, 55), 6: Fraction(1, 1)}
+PS23 minimum=6/11 at ('a', 8)
+CS4 minimum=6/11 at ('a', 4, Fraction(8, 11))
+Spacing minimum=6/11 at ('b', 'a', 'c', 2)
+UN minimum=6/11 at ('a', 1, 1, 4) [PASS]
+CS1 minimum=6/11 at ('c', 4, 4, 16) [PASS]
+CS2A minimum=13/22 at ('a', 4, 0, 4) [PASS]
+CS2B minimum=6/11 at ('b', 0, 16, 2) [PASS]
+CS3 minimum=6/11 at ('b', 0, 1, 2) [PASS]
+RMA minimum=6/11 at ('a', 0, 1, 12) [PASS]
+RMB minimum=6/11 at ('b', 0, 16, 2) [PASS]
+UNLOC_6_11_EXACT_PASS
+descriptor_6_11=('b', 3, ('a3', 'a4', 'c1', 'c5')) components={'C': Fraction(2, 11), 'R': Fraction(6, 11), 'P': Fraction(6, 11), 'S': Fraction(5, 11), 'H': Fraction(1, 2), 'G': Fraction(1, 2)} saving=1/22
+descriptor_20_37=('a', 3, ('b1', 'c1', 'c4')) components={'C': Fraction(7, 37), 'R': Fraction(20, 37), 'P': Fraction(15, 37), 'S': Fraction(39, 74), 'H': Fraction(79, 148), 'G': Fraction(79, 148)} saving=1/148
+descriptor_20_37_powered_b=('b', 3, ('a1', 'a3', 'c1', 'c4')) components={'C': Fraction(7, 37), 'R': Fraction(30, 37), 'P': Fraction(30, 37), 'S': Fraction(22, 37), 'H': Fraction(26, 37), 'G': Fraction(26, 37)}
+scope_mutations=5 PASS
+POW3C_PROFILES_STANDALONE_PASS
+target_direct_R=24/37 pow3c_count=495 minimum=(Fraction(55, 74), ('a1', 'a2', 'a3', 'b1')) minimum_ties=9
+c_heavy_descriptor=('a1', 'a5', 'b3', 'b4') C=2/11 R=6/11 P=6/11 S=5/11 average=1/2 saving=1/22
+c_heavy_pow3b_minimum=(Fraction(7, 11), ('a1', 'a5', 'c1', 'c3')) count=495
+c_heavy_pow3a_safe_minimum=(Fraction(15, 22), ('b3', 'b4', 'c1', 'c3')) count=486
+fail_closed_mutations=6 names=powered-side-c-slot,duplicate-slot,noncanonical-order,unsafe-a-descriptor,forbidden-powered-side,weakened-canary-descriptor-does-not-cut
+ARCH_FACES_STANDALONE_PASS
+W20 values=(Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)) scale_free=True production=True branches=(0, 1) a_gap=0 b_gap=0
+W6 values=(Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)) scale_free=True production=True branches=(0, 1) a_gap=0 b_gap=0
+W46 values=(Fraction(1, 1), Fraction(1, 1), Fraction(15, 17)) scale_free=False production=False branches=() a_gap=2/17 b_gap=2/17
+W79 values=(Fraction(1, 1), Fraction(1, 1), Fraction(119, 278)) scale_free=False production=False branches=() a_gap=159/278 b_gap=159/278
+W152 values=(Fraction(1, 1), Fraction(1, 1), Fraction(255, 281)) scale_free=False production=False branches=() a_gap=26/281 b_gap=26/281
+W152prime values=(Fraction(1, 1), Fraction(1, 1), Fraction(255, 281)) scale_free=False production=False branches=() a_gap=26/281 b_gap=26/281
+W86 values=(Fraction(1, 1), Fraction(1, 1), Fraction(48, 53)) scale_free=False production=False branches=() a_gap=5/53 b_gap=5/53
+W139 values=(Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)) scale_free=True production=True branches=(0, 1) a_gap=0 b_gap=0
+W13 values=(Fraction(1, 1), Fraction(11, 12), Fraction(11, 12)) scale_free=False production=False branches=() a_gap=1/12 b_gap=0
+normalized_equivalence_checks=169
+branch0=local_sig_a=>Vb=Vc=1
+branch1=local_sig_b=>Va=Vc=1
+GROUP12_AB_PROFILES_STANDALONE_PASS
+descriptor_GROUP12b=group('b1', 'b2') q4('a1', 'a4', 'b4')
+descriptor_GROUP12a=group('a1', 'a2') q4('a4', 'b1', 'b4')
+W152prime_b C=9/281 W=15/281 R=194/281 P=194/281 L=221/1405 S=106/281 arms=(Fraction(106, 281), Fraction(150, 281), Fraction(1427, 2810)) effective=150/281 cut_margin=2/281
+W86_a C=5/159 W=3/53 R=110/159 P=110/159 L=41/265 S=20/53 arms=(Fraction(20, 53), Fraction(85, 159), Fraction(267, 530)) effective=85/159 cut_margin=1/159
+W86_prior_b_tight=86/159
+W139_a C=8/257 W=44/257 R=178/257 P=178/257 L=197/1285 S=97/257 arms=(Fraction(97, 257), Fraction(275, 514), Fraction(572, 1285)) effective=275/514 cut_margin=3/514 ordinary_POW3c_tight=139/257
+target_b arms=(Fraction(65, 74), Fraction(113, 148), Fraction(28, 37)) theorem=65/74 effective=24/37
+target_a arms=(Fraction(65, 74), Fraction(113, 148), Fraction(33, 37)) theorem=33/37 effective=24/37 guard_slack=0
+holder_budget=1 optimizer_cases=625 or_checks=3125
+fail_closed_mutations=10 names=duplicate-group-slot,cross-side-group,wrong-q4-block,powered-side-q4-block,wrong-powered-family,unknown-group-side,descriptor-side-mismatch,reversed-guard-sign,missing-factor-two,unresolved-powered-mass
+GROUP12A_C_NEWFACE_STANDALONE_PASS
+descriptors=powered_a {4: (('c1', 'c2'), ('b1', 'b4', 'c4')), 5: (('c1', 'c2'), ('b1', 'b5', 'c4'))}
+target C=7/37 W=7/37 R=20/37 P=15/37 L=5/37 S=39/74 arms=(Fraction(39, 74), Fraction(79, 148), Fraction(21, 37)) effective=20/37
+new_face D=6/11 C=37/1375 W=1/22 R=926/1375 P=911/1375 L=7/55 S=203/550 arms=(Fraction(203, 550), Fraction(2867, 5500), Fraction(521, 1100)) effective=2867/5500 cut_margin=133/5500
+second_face D=110/203 C=64/609 W=38/203 R=380/609 P=374/609 L=27/203 S=257/609 arms=(Fraction(257, 609), Fraction(91, 174), Fraction(281, 609)) effective=91/174 cut_margin=23/1218
+optimizer_cases=625 or_checks=3125
+fail_closed_mutations=8 names=duplicate-group-slot,cross-side-group,wrong-singleton,powered-side-singleton,unauthorized-other-index,reversed-guard-sign,missing-factor-two,unresolved-powered-mass
+GROUP1212A_THIRDFACE_STANDALONE_PASS
+target_descriptors=28 minimum=(Fraction(21, 37), ('b3', 'c4'))
+face_110over203={'C': Fraction(64, 609), 'W': Fraction(38, 203), 'R': Fraction(380, 609), 'P': Fraction(380, 609), 'Lb': Fraction(64, 609), 'Lc': Fraction(27, 203), 'S': Fraction(254, 609), 'theta': Fraction(3, 29), 'q': Fraction(80, 203), 'arms': (Fraction(254, 609), Fraction(317, 609), Fraction(3, 7), Fraction(278, 609)), 'bound': Fraction(317, 609), 'effective': Fraction(317, 609)} saving=13/609
+face_46over85={'C': Fraction(3, 85), 'W': Fraction(3, 85), 'R': Fraction(58, 85), 'P': Fraction(58, 85), 'Lb': Fraction(73, 425), 'Lc': Fraction(57, 425), 'S': Fraction(32, 85), 'theta': Fraction(131, 850), 'q': Fraction(146, 425), 'arms': (Fraction(32, 85), Fraction(9, 17), Fraction(451, 850), Fraction(419, 850)), 'bound': Fraction(451, 850), 'effective': Fraction(451, 850)} saving=9/850
+optimizer_cases=3125 or_checks=15625
+fail_closed_mutations=3 names=duplicate-singleton,outside-pool,noncanonical
+GROUP1212B_REFLECTEDFACE_STANDALONE_PASS
+target_descriptors=28 minimum=(Fraction(26, 37), ('a3', 'c4'))
+reflected_face_46over85={'C': Fraction(3, 85), 'W': Fraction(3, 85), 'R': Fraction(58, 85), 'P': Fraction(58, 85), 'La': Fraction(73, 425), 'Lc': Fraction(57, 425), 'S': Fraction(32, 85), 'theta': Fraction(131, 850), 'modulus': Fraction(146, 425), 'arms': (Fraction(32, 85), Fraction(9, 17), Fraction(451, 850), Fraction(419, 850)), 'bound': Fraction(451, 850), 'effective': Fraction(451, 850)} saving=9/850
+optimizer_cases=3125 or_checks=15625
+fail_closed_mutations=3 names=duplicate-singleton,outside-pool,noncanonical
+POW2_PROFILES_STANDALONE_PASS
+target_POW2a_count=495 minimum=(Fraction(59, 74), ('b1', 'b2', 'c1', 'c4')) ties=9 cuts=0 tight=0
+target_POW2b_count=495 minimum=(Fraction(26, 37), ('a1', 'a3', 'c1', 'c4')) ties=1 cuts=0 tight=0
+target_POW2c_count=495 minimum=(Fraction(87, 148), ('a1', 'a2', 'a3', 'b1')) ties=9 cuts=0 tight=0
+W46_POW2a_count=495 minimum=(Fraction(27, 50), ('b1', 'b4', 'c1', 'c3')) ties=1 cuts=1 tight=0
+W46_POW2b_count=495 minimum=(Fraction(957, 1700), ('a1', 'a2', 'a4', 'c3')) ties=1 cuts=0 tight=0
+W46_POW2c_count=495 minimum=(Fraction(58, 85), ('a1', 'a4', 'b1', 'b4')) ties=1 cuts=0 tight=0
+W46_descriptor=('b1', 'b4', 'c1', 'c3') C=33/425 R=284/425 P=284/425 S=7/17 average=27/50 margin=1/850
+reflected_b_descriptor=('a1', 'a4', 'c1', 'c3') bound=27/50 margin=1/850
+rotated_c_descriptor=('a1', 'a4', 'b1', 'b3') bound=27/50 margin=1/850
+minimal_current_static_subset=POW2a:b1,b4,c1,c3
+fail_closed_mutations=6 names=powered-side-slot,duplicate-slot,noncanonical-order,forbidden-powered-side,tail-slot-is-not-regular,weakened-descriptor-does-not-cut

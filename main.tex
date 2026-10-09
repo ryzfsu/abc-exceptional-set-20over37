@@ -1,0 +1,3202 @@
+\documentclass{amsart}
+\usepackage{amssymb,mathtools,array}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc exceptional set},pdfauthor={Ruiyi Zhang}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{theoremA}{Theorem}
+\renewcommand{\thetheoremA}{\Alph{theoremA}}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\theoremstyle{plain}
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\pos}[1]{\max\{#1,0\}}
+
+\newcommand{\certLeaves}{394\,633}
+\newcommand{\certInternal}{394\,243}
+\newcommand{\certNodes}{788\,876}
+\newcommand{\certDepth}{49}
+\newcommand{\certInfeasible}{0}
+\newcommand{\certLambda}{586/201}
+\newcommand{\certLambdaFrac}{\frac{586}{201}}
+\newcommand{\certLambdaLeaf}{95\,263}
+\newcommand{\certLambdaRho}{\frac{3516}{67}}
+\newcommand{\certLambdaNineteen}{\frac{11134}{201}}
+\newcommand{\certBudget}{\frac{11335}{201}}
+\newcommand{\certTight}{1\,358}
+\newcommand{\certMaxTerms}{28}
+\newcommand{\certUNused}{17\,256}
+\newcommand{\certMut}{46}
+\newcommand{\certWitMut}{19}
+\newcommand{\certFamilyTable}{%
+linear rows of $\mathcal S$ & & & 29 & 2\,061\,265\\
+nonnegativity & & & 21 & 2\,478\,333\\
+\eqref{eq:ARCH} & 4\,972 & 1 & 2 & 26\,673\\
+(G1)--(G13) & 27\,223 & 13 & 26 & 675\,941\\
+\eqref{eq:SPor} & 15\,468 & 30 & 60 & 479\,423\\
+\eqref{eq:cutor} & 236\,038 & 17\,256 & 34\,116 & 2\,417\,940\\
+\eqref{eq:mo:CS4or} & 48\,765 & 10\,649 & 21\,220 & 644\,485\\
+\eqref{eq:mo:PS23or} & 61\,110 & 155 & 310 & 673\,495\\
+\eqref{eq:pw:POW3} & 387 & 75 & 149 & 1\,924\\
+\eqref{eq:pw:G12}, \eqref{eq:pw:G1212} & 280 & 27 & 89 & 2\,679\\}
+\newcommand{\shaManifestI}{7ba2202c473e0204baf7752a8fd41923}
+\newcommand{\shaManifestII}{82111ca4cd189a6db584e3912a3bcf43}
+\newcommand{\shaReportXzI}{f0412ad682389d463d410b96737144e6}
+\newcommand{\shaReportXzII}{65afba13ef26c29f64c7a13f128e24e0}
+\newcommand{\shaReportI}{9cf43afd90bb683897290c18a9ebfb58}
+\newcommand{\shaReportII}{697d0baafe8c9d2c6ae6ff71e8f5e2f7}
+\newcommand{\shaNormI}{f38667a2fe45bda186c0ef0ae827f11c}
+\newcommand{\shaNormII}{8c68cfac0976da043f7eba59bbd9c701}
+\newcommand{\shaCleanI}{9c301c46a2561e2d3c7c27a2c258186d}
+\newcommand{\shaCleanII}{66703d89a52f86d74c2f1e6604ad2d0d}
+\newcommand{\shaTreeI}{d7abb356e4098127e775c4f003ef4bd8}
+\newcommand{\shaTreeII}{2660cbd734547154ab5f8b3f1b394f4a}
+\newcommand{\shaWitI}{b795b735b3ec81177b57f6402b746d26}
+\newcommand{\shaWitII}{2b5fae0a102eadc5f6b07777b9944cf3}
+\newcommand{\shaDiffI}{39ece2ea82da2cd5e221624707de6f0b}
+\newcommand{\shaDiffII}{4d5e7cd18a6599b3e53f02452f9072e3}
+\newcommand{\shaAuditI}{ea40e6d7cbac17b5a2662b31e4d2b96a}
+\newcommand{\shaAuditII}{2ee3a1805ae137892d947311d15df929}
+\newcommand{\shaRunI}{dacd0fe7868341f22c4ed5b94a284492}
+\newcommand{\shaRunII}{df3c8c45dc4f9da578800ba8b0db215b}
+\newcommand{\shaStdoutI}{3c7494813ddb89721817b77f48bdac05}
+\newcommand{\shaStdoutII}{5f9bef2f298b3ca7291799e4565df947}
+
+\newif\ifarxiv
+\arxivtrue
+
+\begin{document}
+
+\title[The $20/37$ bound for the $abc$ exceptional set]{Cubic sieves, a primitive-ratio cut and a $20/37$ bound for the $abc$ exceptional set}
+\author{Ruiyi Zhang}
+\address{Independent Researcher, Columbia, Maryland, USA}
+\email{ryzfsu@gmail.com}
+\subjclass[2020]{Primary 11D75; Secondary 11N25, 11N36, 11L40, 11D25, 11Y16}
+\keywords{abc conjecture, exceptional set, radical, anatomy of integers, power sieve, character sums, Farey fractions, linear programming certificate}
+
+\begin{abstract}
+We prove $N_1(X)\ll_\varepsilon X^{20/37+\varepsilon}$, where $N_\lambda(X)$
+counts the $abc$ triples of exponent $\lambda$ in $[1,X]^3$. The previous full
+bound was $X^{13/20+\varepsilon}$. We use the
+anatomic reduction of Bernert, Browning, Lichtman and Ter\"av\"ainen. Five
+families add new rows. The first two are an archimedean cover and a
+row from Heath-Brown's uniform bound for diagonal cubic curves. Spacing gives $30$ two-arm clauses.
+Cubic characters and a fourth moment of Dirichlet $L$-functions give the
+cubic-sieve rows. Cochrane and Shi's fourth moment gives the moment rows.
+An exact Farkas certificate with $\certLeaves$ leaves gives exponent $20/37$
+for the box count. On each leaf the multipliers of all rows except
+nonnegativity sum to at most $\certLambda$. Exact rows are included in this
+sum. This pays for the losses at $\lambda=1$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+For this paper $\N=\{1,2,\ldots\}$. For $n\ne0$ put
+$\rad(n)=\prod_{p\mid n}p$, and write $\omega(n)=\#\{p:p\mid n\}$,
+with $\omega(1)=0$. Following \cite{BBLT}, call
+$(a,b,c)\in\N^3$ with $\gcd(a,b,c)=1$ an \emph{$abc$ triple of exponent
+$\lambda$} if
+\begin{equation}\label{eq:triple}
+ a+b=c,\qquad \rad(abc)<c^{\lambda}.
+\end{equation}
+Let $N_\lambda(X)$ count these triples in $[1,X]^3$. The $abc$ conjecture of
+Masser and Oesterl\'e implies that $N_\lambda(X)=O_\lambda(1)$ for $\lambda<1$,
+so $\lambda=1$ is the endpoint of interest.
+
+The bound $N_\lambda(X)\ll_\varepsilon X^{2\lambda/3+\varepsilon}$ is
+classical \cite[Proposition~1.1]{BBLT}; it comes from de Bruijn's count
+\cite{dB} of integers with restricted radical. For $\lambda\ge2$, Kane's result
+\cite{Ka} gives $N_\lambda(X)\ll_\varepsilon X^{\lambda-1+\varepsilon}$
+\cite[Section~1]{BBLT}. On $2\le\lambda\le3$ it matches
+$N_\lambda(X)\gg X^{\lambda-1-\varepsilon}$. Granville's unpublished work gives the lower bound for $1<\lambda\le3$, as
+reported in \cite[Section~1]{BBLT}. The question is Mazur's. It can hold only for
+$\lambda\le3$, since
+$N_\lambda(X)\le\#\{(a,b,c)\in[1,X]^3:a+b=c\}=O(X^2)$. Browning, Lichtman and
+Ter\"av\"ainen \cite[Theorem~1.2]{BLT} gave the first power saving below
+$2\lambda/3$, for $0.99<\lambda<1.001$. Bernert \cite[Theorem~1]{Be} proved
+\begin{equation}\label{eq:bernertbound}
+ N_\lambda(X)\ll_\varepsilon X^{(23\lambda+3)/40+\varepsilon}
+ \qquad(0<\lambda<2),
+\end{equation}
+so $N_1(X)\ll_\varepsilon X^{13/20+\varepsilon}$. In the merged paper,
+\cite[Theorem~1.2]{BBLT} states \eqref{eq:bernertbound} for $0<\lambda\le2$.
+Its Theorem~1.3 gives $0.6$ for $0<\lambda<1$, with a constant depending on
+$\lambda$. At $\lambda=1$: a remark at the end of
+\cite[Section~4]{Be} sketches $8/13=0.6153\ldots$; Li \cite{Li} obtains
+$56/85=0.6588\ldots$ from the method of \cite{BLT}, its limit without further
+optimisation by his account.
+
+\begin{theorem}\label{thm:main}
+$N_1(X)\ll_\varepsilon X^{20/37+\varepsilon}$, where $20/37=0.5405\ldots$
+\end{theorem}
+
+Since $N_\mu\le N_1$ for $\mu\le1$, Theorem~\ref{thm:main} also improves
+\cite[Theorem~1.3]{BBLT} on $0<\mu<1$, with a constant independent of $\mu$.
+Among the estimates cited here, the resulting exponent is
+$\min\{2\mu/3,20/37\}$ for $0<\mu\le1$. Thus the new exponent is best known
+for $30/37<\mu\le1$; it ties the classical exponent at $\mu=30/37$.
+Its crossing with the Bernert exponent alone is $\mu=689/851$.
+
+Section~\ref{sec:red} recalls the anatomic reduction of \cite{BLT,Be,BBLT}.
+Fix $\varepsilon_0>0$ and $d=d(\varepsilon_0)$. Every triple lies in a box.
+In a box, each side is a fixed coefficient times
+$\prod_{i\le d}\mathfrak s_i^{\,i}$. The roots $\mathfrak s_i$ have fixed
+dyadic sizes. The three side values are pairwise coprime. Let $\mathcal B_d$
+count the root-factorization tuples in a box, with distinct factorizations
+counted separately, and put $D=\log_X\mathcal B_d$. The proof is the chain.
+Section~\ref{sec:red} works at a generic scale $X$ and exponent $\lambda$;
+Lemma~\ref{lem:endpoint} applies it at the scale $Y$ of \eqref{eq:dyadic},
+with $\lambda:=\mu$ and base-$Y$ logarithms. The quantity $V_s$ is the
+weighted exponent of the root product, excluding its fixed coefficient, as
+defined in Section~\ref{sec:arch}; $h_d=d(d+1)/2$. The quantity $\rho$ is the
+largest finite right-hand-side shift in Lemma~\ref{lem:endpoint}. The bound
+on $\rho$ holds for $Y\ge Y_0(\varepsilon_0,d)$. Smaller $Y$ contribute
+$O_{\varepsilon_0,d}(1)$, and $\mu\le0$ contributes nothing
+(Section~\ref{sec:proof}).
+\[
+ \begin{gathered}
+ N_1(X)\ll(\log X)^2\max_{Y\le X,\ \mu\le1}N^*_\mu(Y),\qquad
+ N^*_\mu(Y)\ll Y^{\varepsilon_0}\max\mathcal B_d,\\
+ D\le\frac{20}{37}+\Lambda_U\rho,\qquad \Lambda_U=\certLambdaFrac,
+ \qquad \rho\le19\varepsilon_0,
+ \end{gathered}
+\]
+from \eqref{eq:dyadic}, \eqref{eq:reduction}, Theorem~\ref{thm:cert} with
+Lemma~\ref{lem:stab}, and Lemma~\ref{lem:endpoint}. Since
+$19\Lambda_U+1=\certBudget$, choosing $\varepsilon_0$ with
+$\certBudget\,\varepsilon_0<\varepsilon/2$ proves Theorem~\ref{thm:main}.
+
+The inequalities for $D$ are linear in $28$ exponents. They are the root and
+tail coordinates of the three sides, $D$, and three auxiliary Fourier
+variables. BBLT's Theorem~1.3 gives the $3/5$ bound. Its Proposition~6.1 lists
+the $22$ inherited inequalities used here. We add the tail
+rows and the cut. Tail roots
+(Section~\ref{sec:tail}) of index at least seven cost $X^{\tau_s}$ to
+enumerate. Here $\tau_s=s-\sum_{i\le6}s_i$. The tail product is at least
+$X^{v_s}$, where $v_s\ge7\tau_s$. The cut (Section~\ref{sec:cut}) fixes all
+but two coprime products $u,v$ on two sides:
+\[
+ \gcd(u,v)=1,\qquad u\equiv\xi v\pmod M,\qquad
+ 0<u\le U_{\rm cut},\quad 0<v\le V_{\rm cut}.
+\]
+Here $M$ is built from roots on the third side, and $\xi$ lies in one of
+$X^{o(1)}$ classes. Lemma~\ref{lem:farey} counts these by
+$1+2U_{\rm cut}V_{\rm cut}/M$. There are
+\begin{equation}\label{eq:cutcount}
+ 3\,(64^2-1)\,127=1\,560\,195
+\end{equation}
+cuts.
+
+The paper adds five further families.
+\begin{itemize}
+\item \emph{Archimedean} (Section~\ref{sec:arch}). One of the side values
+ $n_a,n_b$ is at least $n_c/2$. In the limiting coordinates, $V_a,V_b\le V_c$, and
+ $V_c\le V_a$ or $V_c\le V_b$. At finite scale,
+ $V_a,V_b\le V_c+\varepsilon_0/2$, and one of
+ $V_c\le V_a+3\varepsilon_0/2+\log_Y2^{1+h_d}$ or
+ $V_c\le V_b+3\varepsilon_0/2+\log_Y2^{1+h_d}$ holds.
+\item \emph{Cubic} (Section~\ref{sec:hb3}). Fix all roots but the three
+ cube roots. Heath-Brown's bound \cite[Theorem~1.3]{HBcube} for primitive
+ points on $\alpha x^3+\beta y^3=\gamma z^3$, uniform in the coefficients,
+ gives $D\le L-p_3$. Here $L$ and $p_i$ are as in Section~\ref{sec:red}.
+\item \emph{Spacing} (Section~\ref{sec:spacing}). Consecutive $\ell$th powers
+ are far apart: $30$ two-arm clauses.
+\item \emph{Cubic sieve} (Section~\ref{sec:pow3}). Write one side as
+ $Mx^3$. Sieve with cubic characters modulo primes $p\equiv1\pmod3$. The
+ error term needs a smooth fourth moment of character sums. It comes from the
+ fourth moment of Dirichlet $L$-functions in \cite[Lemma~4]{GMRR}: $1774$ clauses.
+\item \emph{Moments} (Section~\ref{sec:moment}). Expand the congruence of
+ the cut modulo $M$ by characters. The fourth moment of Cochrane and Shi
+ \cite[Theorem~1]{CS} bounds the nonprincipal part: $188\,976$ clauses.
+\end{itemize}
+
+Section~\ref{sec:cert} proves $D\le20/37$ from these rows. The certificate is
+a finite trie. Each internal node splits on one clause, one child per arm.
+Each leaf carries nonnegative rational Farkas multipliers. There are
+$\certLeaves$ leaves, depth $\certDepth$, and no infeasible leaf. On a leaf
+the multipliers of all rows except nonnegativity sum to at most
+$\Lambda_U=\certLambda$, whence the term $\Lambda_U\rho$. This includes exact
+rows. A point of the
+installed system attains $20/37$; the qualification on this optimum appears in
+Section~\ref{sec:witness}.
+
+Section~\ref{sec:end} treats $\mu=1$. In the proof of Theorem~\ref{thm:main},
+the dyadic reduction only requires $0<\mu\le1$. At this endpoint the row
+$L\le1$ of \cite{BBLT} is unavailable: the proof of
+\cite[Theorem~1.3]{BBLT} uses $\varepsilon_0\le(1-\mu)/3$. We use
+$L\le1+3\varepsilon_0/4$ instead. The $L$-native Fourier and geometry rows cost
+$18\varepsilon_0$ and $6\varepsilon_0$. After the choice of $Y_0$ in
+Lemma~\ref{lem:endpoint}, every new row costs at most $2\varepsilon_0$.
+Hence $\rho=18\varepsilon_0+o_{\varepsilon_0,d}(1)$ and
+$\Lambda_U\rho=\certLambdaRho\,\varepsilon_0+o_{\varepsilon_0,d}(1)$.
+
+The proof in \cite{BBLT} does not use the determinant method; \cite{BLT} used
+it together with Thue equations. Lemma~\ref{lem:farey} is an elementary
+lattice-point count of the kind used in \cite[Proposition~4.1]{BBLT}. The cut
+applies it to two sides at once, with modulus $M$ built from roots on the third
+side.
+
+Imported statements are cited where used. Citations of \cite{BBLT} refer to
+arXiv:\allowbreak2410.12234v2 (to appear in C.~R.~Math.); each imported
+statement was checked against it. The dyadic reduction \eqref{eq:dyadic} is
+only stated in \cite[Section~2]{BBLT}; Section~\ref{sec:red} proves it.
+Appendix~\ref{app:windows} reproves the estimates of
+\cite[Propositions~2.3, 3.1 and~4.1]{BBLT} for our boxes. They use the
+divisor bound, the count of solutions of $x^j-y^j=m$
+(Lemma~\ref{lem:app:power}) and the lattice-point bound \cite[Lemma~3]{HB}
+(Theorem~\ref{thm:app:HB}). The new rows use
+the cubic bound \cite[Theorem~1.3]{HBcube} and the fourth moments
+\cite[Lemma~4]{GMRR} and \cite[Theorem~1]{CS}. The cubic-sieve character expansion
+(Section~\ref{sec:pow3}) also uses the classical Jacobi-sum bound \cite{IR}.
+No conjecture is assumed. Theorem~\ref{thm:cert}
+has multiplier bound $\Lambda_U$. It is computer-assisted
+and uses a certificate checked by the standard-library programs in
+Appendix~\ref{app:ver}. The analytic reductions and row families are proved in
+the text.
+
+
+\section{The anatomic reduction}\label{sec:red}
+
+Throughout this section $0<\lambda\le2$, $\varepsilon>0$ is arbitrary,
+$\varepsilon_0>0$ is fixed before $X$, and $d=d(\varepsilon_0)$. We take
+$\varepsilon_0\le4/7$, so that the folded index $k=\lceil4/\varepsilon_0\rceil$
+of \cite[Lemma~2.2]{BBLT} is at least $7$ (Section~\ref{sec:fold}).
+Implied constants depend only on $\varepsilon,\varepsilon_0,d$; $\lambda$ occurs
+only through the displayed $\ll_\lambda$ in \eqref{eq:dyadic}. They never depend on the box,
+the coefficients or $X$.
+
+Write $N^*_\lambda(X)$ for the number of triples counted by $N_\lambda(X)$ that
+satisfy in addition $c\ge X/2$ and $\rad(abc)\ge c^{\lambda}/2$. A dyadic
+decomposition and the pigeonhole principle give
+\begin{equation}\label{eq:dyadic}
+ N_\lambda(X)\ll_\lambda(\log X)^2\max_{1\le Y\le X}\ \max_{\mu\le\lambda}N^*_\mu(Y),
+\end{equation}
+as in \cite[Section~2]{BBLT}. In the application $\lambda=1$, and the bounds
+below for $N^*_\mu(Y)$ are uniform in $0<\mu\le1$
+(Lemma~\ref{lem:endpoint}).
+
+\begin{proof}[Proof of \eqref{eq:dyadic}]
+Let $(a,b,c)$ be counted by $N_\lambda(X)$. Then $c\ge2$ and $a,b<c\le X$.
+Choose $l\ge1$ with $c\in(X2^{-l},X2^{1-l}]$ and put
+$Y=X2^{1-l}\le X$. Thus $Y/2<c\le Y$. Put
+\[
+\mu_i=\lambda-i/\log_2X\qquad
+ (0\le i\le\lceil\lambda\log_2X\rceil).
+\]
+Here $\log_2X=(\log X)/(\log2)$.
+There are $O(\log X)$ such exponents, all at most $\lambda$, and the last is
+at most $0$. With $r=\rad(abc)$, we have
+$r<c^{\mu_0}$ and $r\ge1\ge c^{\mu_m}$ for the last index $m$.
+Choose the largest $i$ with $r<c^{\mu_i}$. Then
+$r\ge c^{\mu_{i+1}}\ge c^{\mu_i}/2$, since $c\le X$.
+Hence the triple is counted by $N^*_{\mu_i}(Y)$. There are $O(\log X)$ choices
+of $Y$ and $O(\log X)$ choices of $\mu_i$, which proves the claim.
+\end{proof}
+
+For $\mu\le0$, $N^*_{\mu}(Y)=0$: its defining condition would require
+$1\le\rad(abc)<c^\mu\le1$. Thus the maximum in \eqref{eq:dyadic} may be
+restricted to $0<\mu\le\lambda$.
+
+For $n\ge1$ write $[n]=\{1,\ldots,n\}$. Here $x\sim A$ means $A\le x<2A$, as
+in \cite{Be}; \cite{BBLT} writes $x\sim A$ for $x\in(A,2A]$.
+
+Let $d\in\N$ and $(a_0,b_0,c_0)\in\N^3$. Let $\mathbf A,\mathbf B,\mathbf C\in\N^d$
+have entries powers of two, $1$ included. Put $\mathfrak a_0=a_0$,
+$\mathfrak b_0=b_0$, $\mathfrak c_0=c_0$ and
+\begin{equation}\label{eq:box}
+ \mathcal B_d=\#\Bigl\{(\mathfrak a_i,\mathfrak b_i,\mathfrak c_i)_{i=1}^d\in\N^{3d}:
+ \begin{aligned}
+  &\mathfrak a_i\sim A_i,\ \mathfrak b_i\sim B_i,\ \mathfrak c_i\sim C_i\quad(1\le i\le d),\\
+  &a_0\textstyle\prod_{i\le d}\mathfrak a_i^{\,i}+b_0\prod_{i\le d}\mathfrak b_i^{\,i}
+    =c_0\prod_{i\le d}\mathfrak c_i^{\,i},\\
+  &\gcd\bigl(\textstyle\prod_{i=0}^{d}\mathfrak a_i,
+    \prod_{i=0}^{d}\mathfrak b_i,\prod_{i=0}^{d}\mathfrak c_i\bigr)=1
+ \end{aligned}\Bigr\}.
+\end{equation}
+For a side write $S_j\in\{A_j,B_j,C_j\}$ for its dyadic root size. When the
+side $s$ must be named, write $S_{s,j}$. Recall $h_d=d(d+1)/2$.
+Equation~\eqref{eq:box} counts root-factorization tuples, not distinct
+side-value triples; different factorizations are counted separately. It is
+the $B_d$ of \cite{BBLT}, under our dyadic convention, with no condition within
+a side. We write $\mathcal B_d$ to avoid a clash with the size $B_d$.
+
+Every interval $[A,2A)\cap\N$ has exactly $A$ integers, including
+$[1,2)\cap\N=\{1\}$. We keep every root coordinate, including those equal to
+$1$. The statements of \cite[Propositions~2.3, 3.1 and~4.1]{BBLT} assume
+windows $(A,2A]$ with $A\ge1$, which exclude roots equal to $1$. So we do not
+cite them for our boxes. We rerun the window-dependent steps of the reduction
+below.
+Appendix~\ref{app:windows} proves the pair, Fourier and geometry bounds in our
+convention (Lemmas~\ref{lem:app:pair}, \ref{lem:app:fourier}
+and~\ref{lem:app:geom}). Their constants depend only on $\varepsilon_0$
+and $d$.
+
+Roots equal to $1$ occur: in
+\cite[Lemma~2.2]{BBLT}, $m_j=\prod_{p^{j}\|n}p$ and $n_j=m_j$ for $j\ne k$, the
+folded index. So $n_j=1$ unless some prime has multiplicity exactly $j$. As
+$n$ has at most $\omega(n)$ distinct multiplicities, all but at most
+$\omega(n)$ indices $j\le d$, $j\ne k$, give $n_j=1$. Our convention assigns
+these roots the size $A_i=1$ and keeps all $d$ indices in \eqref{eq:box}.
+By the proof of \cite[Proposition~2.1]{BBLT}, each $\varepsilon_0>0$ has a
+$d=d(\varepsilon_0)$ with
+\begin{equation}\label{eq:reduction}
+ N^*_\lambda(X)\ll_{\varepsilon_0}X^{\varepsilon_0}\max \mathcal B_d,
+\end{equation}
+the maximum over pairwise coprime $1\le a_0,b_0,c_0\le X^{\varepsilon_0}$ and
+dyadic $A_i,B_i,C_i\in[1,X]$ with
+\begin{equation}\label{eq:boxconstraints}
+ \begin{gathered}
+  2^{-O_d(1)}X^{\lambda}\le\prod_{j\le d}A_jB_jC_j\le X^{\lambda+3\varepsilon_0/4},\\
+  \prod_{j\le d}A_j^{\,j}\le X,\qquad
+  \prod_{j\le d}B_j^{\,j}\le X,\qquad
+ X^{1-\varepsilon_0/2}\le\prod_{j\le d}C_j^{\,j}\le X ,
+ \end{gathered}
+\end{equation}
+The power of two depends only on $d$. We rederive the lower bounds
+below. The upper bounds and the pigeonhole step of the source proof hold
+verbatim under $[A,2A)$, since $A_i\le\mathfrak a_i<2A_i$. The lower bound uses the
+nontrivial branch of \cite[Lemma~2.2]{BBLT}: $\varepsilon_0<4$, so the
+parameter $\varepsilon_0/4<1$ and $k=\lceil4/\varepsilon_0\rceil\le d$.
+Since $c\ge X/2$,
+\[
+ \prod_{j\le d}A_jB_jC_j\ge2^{-3d}\rad(abc)
+ \ge2^{-3d-\lambda-1}X^\lambda\ge2^{-3d-3}X^\lambda,
+\]
+since $\lambda\le2$. Each of the $3d$ roots loses at most a factor $2$; the
+source proof prints $2^{-d}$ here. The weighted lower bound for the $c$-roots is
+\[
+ \prod_{j\le d}C_j^j\ge2^{-h_d}\prod_{j\le d}\mathfrak c_j^j.
+\]
+The factorization uses parameter $\varepsilon_0/4$, so
+$c_0\le X^{\varepsilon_0/4}$ and
+$\prod_{j\le d}\mathfrak c_j^{\,j}=c/c_0\ge2^{-1}X^{1-\varepsilon_0/4}$.
+Since $C_j\ge\mathfrak c_j/2$,
+\[
+ \prod_{j\le d}C_j^j\ge2^{-h_d-1}X^{1-\varepsilon_0/4}
+ \ge X^{1-\varepsilon_0/2}
+ \quad\text{if }X\ge Y_{\rm red}:=2^{4(h_d+1)/\varepsilon_0}.
+\]
+This gives the lower bound in \eqref{eq:boxconstraints}. The global
+threshold $Y_0(\varepsilon_0,d)\ge Y_{\rm red}$ is fixed in
+Lemma~\ref{lem:endpoint}.
+This suffices, since $d$ is fixed before $X$. Fix such a box. For a side $s\in\{a,b,c\}$ set
+\begin{equation}\label{eq:coord}
+ s_i=\log_XS_i\ (1\le i\le d),\qquad
+ s=\log_X\!\prod_{i\le d}S_i=\sum_{i\le d}\log_XS_i .
+\end{equation}
+Index $0$ is not a coordinate: $a_0,b_0,c_0$ are the integer coefficients.
+From here on $a,b,c$ denote coordinates, not the triple.
+Boxes with $\mathcal B_d=0$ do not attain the maximum in \eqref{eq:reduction}
+unless $N^*_{\lambda}(X)=0$. So $\mathcal B_d\ge1$, and we set
+\begin{equation*}
+ D=\log_X\mathcal B_d\ge0.
+\end{equation*}
+For the tail put
+\begin{equation}\label{eq:tailcoord}
+ \tau_s=s-\sum_{i\le6}s_i=\sum_{7\le j\le d}\log_XS_j,
+ \qquad
+ v_s=\sum_{7\le j\le d}j\log_XS_j .
+\end{equation}
+Put $L=a+b+c$ and $p_i=a_i+b_i+c_i$; a bare $p$ is a prime. Moving a
+dyadic endpoint at scale $X$ changes the root coordinates by
+\begin{equation}\label{eq:dyadicshift}
+ \Delta s_i,\ \Delta s=O_d\!\left(\frac1{\log X}\right).
+\end{equation}
+
+The left inequality of \eqref{eq:boxconstraints} uses
+$\prod_{j\le d}n_j\ge\rad(n)$ with no loss, while in this direction
+\cite[Lemma~2.2]{BBLT} gives only $\rad(n)\le n^{\varepsilon_0}\prod_jn_j$. In the proof of that
+lemma
+$m_j=\prod_{p^{j}\|n}p$, and, for the folded index $k$, $n_j=m_j$ for
+$j\ne k$ and $n_k=m_k\prod_{j>d}m_j^{\lfloor j/k\rfloor}$. Since $d\ge k$,
+$\lfloor j/k\rfloor\ge1$ for $j>d$, so
+\[
+ \prod_{j\le d}n_j\ \ge\ \prod_{j\le d}m_j\prod_{j>d}m_j\ =\ \rad(n).
+\]
+
+\begin{lemma}\label{lem:coprime}
+The three side values of a box are pairwise coprime. Hence every factor of one
+side is a unit modulo every factor of another side.
+\end{lemma}
+
+\begin{proof}
+ A prime dividing two side values divides the third by the equation in
+\eqref{eq:box}. If it divides
+$a_0\prod_{i=1}^d\mathfrak a_i^{\,i}$, it divides $\prod_{i=0}^d\mathfrak a_i$;
+likewise on the other sides. This contradicts the gcd condition in
+\eqref{eq:box}.
+\end{proof}
+
+The index $i=0$ in this gcd condition is needed. With $d=1$, the choice
+\[
+ a_0=b_0=1,\quad \mathfrak a_1=\mathfrak b_1=2,\quad c_0=4,\quad \mathfrak c_1=1
+\]
+satisfies the condition with $i\ge1$: $\gcd(2,2,1)=1$. Yet its side values
+$2$, $2$, $4$ share the prime $2$. The
+full condition excludes it: $\gcd(2,2,4)=2$.
+
+Nothing is assumed within a side. Roots of one side may share primes with
+$a_0$. Unenumerated roots are recovered by a divisor bound, not by
+squarefreeness.
+
+\subsection{The inherited rows}
+For these limiting rows take $0<\lambda\le1$. The finite box bound is
+$L\le\lambda+3\varepsilon_0/4\le1+3\varepsilon_0/4$. We use this endpoint
+envelope throughout, so no choice of $\varepsilon_0$ depends on the gap
+$1-\lambda$.
+Lemmas~\ref{lem:app:pair} and~\ref{lem:app:fourier} and
+Corollary~\ref{cor:app:geom} are our forms of
+\cite[Propositions~2.3, 3.1 and 4.1]{BBLT}. In the coordinates \eqref{eq:coord}
+they yield the $22$ inequalities of \cite[Proposition~6.1]{BBLT}. We display them in exact limiting
+form, as Section~\ref{sec:cert} uses them. At finite resolution each
+right-hand side rises by the amount in Lemma~\ref{lem:endpoint} and
+Table~\ref{tab:rho}; \eqref{eq:root} and \eqref{eq:63} hold exactly.
+The reduction has constants depending only on $\varepsilon_0,d$. So do the
+bounds of Appendix~\ref{app:windows}. They use $\lambda$ only through
+$ABC\le X^{\lambda+3\varepsilon_0/4}$ in Corollary~\ref{cor:app:geom}. The
+condition $\varepsilon_0\le(1-\mu)/3$ occurs only in the final step of the
+proof of \cite[Theorem~1.3]{BBLT}, where it ensures
+$ABC\le X^{\mu+3\varepsilon_0}\le X$.
+
+The radical bound in \eqref{eq:boxconstraints} gives \cite[(6.1)]{BBLT},
+\begin{equation}\label{eq:L}
+ L\le1,
+\end{equation}
+derived there for $\lambda<1$. At $\lambda=1$ only $L\le1+3\varepsilon_0/4$
+holds (Lemma~\ref{lem:endpoint}). Roots sum into their side,
+\cite[(6.2)]{BBLT}:
+\begin{equation}\label{eq:root}
+ \sum_{i\le6}s_i\le s\qquad(s=a,b,c).
+\end{equation}
+The side-value bound in \eqref{eq:boxconstraints} gives \cite[(6.3)]{BBLT},
+\begin{equation}\label{eq:63}
+ 7s-1\le6s_1+5s_2+4s_3+3s_4+2s_5+s_6\qquad(s=a,b,c).
+\end{equation}
+Two sides determine the third up to a divisor factor
+(Lemma~\ref{lem:app:pair}). This is \cite[(6.4)]{BBLT}:
+\begin{equation}\label{eq:pair}
+ D\le\min(a+b,\ a+c,\ b+c).
+\end{equation}
+Geometry of numbers (Corollary~\ref{cor:app:geom}) gives the thirteen
+min-disjunctions \cite[(6.5)--(6.9)]{BBLT}, labelled (G1)--(G13) in
+Appendix~\ref{app:geom}. The Fourier estimate (Lemma~\ref{lem:app:fourier})
+gives \cite[(6.10)]{BBLT},
+\begin{equation}\label{eq:fourier}
+ \sum_{s=a,b,c}\max(s_2+s_4+s_6,\ s_3+s_6,\ s_5)\le4L-6D .
+\end{equation}
+One argument per maximum gives $27$ linear rows. Section~\ref{sec:cert}
+encodes them with three auxiliary variables.
+
+The \texttt{Python} listing of \cite[Appendix~A]{BBLT} transcribes the first
+line of \cite[(6.9)]{BBLT} as \texttt{p1+a2+b3+a3}, where the displayed formula
+reads $p_1+a_2+b_3+c_3$. We use the displayed formula. It is what
+Corollary~\ref{cor:app:geom} gives with the printed second argument
+$1-a_2-2b_3-2c_3$. For \eqref{eq:63} we use
+\begin{equation}\label{eq:63proof}
+ 7s-1\le7s-\sum_{i\le d}i\,s_i
+ =\sum_{i\le6}(7-i)s_i+\sum_{7\le i\le d}(7-i)s_i
+ \le\sum_{i\le6}(7-i)s_i,
+\end{equation}
+since $7-i\le0$ for $i\ge7$. In our system \eqref{eq:63} is the sum of the two
+tail rows of Section~\ref{sec:tail}, so it is redundant.
+
+\section{The multiplicity-at-least-seven tail}\label{sec:tail}
+
+The tail rows we use are
+\begin{equation}\label{eq:tailrows}
+ \tau_s\ge0,\qquad v_s\ge7\tau_s,\qquad \sum_{i\le6}i\,s_i+v_s\le1
+ \qquad(s=a,b,c).
+\end{equation}
+The first is \eqref{eq:root}. The second: $\log_XS_j\ge0$, with weight
+$j\ge7$ in $v_s$ and weight $1$ in $\tau_s$. The third is the side-value
+bound in \eqref{eq:boxconstraints}. Adding the last two,
+\[
+ (v_s-7\tau_s)+(1-\sum_{i\le6}i s_i-v_s)\ge0,
+\]
+that is, $\sum_{i\le6}i s_i+7\tau_s\le1$; with $\tau_s=s-\sum_{i\le6}s_i$
+this is \eqref{eq:63}. With the
+upper row $v_s\le d\tau_s$, these rows describe the real relaxation of the
+pairs $(\tau_s,v_s)$ exactly. We omit that row, so the system $\mathcal S$ of
+Section~\ref{sec:cert} is free of $d$.
+
+\begin{lemma}\label{lem:tail}
+Fix a side $s\in\{a,b,c\}$ and let
+$M_{\mathrm{tail}}=\prod_{7\le j\le d}\mathfrak s_j^{\,j}$ with
+$\mathfrak s_j\sim S_j$. Then
+\begin{equation}\label{eq:tailcount}
+ \begin{gathered}
+  \#\{(\mathfrak s_7,\dots,\mathfrak s_d)\in\N^{d-6}:\mathfrak s_j\sim S_j\}\le\prod_{7\le j\le d}S_j=X^{\tau_s},\\
+  M_{\mathrm{tail}}\ge\prod_{7\le j\le d}S_j^{\,j}=X^{v_s},
+ \end{gathered}
+\end{equation}
+and every prime $p$ dividing $M_{\mathrm{tail}}$ does so with
+$\operatorname{ord}_p(M_{\mathrm{tail}})\ge7$, where $\operatorname{ord}_p$
+denotes the $p$-adic valuation.
+\end{lemma}
+
+\begin{proof}
+Each interval $[S_j,2S_j)$ contains exactly $S_j$ integers, which gives the
+count, and $\mathfrak s_j\ge S_j$ gives the modulus bound. If $p\mid\mathfrak s_j$
+with $j\ge7$ then $\operatorname{ord}_p(M_{\mathrm{tail}})\ge j\ge7$.
+\end{proof}
+
+The count is exact for $[N,2N)$ and for $(N,2N]$. A closed $[N,2N]$ would
+overcount by a factor of up to $2^{d-6}$, attained when all $S_j=1$.
+
+So the tail costs $X^{\tau_s}$ to enumerate. The bound is on roots, not on
+$\rad(M_{\mathrm{tail}})$, and uses no squarefreeness. Let $\sigma$ and $T$ be the modulus side and
+index set of Section~\ref{sec:cut}. Then $M_{\mathrm{tail}}$ divides the side
+value and is at least $X^{v_\sigma}$.
+Hence $T$ may contain the tail.
+
+\subsection{Folded roots}\label{sec:fold}
+For the rest of the proof fix $0<\varepsilon_0\le4/7$. This is allowed, as
+$\varepsilon_0$ is arbitrarily small at the endpoint step.
+In \cite[Lemma~2.2]{BBLT} the very high multiplicities are folded into one
+index $k$. The folded root need not be squarefree; the remainder goes into
+$n_0$. The proof of \cite[Proposition~2.1]{BBLT} uses that lemma with
+parameter $\varepsilon_0/4$. So
+\[
+ k=\lceil4/\varepsilon_0\rceil,\qquad d=6\lceil(4/\varepsilon_0)^{2}\rceil .
+\]
+Then $k\ge7$, and
+$d\ge6(4/\varepsilon_0)^2>4/\varepsilon_0+1>k$. So the folded root lies in the
+tail, $M_{\mathrm{tail}}$ still divides the side value, and
+$\operatorname{ord}_p(n_k^{\,k})=k\operatorname{ord}_p(n_k)\ge7$ for
+$p\mid n_k$. The overlap of $n_0$ and $n_k$ is within one side, so
+Lemma~\ref{lem:coprime} is untouched. Unenumerated roots are recovered by
+Lemma~\ref{lem:divisor}. The folding costs the factor
+$X^{3\varepsilon_0/4}$ in the upper radical bound of \eqref{eq:boxconstraints}.
+It also costs the choice of $a_0,b_0,c_0$ in the $X^{\varepsilon_0}$ of
+\eqref{eq:reduction}. Both are already charged. It changes neither
+Lemma~\ref{lem:tail} nor \eqref{eq:tailrows}.
+
+
+
+
+\section{Three lattice and divisor lemmas}\label{sec:lat}
+
+\begin{lemma}\label{lem:farey}
+Let $M\ge1$, let $\xi$ be a unit modulo $M$ and let $U,V\ge1$. Then
+\begin{equation}\label{eq:farey}
+ \#\{(u,v)\in\N^2:u\le U,\ v\le V,\ \gcd(u,v)=1,\ u\equiv\xi v\ (M)\}
+ \le1+\frac{2UV}{M}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $\mathcal L_\xi=\{(u,v)\in\Z^2:u\equiv\xi v\ (M)\}$, of index $M$ in
+$\Z^2$. Any two of its points have determinant in $M\Z$. Positive collinear
+integer points with $\gcd(u,v)=1$ coincide. Thus the points of $\mathcal L_\xi$
+with $\gcd(u,v)=1$ in $[1,U]\times[1,V]$ have distinct slopes; order them by
+slope. Consecutive
+points span with $0$ a triangle of area $\ge M/2$. These triangles have
+disjoint interiors and lie in $[0,U]\times[0,V]$. With $P$ points,
+$(P-1)M/2\le UV$.
+\end{proof}
+
+The proof does not use that $\xi$ is a unit. The constant $2$ is sharp. For
+odd $n\ge3$ take $U=n$, $V=n+4$, $M=n^2+2n-4$, $\xi=n-1$. The primitive points
+are $(n-1,1)$, $(n,n+4)$, $(1,n+3)$, with consecutive determinants $M$, and
+$(P-1)M/(UV)\to2$.
+
+\begin{lemma}\label{lem:qroot}
+Let $1\le q\le6$, let $M\ge1$ and let $K$ be a unit modulo $M$. The congruence
+$\eta^{q}\equiv K\pmod M$ has at most $8^{\omega(M)}$ solutions in units $\eta$,
+hence $X^{o(1)}$ solutions uniformly for $M\le X^{O(1)}$.
+\end{lemma}
+
+\begin{proof}
+The solution set is empty or a coset of the kernel of $\eta\mapsto\eta^q$.
+Odd prime power: the unit group is cyclic, so the kernel has order at most
+$q\le6$. Modulus $2^e$, $e\le2$: the unit group has order
+at most $2$. Modulus $2^e$, $e\ge3$:
+$(\mathbb Z/2^e\mathbb Z)^\times\cong C_2\times C_{2^{e-2}}$, so the kernel has
+order $\gcd(q,2)\gcd(q,2^{e-2})\le8$; the $2$-part of $q\le6$ is at most
+$4$. Multiply by the Chinese remainder theorem. As
+$\omega(M)\ll\log M/\log\log M$ for $M\ge3$,
+\[
+ 8^{\omega(M)}=\exp\bigl(O(\log M/\log\log M)\bigr)=X^{O(1/\log\log X)}
+ \qquad(M\le X^{O(1)}).
+\]
+The form $C^{\omega(M)}\ll_{C,\delta}M^{\delta}$, for fixed $C\ge1$ and $\delta>0$, alone gives no rate. For
+$M\le2$ there is one class. No bound $B^{\omega(M)}$ with $B<8$ holds. For
+$q=4$, $e\ge4$, the group $C_2\times C_{2^{e-2}}$ has
+$\gcd(4,2)\gcd(4,2^{e-2})=8$ fourth roots of unity. And $q=4$ occurs in
+\eqref{eq:q}. Local kernel size $8$ occurs only for $2^e$, $e\ge4$, $q=4$. So
+for $\omega(M)\ge2$ the product of local kernel sizes is at most
+$8\cdot6^{\omega(M)-1}<8^{\omega(M)}$.
+\end{proof}
+
+\begin{lemma}\label{lem:divisor}
+Write $\operatorname{div}(N)=\#\{m\in\N:m\mid N\}$ for $N\in\N$. For
+$r\ge1$ and positive integers $e_1,\dots,e_r$,
+\[
+ \#\{(x_1,\dots,x_r)\in\N^r:x_1^{e_1}\cdots x_r^{e_r}=N\}
+ \le \operatorname{div}(N)^{r-1}\ll_{r,\delta}N^{\delta}\qquad(\delta>0),
+\]
+uniformly in $e_1,\dots,e_r$. For $N\ge3$ the maximal-order bound gives the
+rate
+\[
+ \operatorname{div}(N)^{r-1}=\exp\!\bigl(O_r(\log N/\log\log N)\bigr),
+\]
+so for $N\le X^{O_d(1)}$ and $r\le d$ the count is $X^{O_d(1/\log\log X)}$.
+\end{lemma}
+
+\begin{proof}
+Each $x_i$ divides $N$. The equation determines $x_r$ from
+$x_1,\dots,x_{r-1}$, for any $e_i$. Apply the divisor bound and, for the rate,
+the maximal order of $\operatorname{div}(N)$.
+\end{proof}
+
+Thus an unfactored product of roots determines those roots up to $X^{o(1)}$.
+
+\section{The cut}\label{sec:cut}
+
+Fix a box. Let $(y,z)$ be the other two sides in alphabetical order:
+$(b,c)$, $(a,c)$, $(a,b)$ for $\sigma=a,b,c$. Write
+$[6]=\{1,2,3,4,5,6\}$. Choose a nonempty
+\begin{equation}\label{eq:T}
+ \begin{gathered}
+  T\subseteq\{1,2,3,4,5,6,\mathrm{tail}\},\\
+  \kappa_T=\sum_{t\in T\cap[6]}\sigma_t+\mathbf 1_{\mathrm{tail}\in T}\tau_\sigma,
+  \qquad
+  \Omega_T=\sum_{t\in T\cap[6]}t\,\sigma_t+\mathbf 1_{\mathrm{tail}\in T}v_\sigma .
+ \end{gathered}
+\end{equation}
+Here $\kappa_T$ is the selected root mass for this section. The symbols
+$u,v,M,\xi$ below are local to the cut and are not the corresponding symbols
+in Sections~\ref{sec:pow3} and~\ref{sec:moment}; $v$ is also distinct from
+the tail coordinate $v_\sigma$.
+Choose free sets $R_y,R_z\subseteq[6]$, not both empty, and put
+\begin{equation}\label{eq:q}
+ q=\gcd(\gcd R_y,\gcd R_z),
+ \qquad
+ F=\sum_{i\in R_y}i\,y_i+\sum_{j\in R_z}j\,z_j,
+\end{equation}
+with $\gcd\emptyset=0$. For such a choice
+$(\sigma,T,R_y,R_z)$, the quantities in \eqref{eq:T}--\eqref{eq:q}
+are fixed by the box and the index sets.
+As $R_y\cup R_z\ne\emptyset$, $1\le q\le6$ and $q$ divides every element of
+$R_y\cup R_z$. By the choice of $d$ in Section~\ref{sec:fold},
+$d=6\lceil(4/\varepsilon_0)^2\rceil\ge294$,
+so the tail notation applies. Write $\pos{t}=\max\{t,0\}$.
+
+\begin{proposition}\label{prop:cut}
+Let a box satisfy the constraints after \eqref{eq:reduction}, with
+$\mathcal B_d\ge1$. Then
+\begin{equation}\label{eq:cut}
+ D\le\Bigl(y-\sum_{i\in R_y}y_i\Bigr)+\Bigl(z-\sum_{j\in R_z}z_j\Bigr)
+  +\kappa_T+\pos{\frac Fq-\Omega_T}+o_{\varepsilon_0,d}(1),
+\end{equation}
+uniformly over the finitely many choices of $(\sigma,T,R_y,R_z)$.
+\end{proposition}
+
+For later use write
+\[
+  \mathsf A_{\rm cut}=\Bigl(y-\sum_{i\in R_y}y_i\Bigr)+\Bigl(z-\sum_{j\in R_z}z_j\Bigr)+\kappa_T,
+  \qquad \mathsf B_{\rm cut}=F/q-\Omega_T.
+\]
+The limiting form of \eqref{eq:cut} is
+$D\le\mathsf A_{\rm cut}+\max(0,\mathsf B_{\rm cut})$.
+
+\begin{proof}
+\emph{Sizes.} The box fixes $n_{a,0}=a_0$, $n_{b,0}=b_0$ and $n_{c,0}=c_0$.
+Write $n_{\sigma,0},n_{y,0},n_{z,0}$ for these coefficients and
+$S_{\sigma,i},S_{y,i},S_{z,i}$ for the dyadic root sizes of the $\sigma,y,z$ sides.
+Besides \eqref{eq:box}, the proof uses
+the dyadic ranges and $\prod_iA_i^i$, $\prod_iB_i^i$, $\prod_iC_i^i\le X$. So all
+products and cofactors are at most $X^{O_d(1)}$, and
+Lemmas~\ref{lem:qroot} and~\ref{lem:divisor} cost $X^{o(1)}$. The
+coefficients enter no size estimate.
+
+\emph{Enumeration.} Write $\mathfrak m_i,\mathfrak y_i,\mathfrak z_i$ for the
+roots of the $\sigma$-, $y$- and $z$-sides, so
+$\mathfrak m_i\sim S_{\sigma,i}$, $\mathfrak y_i\sim S_{y,i}$,
+$\mathfrak z_i\sim S_{z,i}$. Enumerate: the roots of
+$y$ outside $R_y$; of $z$ outside $R_z$; the selected roots of $\sigma$. Tails
+go through Lemma~\ref{lem:tail}. The $y$- and $z$-tails are never in
+$R_y,R_z\subseteq[6]$, so they are enumerated too. The cost is
+\begin{equation}\label{eq:enum}
+ X^{(y-\sum_{i\in R_y}y_i)+(z-\sum_{j\in R_z}z_j)+\kappa_T+o_{\varepsilon_0,d}(1)} .
+\end{equation}
+
+\emph{Modulus.} The tail roots of $\sigma$ are $\mathfrak m_j$, $j\ge7$. Put
+\begin{equation}\label{eq:M}
+  M=\prod_{t\in T\cap[6]}\mathfrak m_t^{\,t}\,
+  M_{\mathrm{tail}}^{\mathbf 1_{\mathrm{tail}\in T}},
+ \qquad M_{\mathrm{tail}}=\prod_{7\le j\le d}\mathfrak m_j^{\,j}.
+\end{equation}
+Then $M$ divides the $\sigma$-side value. Also
+$\mathfrak m_t\ge S_{\sigma,t}=X^{\sigma_t}$
+(left-closed intervals), and Lemma~\ref{lem:tail} bounds the tail. So
+\begin{equation}\label{eq:Msize}
+ M\ge X^{\Omega_T} .
+\end{equation}
+Put
+\begin{equation}\label{eq:uv}
+ u=\prod_{i\in R_y}\mathfrak y_i^{\,i/q},
+ \qquad
+ v=\prod_{j\in R_z}\mathfrak z_j^{\,j/q},
+\end{equation}
+an empty product being $1$; the exponents are integers by \eqref{eq:q}.
+
+\emph{Congruence.} By Lemma~\ref{lem:coprime}, every factor of the
+$y$- and $z$-sides is a unit modulo $M$. This covers the coefficients, the
+enumerated roots, $u$ and $v$. The equation of
+\eqref{eq:box} modulo $M$ gives
+\begin{equation}\label{eq:congr}
+ (uv^{-1})^{q}\equiv K\pmod M
+\end{equation}
+with
+\begin{equation}\label{eq:Ksign}
+ K\equiv\epsilon_{\rm cut} E_zE_y^{-1}\pmod M,\qquad
+ \epsilon_{\rm cut}=\begin{cases}-1,&\sigma=c,\\+1,&\sigma\ne c,\end{cases}
+\end{equation}
+where
+\[
+\begin{aligned}
+ E_y&=n_{y,0}\prod_{i\in[6]\setminus R_y}\mathfrak y_i^{\,i}
+ \prod_{7\le j\le d}\mathfrak y_j^{\,j},\\
+ E_z&=n_{z,0}\prod_{j\in[6]\setminus R_z}\mathfrak z_j^{\,j}
+ \prod_{7\le j\le d}\mathfrak z_j^{\,j}.
+\end{aligned}
+\]
+So $K$ is a unit fixed by the enumerated data.
+
+\emph{Count.} By Lemma~\ref{lem:qroot}, $\xi=uv^{-1}$ lies in one of
+$X^{o(1)}$ classes. By Lemma~\ref{lem:coprime}, $\gcd(u,v)=1$. Also
+\[
+ u\le2^{\sum_{i\in R_y}i/q}\prod_{i\in R_y}S_{y,i}^{\,i/q}=:U_{\rm cut},
+ \qquad
+ v\le2^{\sum_{j\in R_z}j/q}\prod_{j\in R_z}S_{z,j}^{\,j/q}=:V_{\rm cut},
+\]
+with $U_{\rm cut},V_{\rm cut}\ge1$; the powers of $2$ cost $O_d(1/\log X)$, as
+$\sum_{r\le6}r=21$. Hence
+\[
+ U_{\rm cut}=X^{\sum_{i\in R_y}i\,y_i/q+O_d(1/\log X)},
+ \qquad
+ V_{\rm cut}=X^{\sum_{j\in R_z}j\,z_j/q+O_d(1/\log X)},
+\]
+so $U_{\rm cut}V_{\rm cut}=X^{F/q+O_d(1/\log X)}$.
+Lemma~\ref{lem:farey} and \eqref{eq:Msize} bound the pairs $(u,v)$ in one
+class by
+\begin{equation}\label{eq:pairs}
+ 1+\frac{2U_{\rm cut}V_{\rm cut}}{M}\ll_dX^{\pos{F/q-\Omega_T}+O_d(1/\log X)} .
+\end{equation}
+\emph{Recovery.} Lemma~\ref{lem:divisor} recovers the free roots from $u,v$ up
+to $X^{o(1)}$. Then the $y$- and $z$-side values are known, and the equation fixes
+the $\sigma$-side value. Divide by $n_{\sigma,0}$ and the selected roots:
+\[
+ Q_\sigma=\prod_{i\in[6]\setminus T}\mathfrak m_i^{\,i}\,
+ \left(\prod_{7\le j\le d}\mathfrak m_j^{\,j}\right)^{1-\mathbf 1_{\mathrm{tail}\in T}}.
+\]
+Lemma~\ref{lem:divisor} recovers these unselected roots up to $X^{o(1)}$.
+Multiplying \eqref{eq:enum} by $X^{o(1)}$ and \eqref{eq:pairs} gives
+\eqref{eq:cut}.
+\end{proof}
+
+If one free set is empty, $U_{\rm cut}=1$ or $V_{\rm cut}=1$, and Lemma~\ref{lem:farey} still
+applies. The exponent $q$ depends only on the index sets $R_y,R_z$, not on
+which roots equal $1$. Counting coefficients is charged to \eqref{eq:reduction}:
+inside a box $a_0,b_0,c_0$ are fixed.
+
+Count: $64$ subsets of $[6]$ per counted side, $127$ sets $T$, three sides
+$\sigma$. Without the pair of empty free sets this is
+$3(64^2-1)127=1\,560\,195$, as in \eqref{eq:cutcount}.
+
+
+\section{Archimedean rows}\label{sec:arch}
+
+Throughout Sections~\ref{sec:arch}--\ref{sec:spacing}, assume
+$0<\mu\le1$. Take $\varepsilon_0\le4/7$ and $d=d(\varepsilon_0)$ as fixed
+in Section~\ref{sec:fold}. Fix a box admissible in \eqref{eq:reduction} at
+scale $Y$, with $\lambda$ replaced by $\mu$ and $\mathcal B_d\ge1$. Of the constraints \eqref{eq:boxconstraints} only the side-value bounds are
+used below, with the coefficient bound $1\le n_{s,0}\le Y^{\varepsilon_0}$. We
+also use the equation, the gcd condition and the windows of \eqref{eq:box}. For the
+finite estimates take $Y\ge Y_0$, the threshold of Lemma~\ref{lem:endpoint};
+it depends only on $\varepsilon_0,d$, and $Y_0\ge\exp(\exp(1))$. All coordinates
+$s,\tau_s,v_s,L,p_i$ from Section~\ref{sec:red} are now read at base $Y$.
+The integer side values are denoted by $n_s$; $V_s$ is the exponent
+coordinate of the root product, not of $n_s$. The root mass of side $s$ is
+$s=\sum_{i\le d}s_i$.
+Put $s_i=\log_YS_{s,i}$ and
+$D=\log_Y\mathcal B_d$.
+\begin{equation}\label{eq:V}
+ V_s=\log_Y\prod_{j\le d}S_{s,j}^{\,j}=\sum_{i\le6}i\,s_i+v_s\qquad(s=a,b,c).
+\end{equation}
+For a tuple of the box write
+$n_s=n_{s,0}\prod_{j\le d}\mathfrak s_j^{\,j}$ for its side values, so
+$n_a+n_b=n_c$. Here $n_{s,0}$ is the coefficient $a_0,b_0$ or $c_0$ on
+side $s$. Since $S_j\le\mathfrak s_j<2S_j$ and $1\le n_{s,0}\le Y^{\varepsilon_0}$,
+\begin{equation}\label{eq:nsize}
+ Y^{V_s}\le n_s<2^{h_d}\,n_{s,0}\,Y^{V_s}\le2^{h_d}\,Y^{V_s+\varepsilon_0}.
+\end{equation}
+The side-value constraints of \eqref{eq:boxconstraints} read
+\begin{equation}\label{eq:Vbox}
+ V_a\le1,\qquad V_b\le1,\qquad 1-\frac{\varepsilon_0}2\le V_c\le1 .
+\end{equation}
+
+\begin{lemma}\label{lem:archorder}
+\[
+ V_a\le V_c+\frac{\varepsilon_0}2,\qquad V_b\le V_c+\frac{\varepsilon_0}2 .
+\]
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:Vbox}, $V_a\le1\le V_c+\varepsilon_0/2$. Likewise for $V_b$.
+\end{proof}
+
+\begin{lemma}\label{lem:archcover}
+At least one of
+\[
+ V_c\le V_a+\frac{3\varepsilon_0}2+\log_Y2^{1+h_d},
+ \qquad
+ V_c\le V_b+\frac{3\varepsilon_0}2+\log_Y2^{1+h_d}
+\]
+holds.
+\end{lemma}
+
+\begin{proof}
+As $\mathcal B_d\ge1$, choose one tuple of the box. Then $n_a,n_b\ge1$ and
+$n_a+n_b=n_c$, so $\max(n_a,n_b)\ge n_c/2$. Suppose $n_a\ge n_c/2$. By
+\eqref{eq:Vbox} and \eqref{eq:nsize},
+\[
+ Y^{1-\varepsilon_0/2}\le Y^{V_c}\le n_c\le2n_a
+ <2^{1+h_d}\,Y^{V_a+\varepsilon_0}.
+\]
+Take $\log_Y$:
+\[
+ 1\le V_a+\frac{3\varepsilon_0}2+\log_Y2^{1+h_d}.
+\]
+With $V_c\le1$ this is the first inequality. If $n_b\ge n_c/2$, the same
+argument gives the second.
+\end{proof}
+
+The choice in Lemma~\ref{lem:archcover} uses one tuple. The conclusion
+concerns the dyadic endpoints, so it holds for the whole box.
+
+\begin{corollary}\label{cor:arch}
+Put $\rho_{\mathrm{arch}}=3\varepsilon_0/2+\log_Y2^{1+h_d}$. Every nonempty
+admissible box satisfies
+\begin{equation}\label{eq:ARCHorder}
+ V_a\le V_c+\rho_{\mathrm{arch}},\qquad V_b\le V_c+\rho_{\mathrm{arch}},
+\end{equation}
+and at least one arm of
+\begin{equation}\label{eq:ARCH}
+ V_c\le V_a+\rho_{\mathrm{arch}}\quad\text{or}\quad V_c\le V_b+\rho_{\mathrm{arch}} .
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Lemmas~\ref{lem:archorder} and~\ref{lem:archcover}, and
+$\varepsilon_0/2\le\rho_{\mathrm{arch}}$.
+\end{proof}
+
+In the limit $\rho_{\mathrm{arch}}\to0$, the first arm of \eqref{eq:ARCH} with
+\eqref{eq:ARCHorder} gives $V_a=V_c\ge V_b$, the second $V_b=V_c\ge V_a$.
+A cover node of the certificate carries both arms.
+
+\section{The cubic row}\label{sec:hb3}
+
+We use the following theorem of Heath-Brown \cite[Theorem~1.3]{HBcube}, with
+its counting function $\rho$ renamed $\mathcal R$. In this theorem $B$ is a
+height and $a,b,c$ are coefficients.
+
+\begin{theoremA}[{\cite[Theorem~1.3]{HBcube}}]\label{thm:HBcubic}
+Let $\mathcal R(B;a,b,c)$ be the number of integer solutions $x,y,z$ to the equation
+\[
+ ax^3+by^3+cz^3=0
+\]
+with $\gcd(x,y,z)=1$ and $\max(|x|,|y|,|z|)\le B$. Then
+\[\mathcal R(B;a,b,c)\ll_\varepsilon B^\varepsilon\]
+for any $\varepsilon>0$, uniformly for all non-zero integer $a,b,c$.
+\end{theoremA}
+
+The implied constant depends on $\varepsilon$ alone. The coefficients need
+not be coprime or positive.
+
+\begin{proposition}\label{prop:HB3}
+For every $\varepsilon_1>0$,
+\begin{equation}\label{eq:HB3}
+ D\le\sum_{s=a,b,c}(s-s_3)+\varepsilon_1+O_{\varepsilon_1}\Bigl(\frac1{\log Y}\Bigr)
+ =L-p_3+\varepsilon_1+O_{\varepsilon_1}\Bigl(\frac1{\log Y}\Bigr).
+\end{equation}
+The implied constant depends only on $\varepsilon_1$.
+\end{proposition}
+
+\begin{proof}
+\emph{Enumeration.} Send a tuple of the box to its roots
+$(\mathfrak a_i,\mathfrak b_i,\mathfrak c_i)_{i\ne3}$ and to
+$(x_a,x_b,x_c)=(\mathfrak a_3,\mathfrak b_3,\mathfrak c_3)$. This map is injective.
+As $\#\{\mathfrak s:\mathfrak s\sim S\}=S$, the first component takes at most
+\[
+ \prod_{s=a,b,c}\ \prod_{i\le d,\ i\ne3}S_{s,i}=Y^{\sum_s(s-s_3)}
+\]
+values. The tail roots $i\ge7$ are enumerated one by one, as in
+Lemma~\ref{lem:tail}.
+
+\emph{Equation.} Fix the first component. Put
+\[
+ \alpha=a_0\prod_{i\ne3}\mathfrak a_i^{\,i},\qquad
+ \beta=b_0\prod_{i\ne3}\mathfrak b_i^{\,i},\qquad
+ \gamma=c_0\prod_{i\ne3}\mathfrak c_i^{\,i}.
+\]
+These are positive integers. The equation of \eqref{eq:box} becomes
+\[
+\alpha x_a^3+\beta x_b^3+(-\gamma)x_c^3=0 .
+\]
+\emph{Primitivity.} $x_a\mid n_a$, $x_b\mid n_b$, $x_c\mid n_c$, and the side values
+are pairwise coprime by Lemma~\ref{lem:coprime}. Hence
+$\gcd(x_a,x_b,x_c)=1$.
+
+\emph{Height.} $1\le x_a<2A_3\le2\bigl(\prod_jA_j^{\,j}\bigr)^{1/3}\le2Y$ by
+\eqref{eq:Vbox}. Likewise $x_b,x_c<2Y$.
+
+\emph{Count.} By Theorem~\ref{thm:HBcubic} with $B=2Y$ and coefficients
+$(\alpha,\beta,-\gamma)$, the number of $(x_a,x_b,x_c)$ is at most
+$\mathcal R(2Y;\alpha,\beta,-\gamma)\le C(\varepsilon_1)(2Y)^{\varepsilon_1}$,
+uniformly in $\alpha,\beta,\gamma$. Hence
+\[
+ \mathcal B_d\le C(\varepsilon_1)\,2^{\varepsilon_1}\,Y^{\sum_s(s-s_3)+\varepsilon_1}.
+\]
+Take $\log_Y$.
+\end{proof}
+
+The bound is uniform in the coefficients $a_0,b_0,c_0$ and in the enumerated
+roots. A constant depending on $\alpha,\beta,\gamma$ would not give a row.
+
+\section{Spacing rows}\label{sec:spacing}
+
+Choose $e\in\{a,b,c\}$, either ordering $(y,z)$ of the other two sides, and
+$2\le\ell\le6$. Put
+\begin{equation}\label{eq:SPAB}
+ \mathsf A_{\rm sp}=y+(z-z_\ell),\qquad
+ \mathsf B_{\rm sp}=V_e-V_z+z_\ell .
+\end{equation}
+Here $y$ and $z$ also denote the root masses of these sides, as in
+\eqref{eq:coord}.
+
+For side $e$, write $n_{e,0}$ for its coefficient and $\mathfrak e_j$ for
+its roots (Section~\ref{sec:arch}). Choose $K_d$ so that
+\[
+ \operatorname{div}(N)^{d-1}\le Y^{K_d/\log\log Y}
+ \quad\text{if }Y\ge\exp(\exp(1)),\quad N\le2^{h_d}Y;
+\]
+such a constant exists by the divisor bound.
+
+\begin{proposition}\label{prop:spacing}
+\begin{equation}\label{eq:SP}
+ D\le\mathsf A_{\rm sp}+\pos{\mathsf B_{\rm sp}}+\varepsilon_0
+ +O_d\Bigl(\frac1{\log\log Y}\Bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+\emph{Signs.} From $n_a+n_b=n_c$,
+\[
+ n_e=\varsigma_yn_y+\varsigma_zn_z,\qquad
+ (\varsigma_y,\varsigma_z)=
+ \begin{cases}
+  (1,1),&e=c,\\
+  (-1,1),&e\ne c,\ z=c,\\
+  (1,-1),&e\ne c,\ y=c.
+ \end{cases}
+ \]
+This ordering need not be the alphabetical order used in Section~\ref{sec:cut}.
+
+\emph{Enumeration.} Enumerate all roots $\mathfrak y_j$ $(j\le d)$ of $y$ and
+all roots $\mathfrak z_j$ $(j\le d,\ j\ne\ell)$ of $z$. As
+$\#\{\mathfrak s:\mathfrak s\sim S\}=S$, there are
+\begin{equation}\label{eq:SPenum}
+ \prod_{j\le d}S_{y,j}\prod_{j\ne\ell}S_{z,j}=Y^{y+z-z_\ell}
+\end{equation}
+choices. Fix one. Then $n_y$ is fixed, and
+\[
+ n_z=\Pi_z\,x^\ell,\qquad \Pi_z=n_{z,0}\prod_{j\ne\ell}\mathfrak z_j^{\,j},\qquad
+ x=\mathfrak z_\ell\in[S_{z,\ell},2S_{z,\ell}).
+\]
+
+\emph{Interval.} By \eqref{eq:nsize}, $n_e$ lies in an interval $I_e$ of length
+$|I_e|<2^{h_d}Y^{V_e+\varepsilon_0}$. Then
+\[
+ x^\ell=\varsigma_z\,\frac{n_e-\varsigma_yn_y}{\Pi_z}\in J,
+ \qquad J=\varsigma_z\,\frac{I_e-\varsigma_yn_y}{\Pi_z},
+\]
+an interval of length $|I_e|/\Pi_z$. As
+$\Pi_z\ge\prod_{j\ne\ell}S_{z,j}^{\,j}=Y^{V_z-\ell z_\ell}$,
+\[
+ |J|<2^{h_d}\,Y^{V_e-V_z+\ell z_\ell+\varepsilon_0}.
+\]
+
+\emph{Spacing.} Let $\mathcal X$ be the integers
+$x\in[S_{z,\ell},2S_{z,\ell})$ for which $x^\ell\in J$, and put
+$m=|\mathcal X|$. If $m=0$, this enumeration choice contributes nothing.
+Otherwise write $x_1<\dots<x_m$ for $\mathcal X$. For $i\ge2$,
+\[
+ x_i^\ell-x_{i-1}^\ell\ge \ell\,x_{i-1}^{\ell-1}\ge S_{z,\ell}^{\ell-1}=Y^{(\ell-1)z_\ell}.
+\]
+So $(m-1)Y^{(\ell-1)z_\ell}\le x_m^\ell-x_1^\ell<|J|$, and
+\begin{equation}\label{eq:SPcount}
+ m<1+2^{h_d}Y^{\mathsf B_{\rm sp}+\varepsilon_0}
+ \le2^{1+h_d}\,Y^{\pos{\mathsf B_{\rm sp}}+\varepsilon_0}.
+\end{equation}
+This includes $S_{z,\ell}=1$, where $x=1$ and $m\le1$.
+
+\emph{Recovery.} Given $x$, $n_z$ and then $n_e=\varsigma_yn_y+\varsigma_zn_z$ are
+fixed. Put $N=n_e/n_{e,0}=\prod_{j\le d}\mathfrak e_j^{\,j}<2^{h_d}Y$. By
+Lemma~\ref{lem:divisor} the roots of $e$ take at most
+$Y^{K_d/\log\log Y}$ values.
+
+\emph{Total.} Multiply \eqref{eq:SPenum}, \eqref{eq:SPcount} and the recovery
+factor:
+\[
+ \mathcal B_d\le2^{1+h_d}\,
+ Y^{\mathsf A_{\rm sp}+\pos{\mathsf B_{\rm sp}}+\varepsilon_0+O_d(1/\log\log Y)} .
+\]
+Take $\log_Y$; $2^{1+h_d}$ costs $O_d(1/\log Y)$.
+\end{proof}
+
+\begin{corollary}\label{cor:spacing}
+Put
+\[
+ \rho_{\mathrm{sp}}=\varepsilon_0+\frac{K_d}{\log\log Y}+\log_Y2^{1+h_d}.
+\]
+This is the error in \eqref{eq:SP}. For each of the
+$3\cdot2\cdot5=30$ choices of $(e,y,z,\ell)$, a
+nonempty admissible box satisfies at least one arm of
+\begin{equation}\label{eq:SPor}
+ D\le\mathsf A_{\rm sp}+\rho_{\mathrm{sp}}\quad\text{or}\quad
+ D\le\mathsf A_{\rm sp}+\mathsf B_{\rm sp}+\rho_{\mathrm{sp}} .
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+$\mathsf A_{\rm sp}+\pos{\mathsf B_{\rm sp}}
+=\max(\mathsf A_{\rm sp},\mathsf A_{\rm sp}+\mathsf B_{\rm sp})$.
+\end{proof}
+
+All these errors are $\mu$-free. With $\varepsilon_1=\varepsilon_0$, each is at
+most $2\varepsilon_0$ for $Y\ge Y_0$. Table~\ref{tab:rho}
+lists them with the others.
+
+\section{Cubic-sieve rows}\label{sec:pow3}
+
+\subsection{Setting}\label{sec:pow3:setting}
+
+Fix $\varepsilon_0\le4/7$ and $d=d(\varepsilon_0)$ as in
+Section~\ref{sec:fold}. Assume
+$Y\ge Y_0$, the threshold of Lemma~\ref{lem:endpoint}. Fix parameters for a nonempty
+box counted by $\mathcal B_d$ in \eqref{eq:reduction} at scale $Y$, and put
+$D=\log_Y\mathcal B_d$. For each side $s\in\{a,b,c\}$, write $n_{s,0}$ for its
+ coefficient and $\mathfrak r_{s,j}\sim S_{s,j}$ $(1\le j\le d)$ for its roots.
+The symbols $M,x,u,v,U,V,\xi$ below are local to this section. Its $M$
+is the canonical coefficient of \eqref{eq:pw:Mx}. The
+modulus $Q$ is local to each analytic-input lemma and to Steps~5--7 of
+Proposition~\ref{prop:pw:master}. Here
+$v_s$ is the tail coordinate, while $v$ is a represented-side label. The
+integer $V$ (as in $V_{\mathfrak o}$, $V(\mathbf u)$, $V_\iota$) is distinct
+from the coordinate $V_s$.
+The side values
+\[
+ n_s=n_{s,0}\prod_{j\le d}\mathfrak r_{s,j}^{\,j}
+\]
+ satisfy $n_a+n_b=n_c$ and are pairwise coprime by Lemma~\ref{lem:coprime}. The
+coordinates are
+\begin{equation}\label{eq:pw:coord}
+ \begin{gathered}
+ s_{s,j}=\log_YS_{s,j},\qquad
+ r_s=\sum_{j\le d}s_{s,j},\qquad
+ t_s=\sum_{7\le j\le d}s_{s,j},\\
+ v_s=\sum_{7\le j\le d}j\,s_{s,j},\qquad
+ V_s=\sum_{j\le6}j\,s_{s,j}+v_s .
+ \end{gathered}
+\end{equation}
+In the notation of Section~\ref{sec:red}, $r_s=s$ and $t_s=\tau_s$; the
+coordinate $s_{s,j}$ is the earlier $s_j$. By
+\eqref{eq:boxconstraints}, $V_s\le1$. Hence $n_s\le n_{s,0}\prod_j(2S_{s,j})^j\le
+2^{d^2}Y^{1+\varepsilon_0}\le Y^2$ for large $Y$.
+
+Fix a \emph{powered side} $\sigma$. Its two \emph{represented sides} $u,v$ and
+the sign $\epsilon_{\rm pw}$ are
+\begin{equation}\label{eq:pw:orient}
+ (\sigma;u,v;\epsilon_{\rm pw})\in\{(a;b,c;-1),\ (b;a,c;-1),\ (c;a,b;+1)\},
+ \qquad n_v+\epsilon_{\rm pw}\,n_u=n_\sigma>0 .
+\end{equation}
+So $\sigma\in\{a,b\}$ uses the positive difference $n_c-n_u$. The side
+$\sigma=c$ uses the sum $n_a+n_b$. Put
+\begin{equation}\label{eq:pw:Mx}
+ M=n_{\sigma,0}\,\mathfrak r_{\sigma,1}\mathfrak r_{\sigma,2}^{\,2}
+   \mathfrak r_{\sigma,4}\mathfrak r_{\sigma,5}^{\,2}
+   \prod_{7\le j\le d}\mathfrak r_{\sigma,j}^{\,j},
+ \qquad
+ x=\mathfrak r_{\sigma,3}\mathfrak r_{\sigma,4}\mathfrak r_{\sigma,5}
+   \mathfrak r_{\sigma,6}^{\,2}.
+\end{equation}
+Then $n_\sigma=Mx^3$. We call $M$ the canonical coefficient. Its labels are
+the tuple
+\[
+ (\mathfrak r_{\sigma,j})_{j\in\{1,2,4,5,7,\dots,d\}}.
+\]
+Put
+\begin{equation}\label{eq:pw:CWR}
+ \mathcal C_\sigma=r_\sigma-s_{\sigma,3}-s_{\sigma,6},\qquad
+ W_\sigma=v_\sigma+s_{\sigma,1}+2s_{\sigma,2}+s_{\sigma,4}+2s_{\sigma,5},\qquad
+ R_\sigma=r_u+r_v .
+\end{equation}
+Here $R_\sigma$ is the combined root mass of the represented sides.
+Put $\zeta_\sigma=\log_Y n_{\sigma,0}$. The coefficient range in
+\eqref{eq:reduction} gives $0\le\zeta_\sigma\le\varepsilon_0$. Since each
+labelled root lies in $[S_{\sigma,j},2S_{\sigma,j})$, the finite-box modulus
+satisfies
+\begin{equation}\label{eq:pw:Mscale}
+ W_\sigma+\zeta_\sigma\le\log_Y M
+ <W_\sigma+\zeta_\sigma+
+ \frac{\bigl(6+\sum_{7\le j\le d}j\bigr)\log2}{\log Y}
+ =W_\sigma+\zeta_\sigma+O_d\!\left(\frac1{\log Y}\right).
+\end{equation}
+
+\begin{lemma}\label{lem:pw:ledger}
+\begin{enumerate}
+\item[(i)] There are at most $Y^{\mathcal C_\sigma}$ label tuples.
+\item[(ii)] Every label tuple gives $M\ge Y^{W_\sigma}$.
+\item[(iii)] $W_\sigma-\mathcal C_\sigma=s_{\sigma,2}+s_{\sigma,5}+(v_\sigma-t_\sigma)\ge0$.
+\item[(iv)] A given integer $M\le Y^2$ arises from $Y^{o_d(1)}$ label tuples.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) $\#\{\mathfrak r:\mathfrak r\sim S\}=S$, and
+$\prod_{j\ne3,6}S_{\sigma,j}=Y^{r_\sigma-s_{\sigma,3}-s_{\sigma,6}}$.
+(ii) $n_{\sigma,0}\ge1$ and $\mathfrak r_{\sigma,j}\ge S_{\sigma,j}$, so
+$M\ge Y^{W_\sigma}$. Also
+\[
+ M\le n_{\sigma,0}\prod_{j\le d}\mathfrak r_{\sigma,j}^{\,j}
+ <2^{h_d}Y^{V_\sigma+\varepsilon_0}\le Y^2
+\]
+for large $Y$, since $V_\sigma\le1$ and $\varepsilon_0<1$.
+(iii) Expand \eqref{eq:pw:CWR}; $v_\sigma\ge7t_\sigma$ by
+\eqref{eq:pw:coord}. (iv) $n_{\sigma,0}$ is fixed; apply
+Lemma~\ref{lem:divisor} to $M/n_{\sigma,0}$ with $r=d-2$.
+\end{proof}
+
+All $o(1)$ below tend to $0$ as $Y\to\infty$, for fixed $\varepsilon_0$, $d$
+and the parameter $\theta$ of the sieve. They are uniform in the box.
+
+\subsection{Analytic inputs}\label{sec:pow3:analytic}
+
+Fix once and for all $w\in C^\infty(\mathbb R)$ with $0\le w\le1$,
+$\operatorname{supp}w\subset[1/2,4]$ and $w=1$ on $[1,2]$. For a Dirichlet
+character $\chi$, extended by $0$ on nonunits, and $N\ge1$ put
+\begin{equation}\label{eq:pw:F}
+ F_N(\chi)=\sum_{n\ge1}\chi(n)\,w(n/N).
+\end{equation}
+
+We quote the all-character estimate of \cite[Lemma~4]{GMRR}. In this section
+$Q$ denotes the modulus of an analytic input, or the modulus
+$M\mathfrak p_1\mathfrak p_2$ of Steps~5--7 of
+Proposition~\ref{prop:pw:master}. It is local to that input or step. It differs
+from the cut cofactor $Q_\sigma$ and the geometry forms $Q_j$.
+The $L(s,\chi)$ below is the Dirichlet $L$-function, not the root mass $L$;
+$s$ in this subsection is a complex variable.
+
+\begin{lemma}[{\cite[Lemma~4]{GMRR}, ``Hybrid fourth moment estimate''}]\label{lem:pw:gmrr}
+Let $H\ge2$ and $q_0\ge2$. Then
+\[
+ \sum_\chi\int_{|t|\le H}\bigl|L(\tfrac12+it,\chi)\bigr|^4dt\ll H\varphi(q_0)\log(Hq_0)^4,
+\]
+ where the sum is over all characters modulo $q_0$.
+\end{lemma}
+
+The all-character estimate in Lemma~\ref{lem:pw:gmrr} is the only input needed
+for the next lemma. Since $\varphi(Q)\le Q$, it implies the weaker form used below.
+
+\begin{lemma}\label{lem:pw:conductor}
+For $H\ge2$ and $Q\ge2$,
+\[
+ \sum_{\chi\bmod Q}\int_{|t|\le H}
+ |L(\tfrac12+it,\chi)|^4\,dt
+ \ll HQ\log(HQ)^4.
+\]
+\end{lemma}
+
+\begin{proof}
+Apply Lemma~\ref{lem:pw:gmrr} with $q_0=Q\ge2$ and use
+$\varphi(Q)\le Q$. In our applications $Q\le Y^{O_{d,\theta}(1)}$. The factor
+$Q/\varphi(Q)$ lost here is paid in Step~7 of
+Proposition~\ref{prop:pw:master}.
+\end{proof}
+
+\begin{lemma}\label{lem:pw:S4}
+For all integers $Q\ge2$ and reals $N\ge1$,
+\begin{equation}\label{eq:pw:S4}
+ \sum_{\substack{\chi\bmod Q\\ \chi\ne\chi_0}}|F_N(\chi)|^4
+ \ll Q\,N^2\log(2Q)^4 .
+\end{equation}
+The implied constant depends only on $w$.
+\end{lemma}
+
+\begin{proof}
+Let $\widetilde w(s)=\int_0^\infty w(y)y^{s-1}dy$. It is entire. Four
+integrations by parts give, for $\tfrac12\le\Re s\le2$,
+\[
+ \widetilde w(s)=\frac{1}{s(s+1)(s+2)(s+3)}\int_0^\infty w^{(4)}(y)\,y^{s+3}dy
+ \ll(1+|s|)^{-4}.
+\]
+By Mellin inversion,
+\[
+ F_N(\chi)=\frac1{2\pi i}\int_{(2)}L(s,\chi)\,\widetilde w(s)\,N^s\,ds .
+\]
+Let $\chi\ne\chi_0$. Its partial sums $A_\chi(y)=\sum_{n\le y}\chi(n)$ satisfy
+$|A_\chi(y)|\le\varphi(Q)$. Partial summation gives
+$L(s,\chi)=s\int_1^\infty A_\chi(y)y^{-s-1}dy$. Thus $L(s,\chi)$ is
+holomorphic in $\Re s>0$, and $|L(s,\chi)|\le2Q(1+|s|)$ for
+$\Re s\ge\frac12$. The
+integrand is therefore $\ll QN^2(1+|s|)^{-3}$ on $\tfrac12\le\Re s\le2$.
+Move the line to $\Re s=\frac12$; there is no pole. With
+$k_w(t)=|\widetilde w(\tfrac12+it)|\ll(1+|t|)^{-4}$,
+\[
+ |F_N(\chi)|\le\frac{N^{1/2}}{2\pi}\int_{\mathbb R}
+ \bigl|L(\tfrac12+it,\chi)\bigr|\,k_w(t)\,dt .
+\]
+Hölder with respect to $k_w(t)\,dt$ gives
+\[
+ \begin{aligned}
+ |F_N(\chi)|^4&\le\frac{N^2}{(2\pi)^4}\Bigl(\int k_w\Bigr)^3
+ \int_{\mathbb R}\bigl|L(\tfrac12+it,\chi)\bigr|^4k_w(t)\,dt\\
+ &\ll N^2\int_{\mathbb R}\bigl|L(\tfrac12+it,\chi)\bigr|^4(1+|t|)^{-4}dt .
+ \end{aligned}
+\]
+Sum over $\chi\ne\chi_0$ and enlarge to all $\chi\bmod Q$. Split
+$|t|\le2$ and $2^{j-1}<|t|\le2^j$ $(j\ge2)$. By
+Lemma~\ref{lem:pw:conductor} with modulus $Q$ and $H=2^j$,
+\[
+ \sum_{\chi\ne\chi_0}|F_N(\chi)|^4
+ \ll N^2\sum_{j\ge1}2^{-4(j-1)}\,2^jQ\log(2^jQ)^4
+ \ll N^2Q\log(2Q)^4\sum_{j\ge1}2^{4-3j}j^4 .
+\]
+The last sum converges.
+\end{proof}
+
+\begin{lemma}\label{lem:pw:G4}
+For $N',N''\ge1$ and a Dirichlet character $\chi$, put
+\[
+ G(\chi)=F_{N'}(\chi)F_{N''}(\chi^2),\qquad
+ Z_0=4^6(N'N''^{\,2})^2.
+\]
+For every integer $Q\ge1$ and $\delta>0$,
+\begin{equation}\label{eq:pw:G4}
+ \sum_{\chi\bmod Q}|G(\chi)|^4\ll_\delta\varphi(Q)\,(N'N'')^2\,Z_0^{\delta}
+ \Bigl(1+\frac {Z_0}Q\Bigr).
+\end{equation}
+The sum includes the principal character.
+\end{lemma}
+
+\begin{proof}
+Complete multiplicativity gives
+\[
+ G(\chi)=\sum_{n\ge1}A(n)\chi(n),\qquad
+ A(n)=\sum_{n_1n_2^2=n}w(n_1/N')\,w(n_2/N'')\ge0 .
+\]
+The coefficients do not depend on $\chi$. Then
+$G(\chi)^2=\sum_mB(m)\chi(m)$ with $B=A*A\ge0$. Now
+$B(m)=0$ unless $m\le(4N'(4N'')^2)^2=Z_0$, and
+\[
+ B(m)\le\#\{(n_1,n_2,n_3,n_4):n_1n_2^2n_3n_4^2=m\}\ll_\delta m^{\delta}
+\]
+by Lemma~\ref{lem:divisor}. Also
+\[
+ \sum_mB(m)=\Bigl(\sum_nA(n)\Bigr)^2
+ =\Bigl(\sum_{n_1}w(n_1/N')\Bigr)^2\Bigl(\sum_{n_2}w(n_2/N'')\Bigr)^2\le(16N'N'')^2 .
+\]
+Orthogonality over all characters modulo $Q$ gives
+\[
+ \sum_{\chi\bmod Q}|G(\chi)|^4=\sum_{\chi\bmod Q}\Bigl|\sum_mB(m)\chi(m)\Bigr|^2
+ =\varphi(Q)\sum_{\substack{m\equiv m'\ (\mathrm{mod}\ Q)\\(mm',Q)=1}}B(m)B(m').
+\]
+For fixed $m$, at most $1+Z_0/Q$ integers $m'\in[1,Z_0]$ satisfy
+$m'\equiv m\pmod Q$. Hence the right side is at most
+\[
+ \varphi(Q)\sum_mB(m)\cdot\max_{m'\le Z_0}B(m')\cdot\Bigl(1+\frac {Z_0}Q\Bigr).
+\]
+Insert the two bounds.
+\end{proof}
+
+\begin{lemma}\label{lem:pw:jacobi}
+Let $\ell$ be prime, $\psi$ a nonprincipal and $\nu$ any character modulo
+$\ell$, and $\epsilon\in\{\pm1\}$. Then
+\[
+ \Bigl|\sum_{t\in(\mathbb Z/\ell)^\times}\nu(t)\,\psi(1+\epsilon t)\Bigr|\le\sqrt\ell .
+\]
+\end{lemma}
+
+\begin{proof}
+If $\nu$ is principal the sum is $\sum_{y\in\mathbb F_\ell}\psi(y)-\psi(1)=-1$.
+Otherwise substitute $y=-\epsilon t$. The sum becomes
+$\nu(-\epsilon)\mathcal J(\nu,\psi)$ with
+$\mathcal J(\nu,\psi)=\sum_{y\in\mathbb F_\ell}\nu(y)\psi(1-y)$, both characters
+nonprincipal. Then $|\mathcal J(\nu,\psi)|=\sqrt\ell$ if $\nu\psi$ is
+nonprincipal and $|\mathcal J(\nu,\psi)|=1$ otherwise \cite[Ch.~8, \S3]{IR}.
+\end{proof}
+
+\begin{lemma}\label{lem:pw:FI}
+Let $M\ge1$, and let $\mathfrak p_1\ne\mathfrak p_2$ be primes not dividing $M$. Put
+$Q=M\mathfrak p_1\mathfrak p_2$. Let $\xi$ be a character modulo
+$\mathfrak p_1\mathfrak p_2$. Assume its components modulo $\mathfrak p_1$ and
+$\mathfrak p_2$ are both nonprincipal. Let $\tilde\xi$ be the character modulo $Q$
+induced by $\xi$, and fix $\epsilon\in\{\pm1\}$. There are coefficients
+$c_\epsilon(\alpha)\in\mathbb C$ for characters $\alpha$ modulo $Q$, with
+\begin{equation}\label{eq:pw:jac}
+ |c_\epsilon(\alpha)|\le\sqrt{\mathfrak p_1\mathfrak p_2},
+\end{equation}
+such that for all integers $U,V$
+\begin{equation}\label{eq:pw:FI}
+ \mathbf 1_{(UV,Q)=1}\,\mathbf 1_{M\mid V+\epsilon U}\;
+ \xi\Bigl(\frac{V+\epsilon U}{M}\Bigr)
+ =\frac{\overline{\xi(M)}}{\varphi(Q)}\sum_{\alpha\bmod Q}
+ c_\epsilon(\alpha)\,\alpha(U)\,(\tilde\xi\bar\alpha)(V).
+\end{equation}
+The left side is read as $0$ when $M\nmid V+\epsilon U$.
+\end{lemma}
+
+\begin{proof}
+If $(UV,Q)>1$, then $\alpha(U)(\tilde\xi\bar\alpha)(V)=0$ for every $\alpha$,
+and both sides vanish. Let $(UV,Q)=1$. By the Chinese remainder theorem each
+$\alpha$ is $\alpha=\eta\nu$ with unique $\eta\bmod M$ and
+$\nu\bmod \mathfrak p_1\mathfrak p_2$; then $\tilde\xi\bar\alpha=\bar\eta\cdot\xi\bar\nu$.
+Define
+\[
+ c_\epsilon(\alpha)=\eta(-\epsilon)\,\hat f(\nu),\qquad
+ \hat f(\nu)=\sum_{y\in(\mathbb Z/\mathfrak p_1\mathfrak p_2)^\times}\bar\nu(y)\,\xi(1+\epsilon y).
+\]
+Orthogonality on the finite group $(\mathbb Z/M)^\times$, for any $M$, gives
+\[
+ \frac1{\varphi(M)}\sum_{\eta\bmod M}\eta(-\epsilon U)\bar\eta(V)
+ =\mathbf 1_{-\epsilon U\equiv V\ (\mathrm{mod}\ M)}=\mathbf 1_{M\mid V+\epsilon U}.
+\]
+Fourier inversion of $f(y)=\xi(1+\epsilon y)$ on $(\mathbb Z/\mathfrak p_1\mathfrak p_2)^\times$, at
+$y=UV^{-1}$, gives
+\[
+ \frac1{\varphi(\mathfrak p_1\mathfrak p_2)}\sum_{\nu\bmod \mathfrak p_1\mathfrak p_2}\hat f(\nu)\,\nu(U)\,(\xi\bar\nu)(V)
+ =\xi(V)\,\xi(1+\epsilon UV^{-1})=\xi(V+\epsilon U).
+\]
+Multiply; $\varphi(Q)=\varphi(M)\varphi(\mathfrak p_1\mathfrak p_2)$. The right side of
+\eqref{eq:pw:FI} becomes
+\[
+ \overline{\xi(M)}\,\mathbf 1_{M\mid V+\epsilon U}\,\xi(V+\epsilon U).
+\]
+If
+$M\mid V+\epsilon U$, then $\xi(V+\epsilon U)=\xi(M)\,\xi((V+\epsilon U)/M)$
+and $|\xi(M)|=1$. This is \eqref{eq:pw:FI}. Write
+$\xi=\xi_{\mathfrak p_1}\xi_{\mathfrak p_2}$ and
+$\nu=\nu_{\mathfrak p_1}\nu_{\mathfrak p_2}$. The Chinese remainder theorem
+factors $\hat f(\nu)$ into two sums of the shape of
+Lemma~\ref{lem:pw:jacobi}, with $\psi=\xi_{\mathfrak p_1}$,
+$\xi_{\mathfrak p_2}$. This gives
+\eqref{eq:pw:jac}.
+\end{proof}
+
+No division by $x$ occurs in \eqref{eq:pw:FI}, and $M$ need not be squarefree,
+odd or prime to $x$. For $\epsilon=+1$ this is the sum identity; for
+$\epsilon=-1$ the difference identity.
+
+\begin{lemma}\label{lem:pw:sieve}
+Let $K_{\rm sv}\ge1$ and $\theta>0$. Let $M\le Y^{K_{\rm sv}}$ be a positive integer and
+\[
+ \mathcal P_M=\{p\ \text{prime}:\ p\equiv1\ (\mathrm{mod}\ 3),\
+ Y^\theta\le p\le2Y^\theta,\ p\nmid M\}.
+\]
+For $p\in\mathcal P_M$ fix a character $\chi_p\bmod p$ of exact order $3$. Let
+$(\varpi_\iota,U_\iota,V_\iota,n_\iota)_{\iota\in\mathcal I}$ be a finite
+family with $\varpi_\iota\ge0$ and nonzero integers
+$U_\iota,V_\iota,n_\iota$ satisfying $|U_\iota V_\iota n_\iota|\le Y^{K_{\rm sv}}$. If
+$Y\ge Y_{\rm sv}(K_{\rm sv},\theta)$, then $|\mathcal P_M|\ge Y^\theta/(3\theta\log Y)$ and
+\begin{equation}\label{eq:pw:sieve}
+ \sum_{\iota:\,n_\iota\in\mathrm{Cub}}\varpi_\iota
+ \le\frac4{|\mathcal P_M|}\sum_\iota\varpi_\iota
+ +\frac4{|\mathcal P_M|^2}\sum_{\substack{\mathfrak p_1,\mathfrak p_2\in\mathcal P_M\\\mathfrak p_1\ne \mathfrak p_2}}
+ \Bigl|\sum_\iota\varpi_\iota\,\mathbf 1_{(\mathfrak p_1\mathfrak p_2,U_\iota V_\iota)=1}\,
+ \chi_{\mathfrak p_1}(n_\iota)\overline{\chi_{\mathfrak p_2}(n_\iota)}\Bigr| ,
+\end{equation}
+where $\mathrm{Cub}=\{m^3:m\in\mathbb Z\}$ is the set of integer cubes.
+\end{lemma}
+
+\begin{proof}
+By the prime number theorem in progressions modulo $3$,
+\[
+ \#\{p\in[Y^\theta,2Y^\theta]:p\equiv1\pmod3\}
+ \ge\frac{Y^\theta}{2.5\,\theta\log Y}
+\]
+for large $Y$. At most $K_{\rm sv}/\theta$ of them divide $M$. This gives the bound
+for $|\mathcal P_M|$. For $\iota\in\mathcal I$ put
+\[
+ \mathcal Z_\iota=\sum_{\substack{p\in\mathcal P_M\\ p\nmid U_\iota V_\iota n_\iota}}\chi_p(n_\iota).
+\]
+Since $0<|U_\iota V_\iota n_\iota|\le Y^{K_{\rm sv}}$, at most $K_{\rm sv}/\theta$ primes of $\mathcal P_M$
+divide $U_\iota V_\iota n_\iota$. If $n_\iota=m^3$ and $p\nmid n_\iota$, then
+$\chi_p(n_\iota)=\chi_p(m)^3=1$. So $n_\iota\in\mathrm{Cub}$ gives
+$\mathcal Z_\iota\ge|\mathcal P_M|-K_{\rm sv}/\theta\ge|\mathcal P_M|/2$ for large $Y$. Hence
+\[
+ \mathbf 1_{n_\iota\in\mathrm{Cub}}\le\frac{4|\mathcal Z_\iota|^2}{|\mathcal P_M|^2}
+\qquad(\iota\in\mathcal I).
+\]
+Expand $|\mathcal Z_\iota|^2$. The diagonal terms $\mathfrak p_1=\mathfrak p_2$ equal
+$1$, and there are at most $|\mathcal P_M|$ of them. For
+$\mathfrak p_1\ne\mathfrak p_2$, the conditions
+$\mathfrak p_1,\mathfrak p_2\nmid n_\iota$ may be dropped, because
+$\chi_{\mathfrak p_1}(n_\iota)=0$ when $\mathfrak p_1\mid n_\iota$. Multiply by
+$\varpi_\iota$, sum over $\iota\in\mathcal I$, and use the triangle inequality in
+$(\mathfrak p_1,\mathfrak p_2)$.
+\end{proof}
+
+\subsection{Descriptors and the master estimate}\label{sec:pow3:master}
+
+A \emph{slot} is a pair $(s,j)$ with $s\in\{u,v\}$ and $1\le j\le6$. Its mass is
+$s_{s,j}$.
+
+\begin{definition}\label{def:pw:desc}
+ A \emph{descriptor} is a triple $\mathfrak D=(\sigma,\mathcal G,\mathcal U)$.
+Here $\sigma$ is a powered side; $\mathcal G$ is a set of \emph{groups}, each
+of the form $g_s=\{(s,1),(s,2)\}$ with $s\in\{u,v\}$; $\mathcal U$ is a set of
+\emph{singleton} slots disjoint from $\bigcup\mathcal G$; and
+$|\mathcal G|+|\mathcal U|=4$. Its retained set, retained mass, grouped
+lengths and generic exponent are
+\begin{equation}\label{eq:pw:PSL}
+ J=\mathcal U\cup\bigcup\mathcal G,\qquad
+ P_J=\sum_{(s,j)\in J}s_{s,j},\qquad
+ \mathcal L_{g_s}=s_{s,1}+2s_{s,2},\qquad
+ E_{\mathfrak D}=\mathcal C_\sigma+R_\sigma-\tfrac12P_J .
+\end{equation}
+Write $\widehat{\mathcal U}=\{\{(s,j)\}:(s,j)\in\mathcal U\}$ and
+$\mathcal F_{\mathfrak D}=\mathcal G\cup\widehat{\mathcal U}$ for the four
+analytic factors.
+\end{definition}
+
+So $|J|=4$, $5$ or $6$. There are always four analytic factors, one per
+group and one per singleton. Aggregate tails are never
+slots. $\mathcal G=\emptyset$ is ordinary $\mathrm{POW3}$.
+
+\begin{proposition}\label{prop:pw:master}
+Let $\mathfrak D$ be a descriptor and $\theta>0$ with
+\begin{equation}\label{eq:pw:guard}
+ W_\sigma+2\theta\ge2\mathcal L_g\qquad(g\in\mathcal G).
+\end{equation}
+Then
+\begin{equation}\label{eq:pw:master}
+ D\le\max\bigl(E_{\mathfrak D}+\theta,\ R_\sigma-\theta\bigr)+o(1).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $C=\mathcal C_\sigma$, $W=W_\sigma$, $R=R_\sigma$ and $\mathfrak r_{s,j}$,
+$S_{s,j}$ for the roots and sizes of the represented sides.
+
+\emph{Step 1. Outer configurations.} An outer configuration $\mathfrak o$
+consists of the labels of $M$ and all roots $\mathfrak r_{s,j}$ $(s\in\{u,v\},\
+1\le j\le d,\ (s,j)\notin J)$. By Lemma~\ref{lem:pw:ledger}(i) and
+$\#\{\mathfrak r\sim S\}=S$,
+\begin{equation}\label{eq:pw:nout}
+ \#\{\mathfrak o\}\le Y^{C}\prod_{(s,j)\notin J}S_{s,j}=Y^{C+R-P_J}.
+\end{equation}
+Fix $\mathfrak o$. For $(s,j)\in J$ write $\mathfrak r_{s,j}=\mathfrak u_{s,j}$
+and $\mathbf u=(\mathfrak u_{s,j})_{(s,j)\in J}$. Then
+\begin{equation}\label{eq:pw:UV}
+ n_u=U_{\mathfrak o}\prod_{(u,j)\in J}\mathfrak u_{u,j}^{\,j},\qquad
+ n_v=V_{\mathfrak o}\prod_{(v,j)\in J}\mathfrak u_{v,j}^{\,j},
+\end{equation}
+with $U_{\mathfrak o},V_{\mathfrak o}$ fixed. Write $U(\mathbf u),V(\mathbf u)$
+for the right sides. Given $\mathfrak o$ and $\mathbf u$,
+\eqref{eq:pw:orient} fixes $n_\sigma=V+\epsilon_{\rm pw} U$ and \eqref{eq:pw:Mx}
+fixes $x=(n_\sigma/M)^{1/3}$. By Lemma~\ref{lem:divisor},
+$\mathfrak r_{\sigma,3}\mathfrak r_{\sigma,6}^2=x/(\mathfrak r_{\sigma,4}\mathfrak r_{\sigma,5})$
+has $Y^{o(1)}$ solutions. Pairwise coprimality of
+the sides gives $(M,UV)=1$. Hence
+\begin{equation}\label{eq:pw:step1}
+ \begin{gathered}
+ \mathcal B_d\le Y^{o(1)}\sum_{\mathfrak o}N(\mathfrak o),\\
+ N(\mathfrak o)=\#\Bigl\{\mathbf u:\
+ \begin{aligned}
+ &\mathfrak u_{s,j}\sim S_{s,j},\ (M,UV)=1,\ M\mid V+\epsilon_{\rm pw} U,\\
+ &(V+\epsilon_{\rm pw} U)/M\ \text{is a positive integer cube}
+ \end{aligned}\Bigr\}.
+ \end{gathered}
+\end{equation}
+
+\emph{Step 2. Positive ambientization.} For $\mathbf u\in\mathbb N^J$ put
+\begin{equation}\label{eq:pw:omega}
+ \begin{aligned}
+ \varpi_{\mathfrak o}(\mathbf u)&=\prod_{(s,j)\in J}w\bigl(\mathfrak u_{s,j}/S_{s,j}\bigr)\\
+ &\quad\cdot\mathbf 1_{(M,UV)=1}\,\mathbf 1_{V+\epsilon_{\rm pw} U\ne0}\,
+ \mathbf 1_{M\mid V+\epsilon_{\rm pw} U},\\
+ n(\mathbf u)&=\frac{V+\epsilon_{\rm pw} U}{M}.
+ \end{aligned}
+\end{equation}
+Since $w\ge0$ and $w=1$ on $[1,2)$, pointwise
+\begin{equation}\label{eq:pw:amb}
+ N(\mathfrak o)\le\sum_{\mathbf u\in\mathbb N^J}\varpi_{\mathfrak o}(\mathbf u)\,
+ \mathbf 1_{n(\mathbf u)\in\mathrm{Cub}}.
+\end{equation}
+We drop the condition $\gcd(U,V)=1$ and the sharp dyadic windows of the
+retained roots, and keep $(M,UV)=1$. We also weaken the positive-cube
+condition to: $n(\mathbf u)$ is a nonzero integer cube. These changes only
+increase the count. We retain $M$, its labels, every unretained represented root and every
+tail in $\mathfrak o$. On the support,
+$\mathfrak u_{s,j}\le4S_{s,j}$, so $|UVn|\le Y^{8}$ for large $Y$.
+
+\emph{Step 3. Sieve.} Apply Lemma~\ref{lem:pw:sieve} with $K_{\rm sv}=8$ to the family
+$(\varpi_{\mathfrak o}(\mathbf u),U,V,n(\mathbf u))$ restricted to its support.
+Then
+\begin{equation}\label{eq:pw:split}
+ \begin{gathered}
+ N(\mathfrak o)\le\frac4{|\mathcal P_M|}\sum_{\mathbf u}\varpi_{\mathfrak o}(\mathbf u)
+ +4\max_{\substack{\mathfrak p_1,\mathfrak p_2\in\mathcal P_M\\\mathfrak p_1\ne \mathfrak p_2}}|\mathcal E_{\mathfrak p_1,\mathfrak p_2}(\mathfrak o)|,\\
+ \mathcal E_{\mathfrak p_1,\mathfrak p_2}(\mathfrak o)=\sum_{\mathbf u}\varpi_{\mathfrak o}(\mathbf u)
+ \mathbf 1_{(\mathfrak p_1\mathfrak p_2,UV)=1}\,\xi(n(\mathbf u)),
+ \end{gathered}
+\end{equation}
+with $\xi=\chi_{\mathfrak p_1}\bar\chi_{\mathfrak p_2}$, a character modulo
+$\mathfrak p_1\mathfrak p_2$ whose components are $\chi_{\mathfrak p_1}$ and
+$\bar\chi_{\mathfrak p_2}$, both nonprincipal. Also
+$|\mathcal P_M|^{-1}\le Y^{-\theta+o(1)}$.
+
+\emph{Step 4. Diagonal.} Split $\mathfrak o=(\mathfrak m,\mathfrak y)$ into the
+labels $\mathfrak m$ of $M$ and the represented part $\mathfrak y$. For fixed
+$(\mathfrak y,\mathbf u)$ the integers $U,V$ are fixed and
+$V+\epsilon_{\rm pw} U\ne0$ on the support. Then
+$M\mid V+\epsilon_{\rm pw} U$ leaves at most
+$\operatorname{div}(|V+\epsilon_{\rm pw} U|)$ values of $M$, each with $Y^{o(1)}$ label
+tuples by Lemma~\ref{lem:pw:ledger}(iv). Hence
+\[
+ \begin{aligned}
+ \sum_{\mathfrak o}\sum_{\mathbf u}\varpi_{\mathfrak o}(\mathbf u)
+ &\le Y^{o(1)}\sum_{\mathfrak y}\ \prod_{(s,j)\in J}\sum_{\mathfrak u\ge1}w(\mathfrak u/S_{s,j})\\
+ &\le Y^{o(1)}\,Y^{R-P_J}\prod_{(s,j)\in J}4S_{s,j}=Y^{R+o(1)} .
+ \end{aligned}
+\]
+The diagonal part of \eqref{eq:pw:split}, summed over $\mathfrak o$, is
+therefore $\le Y^{R-\theta+o(1)}$. Summing first over $\mathfrak m$ would give
+$Y^{C+R-\theta}$; the divisor recovery removes $C$.
+
+\emph{Step 5. Fourier expansion.} Fix $\mathfrak o$ and
+$\mathfrak p_1\ne\mathfrak p_2$ in $\mathcal P_M$. Put
+$Q=M\mathfrak p_1\mathfrak p_2$. Since $\xi(0)=0$ and $(M,UV)=1$ is in
+$\varpi_{\mathfrak o}$,
+\[
+ \mathcal E_{\mathfrak p_1,\mathfrak p_2}(\mathfrak o)=\sum_{\mathbf u}
+ \prod_{(s,j)\in J}w\bigl(\mathfrak u_{s,j}/S_{s,j}\bigr)\,
+ \mathbf 1_{(UV,Q)=1}\,\mathbf 1_{M\mid V+\epsilon_{\rm pw} U}\,
+ \xi\Bigl(\frac{V+\epsilon_{\rm pw} U}M\Bigr).
+\]
+Apply Lemma~\ref{lem:pw:FI}. Dirichlet characters are completely
+multiplicative and vanish on nonunits, and $\mathbf u$ runs over a product
+set. So
+\begin{equation}\label{eq:pw:E}
+ \mathcal E_{\mathfrak p_1,\mathfrak p_2}(\mathfrak o)=\frac{\overline{\xi(M)}}{\varphi(Q)}
+ \sum_{\alpha\bmod Q}c_{\epsilon_{\rm pw}}(\alpha)\,
+ \alpha(U_{\mathfrak o})\,(\tilde\xi\bar\alpha)(V_{\mathfrak o})
+ \prod_{f\in\mathcal F_{\mathfrak D}}\Phi_f\bigl(\gamma_f(\alpha)\bigr),
+\end{equation}
+where $\gamma_f(\alpha)=\alpha$ if $f$ lies on side $u$ and
+$\gamma_f(\alpha)=\tilde\xi\bar\alpha$ if $f$ lies on side $v$, and
+\[
+ \Phi_{\{(s,j)\}}(\chi)=F_{S_{s,j}}(\chi^j),\qquad
+ \Phi_{g_s}(\chi)=G_s(\chi)=F_{S_{s,1}}(\chi)\,F_{S_{s,2}}(\chi^2).
+\]
+For the group this uses $\chi(\mathfrak u_1)\chi(\mathfrak u_2)^2
+=\chi(\mathfrak u_1\mathfrak u_2^2)$. By \eqref{eq:pw:jac},
+\begin{equation}\label{eq:pw:Ebound}
+ |\mathcal E_{\mathfrak p_1,\mathfrak p_2}(\mathfrak o)|\le
+\frac{\sqrt{\mathfrak p_1\mathfrak p_2}}{\varphi(Q)}
+ \sum_{\alpha\bmod Q}\ \prod_{f\in\mathcal F_{\mathfrak D}}
+ \bigl|\Phi_f(\gamma_f(\alpha))\bigr| .
+\end{equation}
+This is one family of $\varphi(Q)$ modes. Each $\gamma_f$ is a bijection of the
+character group modulo $Q$.
+
+\emph{Step 6. Torsion modes.} Here $Q=M\mathfrak p_1\mathfrak p_2$, as in
+Step~5. Let
+$\mathcal T_{\rm tor}=\{\alpha:\ \gamma_f(\alpha)^j=\chi_0\ \text{for some}\
+f=\{(s,j)\}\in\widehat{\mathcal U}\}$. The character group modulo $Q$ is isomorphic to
+$(\mathbb Z/Q)^\times$, whose $j$-torsion has at most $j^{\omega(Q)+1}$
+elements. So $|\mathcal T_{\rm tor}|\le4\cdot6^{\omega(Q)+1}=Y^{o(1)}$, as
+$Q\le Y^2\cdot4Y^{2\theta}=Y^{O_{d,\theta}(1)}$.
+Trivially $|\Phi_f|\le\prod_{(s,j)\in f}4S_{s,j}$. By
+Lemma~\ref{lem:pw:ledger}(ii), $\varphi(Q)\ge Q\,Y^{-o(1)}\ge
+Y^{W+2\theta-o(1)}$. The modes in $\mathcal T_{\rm tor}$ contribute to
+\eqref{eq:pw:Ebound} at most
+\[
+ \frac{2Y^{\theta}}{Y^{W+2\theta-o(1)}}\,Y^{o(1)}\,4^6Y^{P_J}
+ =Y^{P_J-W-\theta+o(1)} .
+\]
+Sum over $\mathfrak o$ with \eqref{eq:pw:nout}. By
+Lemma~\ref{lem:pw:ledger}(iii) the total is
+\[
+ Y^{C+R-W-\theta+o(1)}\le Y^{R-\theta+o(1)} .
+\]
+
+\emph{Step 7. Generic modes.} By Hölder with four exponents $4$,
+\[
+ \sum_{\alpha\notin\mathcal T_{\rm tor}}\prod_{f\in\mathcal F_{\mathfrak D}}\bigl|\Phi_f(\gamma_f(\alpha))\bigr|
+ \le\prod_{f\in\mathcal F_{\mathfrak D}}\Bigl(\sum_{\alpha\notin\mathcal T_{\rm tor}}\bigl|\Phi_f(\gamma_f(\alpha))\bigr|^4\Bigr)^{1/4}.
+\]
+Singleton $f=\{(s,j)\}$: for $\alpha\notin\mathcal T_{\rm tor}$ the character
+$\gamma_f(\alpha)^j$ is nonprincipal. The map $\alpha\mapsto\gamma_f(\alpha)^j$
+has fibres of size $\le6^{\omega(Q)+1}$. Lemma~\ref{lem:pw:S4} gives
+\[
+ \sum_{\alpha\notin\mathcal T_{\rm tor}}|\Phi_f(\gamma_f(\alpha))|^4
+ \le6^{\omega(Q)+1}\sum_{\chi\ne\chi_0}|F_{S_{s,j}}(\chi)|^4
+ \le\varphi(Q)\,S_{s,j}^{\,2}\,Y^{o(1)} .
+\]
+Here $Q/\varphi(Q)=Y^{o(1)}$, since $Q\le Y^{O_{d,\theta}(1)}$.
+Group $f=g_s$: $\gamma_f$ is a bijection, so by Lemma~\ref{lem:pw:G4}
+\[
+ \sum_{\alpha}|G_s(\gamma_f(\alpha))|^4=\sum_{\chi\bmod Q}|G_s(\chi)|^4
+\le\varphi(Q)\,(S_{s,1}S_{s,2})^2\,Y^{o(1)}\Bigl(1+\frac{4^6Y^{2\mathcal L_{g_s}}}{Q}\Bigr).
+\]
+Here $Q\ge MY^{2\theta}\ge Y^{W+2\theta}\ge Y^{2\mathcal L_{g_s}}$ by
+Lemma~\ref{lem:pw:ledger}(ii) and \eqref{eq:pw:guard}. So the bracket is
+$\le1+4^6$. The guard is closed: equality in \eqref{eq:pw:guard} still leaves a
+bounded number of shifts $m'\equiv m\pmod Q$. Multiply the four bounds:
+\[
+ \sum_{\alpha\notin\mathcal T_{\rm tor}}\prod_{f\in\mathcal F_{\mathfrak D}}\bigl|\Phi_f(\gamma_f(\alpha))\bigr|
+ \le\varphi(Q)\,Y^{o(1)}\prod_{(s,j)\in J}S_{s,j}^{1/2}
+ =\varphi(Q)\,Y^{P_J/2+o(1)} .
+\]
+In \eqref{eq:pw:Ebound} the factor $\varphi(Q)$ cancels. Since
+$\sqrt{\mathfrak p_1\mathfrak p_2}\le2Y^\theta$, the generic modes contribute
+$Y^{\theta+P_J/2+o(1)}$. Sum over $\mathfrak o$ with \eqref{eq:pw:nout}:
+\[
+ Y^{C+R-P_J+P_J/2+\theta+o(1)}=Y^{E_{\mathfrak D}+\theta+o(1)} .
+\]
+
+\emph{Step 8. Assembly.} By \eqref{eq:pw:step1}, \eqref{eq:pw:amb},
+\eqref{eq:pw:split} and Steps 4, 6, 7,
+\[
+ \mathcal B_d\le Y^{o(1)}\bigl(Y^{R-\theta}+Y^{R-\theta}+Y^{E_{\mathfrak D}+\theta}\bigr).
+\]
+Take $\log_Y$.
+\end{proof}
+
+The proof uses four fourth moments in every case. With two groups,
+\[
+ \sum_\alpha|G_{s}G_{s'}\Phi_f\Phi_{f'}|\le
+ \|G_s\|_4\|G_{s'}\|_4\|\Phi_f\|_4\|\Phi_{f'}\|_4 ,
+\]
+over the one mode family; no mixed correlation and no eighth moment enter.
+Both guards are imposed at the same $\theta$.
+
+\subsection{Elimination of \texorpdfstring{$\theta$}{theta}}\label{sec:pow3:elim}
+
+\begin{lemma}\label{lem:pw:elim}
+Let $0\le k\le2$, let $E,R,\Gamma_1,\dots,\Gamma_k$ be real, and let
+$0<\rho_0\le1$. Put
+\[
+ \theta^*=\max\bigl(0,\tfrac12(R-E),\Gamma_1,\dots,\Gamma_k\bigr),\qquad
+ \Theta(\rho_0)=\{m\rho_0:\ m\in\mathbb Z,\ 1\le m\le4/\rho_0\},
+\]
+and assume $\theta^*\le3$.
+Some $\theta\in\Theta(\rho_0)$ satisfies $\theta\ge\Gamma_i$ for all $i$ and
+\[
+ \max(E+\theta,R-\theta)\le\max\bigl(E,\tfrac12(E+R),E+\Gamma_1,\dots,E+\Gamma_k\bigr)+\rho_0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\theta$ be the least element of $\Theta(\rho_0)$ with $\theta\ge\theta^*$.
+It exists since $\max\Theta(\rho_0)>4-\rho_0\ge3$. Then
+$\theta^*\le\theta\le\theta^*+\rho_0$. As $\theta\ge\frac12(R-E)$,
+$R-\theta\le E+\theta$. So the left side is
+$E+\theta\le E+\theta^*+\rho_0$, and $E+\theta^*$ is the displayed maximum.
+\end{proof}
+
+\begin{proposition}\label{thm:pw:rows}
+Let $0<\rho_0\le1$. There is $Y_{\rm el}=Y_{\rm el}(\varepsilon_0,d,\rho_0)$ such that for
+$Y\ge Y_{\rm el}$ and every descriptor $\mathfrak D$:
+\begin{enumerate}
+\item[(a)] if $\mathcal G=\emptyset$,
+\begin{equation}\label{eq:pw:POW3}
+ D\le E_{\mathfrak D}+2\rho_0\quad\text{or}\quad D\le\tfrac12(E_{\mathfrak D}+R_\sigma)+2\rho_0;
+\end{equation}
+\item[(b)] if $\mathcal G=\{g\}$,
+\begin{equation}\label{eq:pw:G12}
+ D\le E_{\mathfrak D}+2\rho_0\quad\text{or}\quad D\le\tfrac12(E_{\mathfrak D}+R_\sigma)+2\rho_0
+ \quad\text{or}\quad D\le E_{\mathfrak D}+\mathcal L_g-\tfrac12W_\sigma+2\rho_0;
+\end{equation}
+\item[(c)] if $\mathcal G=\{g,g'\}$,
+\begin{equation}\label{eq:pw:G1212}
+ \begin{gathered}
+ D\le E_{\mathfrak D}+2\rho_0\quad\text{or}\quad D\le\tfrac12(E_{\mathfrak D}+R_\sigma)+2\rho_0\quad\text{or}\\
+ D\le E_{\mathfrak D}+\mathcal L_g-\tfrac12W_\sigma+2\rho_0\quad\text{or}\quad
+ D\le E_{\mathfrak D}+\mathcal L_{g'}-\tfrac12W_\sigma+2\rho_0 .
+ \end{gathered}
+\end{equation}
+\end{enumerate}
+Here $E_{\mathfrak D}$, $P_J$, $\mathcal L_g$ are as in \eqref{eq:pw:PSL} and $\mathcal C_\sigma$, $W_\sigma$,
+$R_\sigma$ as in \eqref{eq:pw:CWR}.
+\end{proposition}
+
+\begin{proof}
+Write $\mathcal G=\{g^{(1)},\dots,g^{(k)}\}$ and take
+$\Gamma_i=\mathcal L_{g^{(i)}}-\frac12W_\sigma$ in Lemma~\ref{lem:pw:elim}. Its hypothesis
+holds: $\mathcal C_\sigma\ge0$ and $P_J\le R_\sigma$ give
+$E_{\mathfrak D}\ge\frac12R_\sigma\ge0$. Also $R_\sigma\le2$, since
+$r_s\le V_s\le1$ for each represented side. Thus
+$\frac12(R_\sigma-E_{\mathfrak D})\le\frac14R_\sigma\le\frac12$; and
+ $\Gamma_i\le\mathcal L_{g^{(i)}}\le V_s\le1$. The chosen $\theta\in\Theta(\rho_0)$ satisfies
+\eqref{eq:pw:guard}. Proposition~\ref{prop:pw:master} at this $\theta$ gives
+\[
+ D\le\max\bigl(E_{\mathfrak D},\tfrac12(E_{\mathfrak D}+R_\sigma),E_{\mathfrak D}+\Gamma_1,\dots,E_{\mathfrak D}+\Gamma_k\bigr)+\rho_0+o(1).
+\]
+The grid $\Theta(\rho_0)$ and the set of descriptors are finite. So the
+$o(1)$ is $\le\rho_0$ for $Y\ge Y_{\rm el}$. Since
+$E_{\mathfrak D}+\max(0,\Gamma_i)=\max(E_{\mathfrak D},E_{\mathfrak D}+\Gamma_i)$, the
+maximum is the largest arm. A bound by a maximum is the stated disjunction.
+\end{proof}
+
+Each clause is used together with the direct row \eqref{eq:pair},
+$D\le R_\sigma$. So (a) reads
+$D\le\min\bigl(R_\sigma,\max(E_{\mathfrak D},\tfrac12(E_{\mathfrak D}+R_\sigma))\bigr)$ up to the
+relaxation. A clause may not be replaced by the conjunction of its arms.
+
+\subsection{The installed descriptor families}\label{sec:pow3:families}
+
+Proposition~\ref{thm:pw:rows} holds for every descriptor. The system of
+Section~\ref{sec:cert} installs the following finite families. For brevity,
+$s_j$ in a descriptor denotes the slot $(s,j)$; its mass is always $s_{s,j}$.
+
+\begin{enumerate}
+\item[$\mathrm{POW3}(\sigma)$.] $\mathcal G=\emptyset$, $\mathcal U=J$ any
+four of the twelve slots $u_1,\dots,u_6,v_1,\dots,v_6$. For $\sigma=b$ and
+$\sigma=c$ all $\binom{12}4=495$ sets are installed. For $\sigma=a$, install
+the $486$ sets not containing $\{b_1,c_1,c_4\}$. The nine omitted sets are
+valid rows, but were not installed in the finite system. Including them would
+remove the displayed witness; the optimum of the enlarged system is not
+computed here.
+\item[$\mathrm{GROUP12c}(y)$.] $\sigma=c$, $y\in\{a,b\}$, $z$ the other
+ represented side, $\mathcal G=\{g_y\}$, $\mathcal U=\{y_4,z_1,z_4\}$. Two
+clauses.
+\item[$\mathrm{GROUP12ab}(\sigma)$.] $\sigma\in\{a,b\}$, $z$ the represented
+ side other than $c$, $\mathcal G=\{g_c\}$, $\mathcal U$ any three of
+$c_3,c_4,c_5,c_6,z_1,\dots,z_6$. In total $2\binom{10}3=240$ clauses.
+\item[$\mathrm{GROUP1212ab}(\sigma)$.] $\sigma\in\{a,b\}$, $z$ as before,
+$\mathcal G=\{g_c,g_z\}$, $\mathcal U$ any two of
+$z_3,z_4,z_5,z_6,c_3,c_4,c_5,c_6$. In total $2\binom82=56$ clauses.
+\end{enumerate}
+
+For these families, \eqref{eq:pw:CWR} and \eqref{eq:pw:PSL} read as follows.
+In $\mathrm{GROUP12c}(y)$,
+\[
+ \begin{gathered}
+ C=c-s_{c,3}-s_{c,6},\qquad R=a+b,\qquad
+ P_J=s_{y,1}+s_{y,2}+s_{y,4}+s_{z,1}+s_{z,4},\\
+ W=v_c+s_{c,1}+2s_{c,2}+s_{c,4}+2s_{c,5},\qquad
+ \mathcal L_{g_y}=s_{y,1}+2s_{y,2}.
+ \end{gathered}
+\]
+In $\mathrm{GROUP12ab}(\sigma)$ and $\mathrm{GROUP1212ab}(\sigma)$,
+$C=\sigma-s_{\sigma,3}-s_{\sigma,6}$,
+$W=v_\sigma+s_{\sigma,1}+2s_{\sigma,2}+s_{\sigma,4}+2s_{\sigma,5}$,
+$R=r_z+r_c$, $\mathcal L_{g_c}=s_{c,1}+2s_{c,2}$, $\mathcal L_{g_z}=s_{z,1}+2s_{z,2}$. Here a
+bare side letter is its root mass $r_s=\sum_{j\le d}s_{s,j}$ from
+\eqref{eq:pw:coord}.
+
+All clauses of this section carry the one relaxation $2\rho_0$; we take
+$\rho_0=\varepsilon_0/2$. Table~\ref{tab:rho} records it.
+
+
+\section{Moment rows}\label{sec:moment}
+
+\subsection{Setting}\label{sec:mo:setting}
+
+Fix $\varepsilon_0\le4/7$ and $d=d(\varepsilon_0)$ as in
+Section~\ref{sec:fold}. Work in a nonempty box
+admissible in \eqref{eq:reduction} at scale $Y$, and put
+$D=\log_Y\mathcal B_d$. Fix $\sigma\in\{a,b,c\}$, and let $(y,z)$ be the
+other sides in alphabetical order. Choose nonempty
+$T\subseteq\{1,\dots,6,\mathrm{tail}\}$, with $\kappa_T,\Omega_T$ as in
+\eqref{eq:T}. Write $\mathfrak m_i$, $\mathfrak y_i$, $\mathfrak z_i$ for the
+roots of the $\sigma$-, $y$- and $z$-sides. Let $M$ be the modulus \eqref{eq:M}, and
+\[
+ \epsilon_{\rm mo}=-1\ (\sigma=c),\qquad \epsilon_{\rm mo}=+1\ (\sigma\ne c).
+\]
+Then the side values satisfy $n_y\equiv\epsilon_{\rm mo}\,n_z\pmod M$, as
+$M\mid n_\sigma$ and $n_a+n_b=n_c$.
+Here $M$ is the cut modulus of \eqref{eq:M}; the cubic-sieve section uses its
+own local coefficient $M$. The function $\varphi$ denotes Euler's totient.
+
+A \emph{block} is a pair $\beta=(s,j)$, where $s\in\{y,z\}$ and $1\le j\le d$.
+Its root $x_\beta$ is $\mathfrak y_j$ or $\mathfrak z_j$. Let $S_\beta$ be its dyadic size, and
+put $j_\beta=j$ and $h_\beta=\log_YS_\beta$. Thus $h_\beta$ is $y_j$ or $z_j$;
+it is unrelated to $h_d=d(d+1)/2$.
+The block is \emph{ordinary} when $j\le6$. For a set $\mathcal H$ of blocks put
+$h_{\mathcal H}=\sum_{\beta\in\mathcal H}h_\beta$, and let
+$\mathcal H_y,\mathcal H_z$ be its blocks on $y$ and $z$. Put
+\begin{equation}\label{eq:mo:P}
+ P_{\rm mo}=\sum_{\beta}h_\beta,
+\end{equation}
+the sum over all $2d$ blocks: the total root mass of the sides $y$ and $z$.
+Tails are included in $P_{\rm mo}$.
+
+All $o(1)$ terms below tend to $0$ as $Y\to\infty$ for fixed $\varepsilon_0$
+and $d$ (and $\delta$ in Proposition~\ref{prop:mo:PS23}). They are uniform in
+the box, in $(\sigma,T)$ and in $\mathcal H$.
+
+\begin{lemma}\label{lem:mo:size}
+For $Y\ge Y_0$,
+$Y^{\Omega_T}\le M\le Y^2$ and $\varphi(M)\ge M/\operatorname{div}(M)\ge Y^{\Omega_T-o(1)}$.
+Every root $x_\beta$ is prime to $M$. Moreover
+$\Omega_T\le1$ and $h_\beta\le1/j_\beta$.
+\end{lemma}
+
+\begin{proof}
+The lower bound is \eqref{eq:Msize} at scale $Y$. $M$ divides
+ $\prod_j\mathfrak m_j^{\,j}<2^{d(d+1)/2}Y^{V_\sigma}\le Y^2$ for large $Y$, by
+\eqref{eq:boxconstraints}. Next
+$\varphi(M)=M\prod_{p\mid M}(1-1/p)\ge M2^{-\omega(M)}\ge M/\operatorname{div}(M)$,
+and $\operatorname{div}(M)=Y^{o(1)}$ for $M\le Y^2$. Coprimality is
+Lemma~\ref{lem:coprime}. Finally $\Omega_T\le V_\sigma\le1$ and
+$j_\beta h_\beta\le V_s\le1$ by \eqref{eq:boxconstraints}.
+\end{proof}
+
+\subsection{Reduction and orthogonality}\label{sec:mo:red}
+
+For a set $\mathcal H$ of blocks, a unit $K$ modulo $M$ and a character
+$\psi$ modulo $M$ put
+\begin{equation}\label{eq:mo:N}
+ \begin{gathered}
+ \Sigma_\beta(\psi)=\sum_{S_\beta\le x<2S_\beta}\psi(x),\\
+ N_{\mathcal H}(K)=\#\Bigl\{(x_\beta)_{\beta\in\mathcal H}:\
+ \begin{aligned}
+ &S_\beta\le x_\beta<2S_\beta,\ (x_\beta,M)=1,\\
+ &\textstyle\prod_{\beta\in\mathcal H_y}x_\beta^{\,j_\beta}\equiv
+ K\prod_{\beta\in\mathcal H_z}x_\beta^{\,j_\beta}\ (\mathrm{mod}\ M)
+ \end{aligned}\Bigr\}.
+ \end{gathered}
+\end{equation}
+
+\begin{lemma}\label{lem:mo:red}
+For every set $\mathcal H$ of blocks,
+\[
+ \mathcal B_d\le Y^{\kappa_T+P_{\rm mo}-h_{\mathcal H}+o(1)}\max_KN_{\mathcal H}(K),
+\]
+the maximum over the outer data fixed in the proof and over units $K$
+modulo the resulting $M$.
+\end{lemma}
+
+\begin{proof}
+\emph{Enumeration.} Enumerate the roots of $\sigma$ selected by $T$.
+Its individual tail roots are among them exactly when $\mathrm{tail}\in T$.
+Also enumerate the roots of all blocks outside $\mathcal H$, on $y$ and $z$. A tail block in $\mathcal H$
+remains unenumerated. As $\#\{x:S\le x<2S\}=S$, there are
+$Y^{\kappa_T}\cdot Y^{P_{\rm mo}-h_{\mathcal H}}$ choices. Fix one. Then $M$ is fixed.
+
+\emph{Congruence.} Write $n_y=\Pi_y\prod_{\mathcal H_y}x_\beta^{\,j_\beta}$ and
+$n_z=\Pi_z\prod_{\mathcal H_z}x_\beta^{\,j_\beta}$. The coefficients $n_{y,0},n_{z,0}$
+are fixed by the box, so $\Pi_y,\Pi_z$ are fixed. They are units modulo $M$
+by Lemmas~\ref{lem:mo:size} and~\ref{lem:coprime}. So
+$n_y\equiv\epsilon_{\rm mo} n_z$ gives the congruence of
+\eqref{eq:mo:N} with $K\equiv\epsilon_{\rm mo} \Pi_z\Pi_y^{-1}$. The sign
+$\epsilon_{\rm mo}$ equals $\epsilon_{\rm cut}$ in \eqref{eq:Ksign}.
+The roots $x_\beta$ are units. So the remaining tuples number at most
+$N_{\mathcal H}(K)$.
+
+\emph{Recovery.} Given all roots of $y$ and $z$, the side values $n_y,n_z$ are
+fixed, hence $n_\sigma$. Divide by $n_{\sigma,0}$ and by the selected part. The
+quotient $Q_\sigma=\prod_{i\in[6]\setminus T}\mathfrak m_i^{\,i}\cdot(\prod_{j\ge7}\mathfrak m_j^{\,j})^{1-\mathbf 1_{\mathrm{tail}\in T}}<2^{d^2}Y$
+determines the unselected roots of $\sigma$ up to
+$\operatorname{div}(Q_\sigma)^{d-1}=Y^{o(1)}$ choices by Lemma~\ref{lem:divisor}.
+\end{proof}
+
+\begin{lemma}\label{lem:mo:orth}
+\[
+ N_{\mathcal H}(K)=\frac1{\varphi(M)}\sum_{\chi\bmod M}\overline{\chi}(K)
+ \prod_{\beta\in\mathcal H_y}\Sigma_\beta(\chi^{j_\beta})
+ \prod_{\beta\in\mathcal H_z}\Sigma_\beta(\overline\chi^{\,j_\beta}).
+\]
+\end{lemma}
+
+\begin{proof}
+For units $g_1,g_2$,
+$\varphi(M)^{-1}\sum_\chi\chi(g_1)\overline\chi(g_2)=\mathbf 1_{g_1\equiv g_2}$.
+Take $g_1=\prod_{\mathcal H_y}x_\beta^{\,j_\beta}$,
+$g_2=K\prod_{\mathcal H_z}x_\beta^{\,j_\beta}$. Characters vanish on nonunits,
+so summing over all $x_\beta$ in the windows imposes $(x_\beta,M)=1$. Expand
+by complete multiplicativity.
+\end{proof}
+
+\subsection{Moment inputs}\label{sec:mo:inputs}
+
+\begin{lemma}\label{lem:mo:kernel}
+Let $j\ge1$. Then $\#\{\chi\bmod M:\chi^j=\chi_0\}\le(2j)^{\omega(M)}$, and every
+fibre of $\chi\mapsto\chi^j$ has at most $(2j)^{\omega(M)}$ elements. For
+$j\le d$ and $M\le Y^2$ this is $Y^{o(1)}$.
+\end{lemma}
+
+\begin{proof}
+The character group is isomorphic to $(\mathbb Z/M)^\times$, and the fibres of a
+homomorphism are cosets of its kernel. By the Chinese remainder theorem count
+$\eta^j=1$ locally. Odd $p^e$: cyclic, at most $\gcd(j,\varphi(p^e))\le j$.
+$2^e$: the group is $1$, $C_2$ or $C_2\times C_{2^{e-2}}$, at most
+$\gcd(j,2)\gcd(j,2^{e-2})\le2j$. Finally
+$\omega(M)\ll\log M/\log\log M$.
+\end{proof}
+
+We use the 2009 author-preprint formulation of \cite[Theorem~1]{CS}; the
+published article is listed in the bibliography. The displayed bound is
+meaningful for $m\ge3$, where $\log\log m>0$. For $m=1,2$ the nonprincipal
+character set is empty, so those cases contribute zero.
+
+\begin{theoremA}[{\cite[Theorem~1]{CS}}]\label{thm:mo:CS}
+For every integer $m\ge3$ and integers $a,B$ with $B>0$ we have
+\[
+ \frac1{\varphi(m)}\sum_{\chi\ne\chi_0}\Bigl|\sum_{x=a+1}^{a+B}\chi(x)\Bigr|^4
+ \ll8^{\omega(m)}\operatorname{div}(m)(\log m)^3(\log\log m)^7B^2.
+\]
+\end{theoremA}
+
+Here $\chi$ runs over all characters modulo $m$, including imprimitive
+characters. The published reference is J. Number Theory~130 (2010), no.~3,
+767--785; the frozen source is the 2009 author preprint.
+The window $S\le x<2S$ is $a=S-1$, $B=S$.
+
+\begin{lemma}\label{lem:mo:elem}
+Let $r,S,M\in\N$ with $r\ge1$, $S\ge1$ and $S^r\le M$. Then
+\[
+ \sum_{\chi\bmod M}\Bigl|\sum_{S\le x<2S}\chi(x)\Bigr|^{2r}
+ \le(2^r+1)\,\varphi(M)\,S^r\max_{n\le(2S)^r}\operatorname{div}(n)^{r-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+Expand the $2r$-th power and apply orthogonality. The left side is
+$\varphi(M)$ times the number of $(\mathbf x,\mathbf x')\in[S,2S)^{2r}$ with
+all coordinates prime to $M$ and
+$x_1\cdots x_r\equiv x'_1\cdots x'_r\pmod M$. Fix $\mathbf x'$: $S^r$ choices.
+Then $n=x_1\cdots x_r<(2S)^r\le2^rM$ lies in a fixed class modulo $M$: at most
+$2^r+1$ values. Each $n$ has at most $\operatorname{div}(n)^{r-1}$
+factorizations by Lemma~\ref{lem:divisor}.
+\end{proof}
+
+\begin{lemma}\label{lem:mo:power}
+Let $\beta$ be a block, $j=j_\beta$, $S=S_\beta$, and
+$\mathcal E_j=\{\chi\bmod M:\chi^j=\chi_0\}$.
+\begin{enumerate}
+\item[(i)] $\displaystyle\sum_{\chi\notin\mathcal E_j}|\Sigma_\beta(\chi^j)|^4
+ \le\varphi(M)\,S^2\,Y^{o(1)}$.
+\item[(ii)] If $r_{\max}\in\N$, $1\le r\le r_{\max}$ and $S^r\le M$, then
+ $\displaystyle\sum_{\chi\bmod M}|\Sigma_\beta(\chi^j)|^{2r}\le\varphi(M)\,S^r\,Y^{o(1)}$,
+ the $o(1)$ depending on $r_{\max}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) For $\chi\notin\mathcal E_j$, $\psi=\chi^j$ is nonprincipal, and each
+$\psi$ has at most $(2j)^{\omega(M)}$ preimages
+(Lemma~\ref{lem:mo:kernel}). So the sum is at most
+$(2j)^{\omega(M)}\sum_{\psi\ne\psi_0}|\Sigma_\beta(\psi)|^4$. For $M\le2$ this
+vanishes. For $M\ge3$ apply Theorem~\ref{thm:mo:CS} with $m=M$, $a=S-1$, $B=S$.
+Its factor is at most $\operatorname{div}(M)^4(2\log Y)^{10}=Y^{o(1)}$.
+(ii) The same fibre bound reduces to all $\psi$; apply
+Lemma~\ref{lem:mo:elem}. The total factor is
+$(2j)^{\omega(M)}(2^{r_{\max}}+1)\max_{n\le(2S)^r}\operatorname{div}(n)^{r-1}$,
+which is $Y^{O_{d,r_{\max}}(1/\log\log Y)}$.
+\end{proof}
+
+\begin{lemma}\label{lem:mo:holder}
+Let $\mathcal X$ be a set of characters modulo $M$ and $\mathcal H$ a finite
+set. For $\beta\in\mathcal H$ let $f_\beta:\mathcal X\to\mathbb C$,
+$S_\beta\ge1$, $C_{\rm H}\ge1$ and integers $r_\beta\ge1$ satisfy
+\[
+ |f_\beta|\le S_\beta,\qquad
+ \sum_{\chi\in\mathcal X}|f_\beta(\chi)|^{2r_\beta}\le C_{\rm H}\,\varphi(M)\,S_\beta^{\,r_\beta}.
+\]
+Let $0\le\vartheta_\beta\le1$ with $\sum_\beta\vartheta_\beta/(2r_\beta)\le1$. Then
+\[
+ \frac1{\varphi(M)}\sum_{\chi\in\mathcal X}\prod_{\beta\in\mathcal H}|f_\beta(\chi)|
+ \le C_{\rm H}^{|\mathcal H|}\prod_{\beta\in\mathcal H}S_\beta^{\,1-\vartheta_\beta/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+$|f_\beta|\le S_\beta^{1-\vartheta_\beta}|f_\beta|^{\vartheta_\beta}$. Apply Hölder to
+the functions $|f_\beta|^{\vartheta_\beta}$ $(\vartheta_\beta>0)$ with exponents
+$2r_\beta/\vartheta_\beta$, and to the constant $1$ with the complementary
+exponent. With $|\mathcal X|\le\varphi(M)$,
+\[
+ \begin{aligned}
+ \sum_{\mathcal X}\prod_\beta|f_\beta|^{\vartheta_\beta}
+ &\le\varphi(M)^{1-\sum\vartheta_\beta/(2r_\beta)}\\
+ &\quad\cdot\prod_\beta\bigl(C_{\rm H}\varphi(M)S_\beta^{\,r_\beta}\bigr)^{\vartheta_\beta/(2r_\beta)}\\
+ &\le C_{\rm H}^{|\mathcal H|}\varphi(M)\prod_\beta S_\beta^{\,\vartheta_\beta/2}.
+ \end{aligned}
+\]
+Multiply by $\prod_\beta S_\beta^{1-\vartheta_\beta}$.
+\end{proof}
+
+\subsection{The rows}\label{sec:mo:rows}
+
+\begin{proposition}[CS4]\label{prop:mo:CS4}
+Let $\mathcal H$ be a set of at most four blocks, in total over $y$ and $z$.
+Then
+\begin{equation}\label{eq:mo:CS4}
+ D\le \kappa_T+P_{\rm mo}-\min\Bigl(\Omega_T,\frac{h_{\mathcal H}}2\Bigr)+o(1).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+If $\mathcal H=\emptyset$, then
+$N_{\emptyset}(K)=\mathbf 1_{K\equiv1\pmod M}\le1$, and the assertion is
+immediate. Write $h=h_{\mathcal H}$. By Lemma~\ref{lem:mo:red} it suffices to
+show $N_{\mathcal H}(K)\le Y^{\max(h-\Omega_T,\,h/2)+o(1)}$ uniformly in $K$.
+Expand by Lemma~\ref{lem:mo:orth}. Let
+$\mathcal E=\bigcup_{\beta\in\mathcal H}\mathcal E_{j_\beta}$, the characters
+for which some held power is principal. It contains $\chi_0$.
+
+\emph{Torsion.} $|\mathcal E|\le4(2d)^{\omega(M)}=Y^{o(1)}$ by
+Lemma~\ref{lem:mo:kernel}. On $\mathcal E$ use $|\Sigma_\beta|\le S_\beta$. By
+Lemma~\ref{lem:mo:size} these characters contribute at most
+\[
+ \frac{|\mathcal E|}{\varphi(M)}\prod_\beta S_\beta\le Y^{h-\Omega_T+o(1)} .
+\]
+
+\emph{Generic.} Let $\mathcal X$ be the complement of $\mathcal E$. For
+$\chi\in\mathcal X$ and every $\beta$, $\chi^{j_\beta}$ and
+$\overline\chi^{\,j_\beta}$ are nonprincipal, and
+$|\Sigma_\beta(\overline\chi^{\,j_\beta})|=|\Sigma_\beta(\chi^{j_\beta})|$. Lemma~\ref{lem:mo:power}(i)
+gives the hypothesis of Lemma~\ref{lem:mo:holder} with $r_\beta=2$,
+ $C_{\rm H}=Y^{o(1)}$. Take $\vartheta_\beta=1$; then
+$\sum_\beta\vartheta_\beta/4=|\mathcal H|/4\le1$. The generic characters
+contribute at most $Y^{o(1)}\prod_\beta S_\beta^{1/2}=Y^{h/2+o(1)}$.
+
+\emph{Total.} $N_{\mathcal H}(K)\le Y^{o(1)}(Y^{h-\Omega_T}+Y^{h/2})$. With
+Lemma~\ref{lem:mo:red},
+\[
+ D\le \kappa_T+P_{\rm mo}-h+\max\Bigl(h-\Omega_T,\frac h2\Bigr)+o(1)
+ =\kappa_T+P_{\rm mo}-\min\Bigl(\Omega_T,\frac h2\Bigr)+o(1).
+\]
+\end{proof}
+
+No case distinction in $\Omega_T$ occurs. The proof holds for every $M\ge1$; for
+$M\le2$ the generic sum is empty. If $\mathcal H=\emptyset$ the row is
+trivial.
+
+\begin{proposition}[PS23]\label{prop:mo:PS23}
+Let $0<\delta\le1/2$. Then
+\begin{equation}\label{eq:mo:PS23}
+ D\le \kappa_T+P_{\rm mo}-\min\Bigl(\frac{P_{\rm mo}}2,\frac{2\Omega_T}3\Bigr)+d\delta+o(1),
+\end{equation}
+the $o(1)$ depending on $\delta$.
+\end{proposition}
+
+\begin{proof}
+\emph{Paid blocks.} Let $\mathcal H=\{\beta:h_\beta\ge\delta\}$ and
+$h=h_{\mathcal H}$. The other blocks number at most $2d$, so
+$P_{\rm mo}-h<2d\delta$.
+
+\emph{Orders.} For $\beta\in\mathcal H$ put
+\[
+ r_\beta=2\quad(h_\beta>\Omega_T/2),\qquad
+ r_\beta=\lfloor\Omega_T/h_\beta\rfloor\quad(h_\beta\le\Omega_T/2).
+\]
+In the second case $2\le r_\beta\le1/\delta$, by Lemma~\ref{lem:mo:size}, and
+$S_\beta^{\,r_\beta}=Y^{r_\beta h_\beta}\le Y^{\Omega_T}\le M$. In both cases
+\begin{equation}\label{eq:mo:ratio}
+ r_\beta h_\beta\ge\frac{2\Omega_T}3 .
+\end{equation}
+Indeed $2h_\beta>\Omega_T$ in the first case. In the second, put $t=\Omega_T/h_\beta\ge2$:
+for $t<3$, $\lfloor t\rfloor/t=2/t>2/3$; for $t\ge3$,
+$\lfloor t\rfloor>t-1\ge2t/3$.
+
+\emph{Moments.} Expand $N_{\mathcal H}(K)$ by Lemma~\ref{lem:mo:orth}. Let
+$\mathcal E=\bigcup_{\beta\in\mathcal H}\mathcal E_{j_\beta}$ and $\mathcal X$
+its complement. On $\mathcal X$,
+\[
+ \sum_{\chi\in\mathcal X}|\Sigma_\beta(\chi^{j_\beta})|^{2r_\beta}\le\varphi(M)\,
+ S_\beta^{\,r_\beta}\,Y^{o(1)}\qquad(\beta\in\mathcal H),
+\]
+by Lemma~\ref{lem:mo:power}(i) if $h_\beta>\Omega_T/2$, and by
+Lemma~\ref{lem:mo:power}(ii) with $r_{\max}=\lfloor1/\delta\rfloor$ if
+$h_\beta\le\Omega_T/2$.
+
+\emph{Budget.} Put $b_{\rm H}=\sum_{\beta\in\mathcal H}1/(2r_\beta)$ and
+$\vartheta=\min(1,1/b_{\rm H})$, with $\vartheta=1$ if
+$\mathcal H=\emptyset$. Then $\sum_\beta\vartheta/(2r_\beta)\le1$.
+By \eqref{eq:mo:ratio},
+\[
+ \frac\vartheta2\,h=\vartheta\sum_{\beta}\frac{r_\beta h_\beta}{2r_\beta}
+ \ge\frac{2\Omega_T}3\,\vartheta b_{\rm H} .
+\]
+If $b_{\rm H}\le1$, then $\vartheta=1$ and the saving $\vartheta h/2$
+equals $h/2$. If $b_{\rm H}>1$, then
+$\vartheta b_{\rm H}=1$ and $\vartheta h/2\ge2\Omega_T/3$. In both cases
+$\vartheta h/2\ge\min(h/2,2\Omega_T/3)$.
+
+\emph{Generic.} Lemma~\ref{lem:mo:holder} with $\vartheta_\beta=\vartheta$ and
+$|\mathcal H|\le2d$ bounds the generic characters by
+$Y^{h-\vartheta h/2+o(1)}\le Y^{h-\min(h/2,2\Omega_T/3)+o(1)}$.
+
+\emph{Torsion.} $|\mathcal E|\le2d(2d)^{\omega(M)}=Y^{o(1)}$. As in
+Proposition~\ref{prop:mo:CS4} these characters contribute
+$Y^{h-\Omega_T+o(1)}$. Since $\min(h/2,2\Omega_T/3)\le\Omega_T$, this is dominated.
+
+\emph{Total.} By Lemma~\ref{lem:mo:red},
+\[
+ D\le \kappa_T+P_{\rm mo}-\min\Bigl(\frac h2,\frac{2\Omega_T}3\Bigr)+o(1).
+\]
+Finally $\min(h/2,2\Omega_T/3)\ge\min(P_{\rm mo}/2,2\Omega_T/3)-(P_{\rm mo}-h)/2$
+and $(P_{\rm mo}-h)/2<d\delta$.
+\end{proof}
+
+If $h_\beta\le \Omega_T/2$, then $S_\beta^{\,2}\le M$, and
+Lemma~\ref{lem:mo:power}(ii) with $r=2$ gives the bound of
+Lemma~\ref{lem:mo:power}(i). Thus this proof invokes
+Theorem~\ref{thm:mo:CS} only for blocks with $h_\beta>\Omega_T/2$. When every
+block is at most $\Omega_T/2$, the elementary moment suffices.
+
+For larger blocks the elementary moment with Lemma~\ref{lem:mo:holder}
+falls short. Take $\Omega_T=1$ and four block masses
+\[
+ \frac35,\quad \frac{17}{50},\quad \frac{17}{50},\quad \frac1{50}.
+\]
+The target saving is $\min(P_{\rm mo}/2,2\Omega_T/3)=13/20$. With the
+elementary moment, the available orders satisfy
+$r_\beta\le\lfloor\Omega_T/h_\beta\rfloor$, giving
+$r=(1,2,2,50)$. The best saving with
+per-block exponents is the fractional-knapsack value
+\[
+ \max_{\substack{0\le\vartheta_i\le1\\\sum_i\vartheta_i/(2r_i)\le1}}
+ \frac12\sum_i\vartheta_i h_i=\frac{161}{250},
+ \qquad (\vartheta_1,\vartheta_2,\vartheta_3,\vartheta_4)
+ =\left(\frac{49}{50},1,1,1\right).
+\]
+The greedy order is by the ratio $r_i h_i$. A uniform exponent instead gives
+$\vartheta=100/101$ and saving $65/101$. Even the per-block optimum is short by
+\[
+ \frac{13}{20}-\frac{161}{250}=\frac3{500}.
+\]
+The masses and $\Omega_T$ are homogeneous. Rescale them into the admissible
+region $L\le1$. This concerns only that method. It is no counterexample to
+Proposition~\ref{prop:mo:PS23}.
+
+\begin{corollary}\label{cor:mo:rows}
+Put $\delta=\varepsilon_0/(2d)$.
+Fix $Y\ge Y_0$, a pair $(\sigma,T)$, and a set $\mathcal H$ of at most four
+ordinary blocks. Then at least one arm of each displayed disjunction holds:
+\begin{gather}
+ D\le \kappa_T+P_{\rm mo}-\Omega_T+\rho_{\mathrm{CS}}\quad\text{or}\quad
+ D\le \kappa_T+P_{\rm mo}-\tfrac12h_{\mathcal H}+\rho_{\mathrm{CS}},\label{eq:mo:CS4or}\\
+ D\le \kappa_T+\tfrac12P_{\rm mo}+\rho_{\mathrm{PS}}\quad\text{or}\quad
+ D\le \kappa_T+P_{\rm mo}-\tfrac23\Omega_T+\rho_{\mathrm{PS}}\label{eq:mo:PS23or}
+\end{gather}
+with $\rho_{\mathrm{CS}}=O_d(1/\log\log Y)\le\varepsilon_0/2$ and
+$\rho_{\mathrm{PS}}=\varepsilon_0/2+O_{\varepsilon_0,d}(1/\log\log Y)\le\varepsilon_0$.
+\end{corollary}
+
+\begin{proof}
+Propositions~\ref{prop:mo:CS4} and~\ref{prop:mo:PS23} apply, since
+$d\delta=\varepsilon_0/2$. The divisor, prime-factor and logarithmic factors
+are each $Y^{O_d(1/\log\log Y)}$. The exponents depend on $d$ and $1/\delta$.
+The constants contribute $O(1/\log Y)$. The families are finite. A maximum
+gives the disjunction of its arms.
+\end{proof}
+
+The installed families are: $\mathrm{CS4}(\sigma,T,\mathcal H)$ with
+$|\mathcal H|=4$ ordinary blocks, $3\cdot127\cdot\binom{12}4=188\,595$
+descriptors; and $\mathrm{PS23}(\sigma,T)$, $3\cdot127=381$ descriptors. Table~\ref{tab:rho}
+records the relaxation of each arm. The certificate fixes the actual held
+set $\mathcal H$ of each $\mathrm{CS4}$ clause.
+
+\section{The finite system}\label{sec:cert}
+
+The variables are the $28$ nonnegative exponents
+\begin{equation}\label{eq:vars}
+ (a,b,c;\,a_1,\dots,a_6,b_1,\dots,b_6,c_1,\dots,c_6;\,v_a,v_b,v_c;\,
+ f_a,f_b,f_c;\,D).
+\end{equation}
+Here $L$, $p_i$, $\tau_s$ and $V_s$ of \eqref{eq:V} are linear forms. The
+auxiliary variables $f_s$ encode \eqref{eq:fourier}:
+\begin{equation}\label{eq:fourierE}
+ \begin{gathered}
+ f_s\ge s_2+s_4+s_6,\qquad f_s\ge s_3+s_6,\qquad f_s\ge s_5\qquad(s=a,b,c),\\
+ f_a+f_b+f_c\le4L-6D .
+ \end{gathered}
+\end{equation}
+A point satisfies \eqref{eq:fourier} if and only if some $f_s$ satisfy
+\eqref{eq:fourierE}; take $f_s$ the maximum. Since
+$\mathsf A_{\rm cut}+\pos{\mathsf B_{\rm cut}}
+=\max(\mathsf A_{\rm cut},\mathsf A_{\rm cut}+\mathsf B_{\rm cut})$, the
+limiting cut \eqref{eq:cut} is the clause
+\begin{equation}\label{eq:cutor}
+ D\le\mathsf A_{\rm cut}\quad\text{or}\quad
+ D\le\mathsf A_{\rm cut}+\mathsf B_{\rm cut} .
+\end{equation}
+
+Let $\mathcal S$ be the following system.
+\begin{itemize}
+\item $29$ linear rows: \eqref{eq:L}, \eqref{eq:root}, \eqref{eq:63},
+ \eqref{eq:pair}, the last two rows of \eqref{eq:tailrows} per side, the ten
+ rows of \eqref{eq:fourierE}, \eqref{eq:HB3} and \eqref{eq:ARCHorder}.
+\item The clauses of Table~\ref{tab:sys}, each with all its arms.
+\end{itemize}
+All rows are in the limiting form of Table~\ref{tab:rho}: every entry in its
+last column is dropped. A clause holds if one of
+its arms holds. It is never replaced by the conjunction of its arms.
+Coefficients, dyadic bounds, tail enumeration and recovery costs are inside
+the rows. So the theorems below are finite statements about \eqref{eq:vars}.
+
+\begin{table}[ht]
+\centering\small
+\caption{The clauses of $\mathcal S$.}\label{tab:sys}
+\begin{tabular}{@{}llrl@{}}
+\hline clause & arms & number & source\\\hline
+(G1)--(G13) & $2$ & $13$ & Appendix~\ref{app:geom}\\
+\eqref{eq:ARCH} & $2$ & $1$ & Corollary~\ref{cor:arch}\\
+\eqref{eq:SPor} & $2$ & $30$ & Corollary~\ref{cor:spacing}\\
+\eqref{eq:cutor} & $2$ & $1\,560\,195$ & Proposition~\ref{prop:cut}\\
+\eqref{eq:mo:CS4or} & $2$ & $188\,595$ & Corollary~\ref{cor:mo:rows}\\
+\eqref{eq:mo:PS23or} & $2$ & $381$ & Corollary~\ref{cor:mo:rows}\\
+\eqref{eq:pw:POW3} & $2$ & $1476$ & Proposition~\ref{thm:pw:rows}(a)\\
+\eqref{eq:pw:G12} & $3$ & $242$ & Proposition~\ref{thm:pw:rows}(b)\\
+\eqref{eq:pw:G1212} & $4$ & $56$ & Proposition~\ref{thm:pw:rows}(c)\\
+\hline
+\end{tabular}
+\end{table}
+
+The descriptor sets are those of Sections~\ref{sec:cut}, \ref{sec:spacing},
+\ref{sec:pow3:families} and~\ref{sec:moment}. The $242$ one-group clauses are
+the two $\mathrm{GROUP12c}$ clauses and the $240$ $\mathrm{GROUP12ab}$
+clauses. In total $\mathcal S$ has $29$ linear rows and $1\,750\,989$ clauses.
+The certificate below uses only these families.
+
+\subsection{The certificate}
+
+\begin{theorem}[Computer-assisted]\label{thm:cert}
+Every nonnegative solution of $\mathcal S$ satisfies $D\le20/37$.
+\end{theorem}
+
+\begin{proof}
+Write $x$ for the vector \eqref{eq:vars}. Let $e_D$ be the unit vector in the
+$D$ coordinate. The certificate is a finite rooted trie. Each internal node
+carries one clause of $\mathcal S$ and all its arms as children. Each leaf
+$t$ carries a set $I(t)$ of rows. These are the linear rows of
+$\mathcal S$, the rows $-x_k\le0$ and the arms on the path from the root to
+$t$. No other row is admissible. Write each row as
+ $\langle g_i,x\rangle\le b_i$. The certificate gives $\eta_i\ge0$ in
+$\mathbb Q$ on $I(t)$. The checker verifies at every leaf
+\begin{equation}\label{eq:farkas}
+ \sum_{i\in I(t)}\eta_i g_i=e_D,
+ \qquad
+ \sum_{i\in I(t)}\eta_i b_i\le\frac{20}{37}.
+\end{equation}
+Let $x\ge0$ satisfy $\mathcal S$. At each internal node $x$ satisfies one arm
+of its clause. Descend into that child. So $x$ reaches a leaf $t$, and
+every row of $I(t)$ holds at $x$. Hence
+\begin{equation}\label{eq:chain}
+ D=\langle e_D,x\rangle
+ =\sum_{i\in I(t)}\eta_i\langle g_i,x\rangle
+ \le\sum_{i\in I(t)}\eta_i b_i
+ \le\frac{20}{37}. \qedhere
+\end{equation}
+\end{proof}
+
+The checker also verifies that no leaf path is a prefix of another. The
+clause \eqref{eq:ARCH} may occur at any depth; every \eqref{eq:ARCH} node has
+both children. Put
+\begin{equation}\label{eq:Lambda}
+ \Lambda_U=\max_t\sum_{\substack{i\in I(t)\\ \text{not }-x_k\le0}}\eta_i .
+\end{equation}
+Each row is encoded in the normalisation of its displayed source and of
+Table~\ref{tab:rows}. In that normalisation its right-hand side rises by at
+most the entry of Table~\ref{tab:rho}. The checker gives $\Lambda_U=\certLambda$, attained at leaf
+$\certLambdaLeaf$. Tables~\ref{tab:cert} and~\ref{tab:fam} give the
+statistics. The combined row for the two grouped families in Table~\ref{tab:fam}
+records their certificate census together.
+
+\begin{table}[ht]
+\centering\small
+\caption{The certificate of Theorem~\ref{thm:cert}.}\label{tab:cert}
+\begin{tabular}{@{}lr@{}}
+\hline leaves (all of kind \texttt{upper}) & $\certLeaves$\\
+internal nodes & $\certInternal$\\
+nodes & $\certNodes$\\
+depth & $\certDepth$\\
+infeasible leaves & $\certInfeasible$\\
+$\Lambda_U$ & $\certLambda$\\
+worst certificate value $\sum_i\eta_i b_i$ & $20/37$\\
+leaves with certificate value exactly $20/37$ & $\certTight$\\
+largest number of nonzero multipliers on a leaf & $\certMaxTerms$\\
+distinct cuts \eqref{eq:cutor} on paths & $\certUNused$\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\caption{Census of the certificate by family. A row of a clause family is
+one of its arms.}\label{tab:fam}
+\begin{tabular}{@{}lrrrr@{}}
+\hline family & \shortstack[r]{internal\\nodes} & \shortstack[r]{distinct clauses\\on paths}
+ & \shortstack[r]{distinct rows\\with $\eta_i>0$} & \shortstack[r]{pairs (leaf, row)\\with $\eta_i>0$}\\\hline
+\certFamilyTable
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{The optimum}\label{sec:witness}
+Let $x^*$ be the point
+\begin{equation}\label{eq:wit}
+ \begin{gathered}
+ a=\tfrac{17}{37},\ a_1=\tfrac7{37},\ a_3=\tfrac{10}{37};\qquad
+ b=\tfrac7{37},\ b_1=\tfrac2{37},\ v_b=\tfrac{35}{37};\\
+ c=\tfrac{13}{37},\ c_1=\tfrac5{37},\ c_4=\tfrac8{37};\qquad
+ f_a=\tfrac{10}{37},\ f_c=\tfrac8{37};\qquad D=\tfrac{20}{37},
+ \end{gathered}
+\end{equation}
+with every unlisted coordinate zero.
+
+\begin{proposition}\label{prop:wit}
+$x^*$ satisfies $\mathcal S$. Thus $20/37$ is the exact optimum of the
+installed system $\mathcal S$.
+\end{proposition}
+
+\begin{proof}
+The witness verifier of Appendix~\ref{app:ver} checks every row and every arm
+at $x^*$ in exact arithmetic. Table~\ref{tab:wit} gives the result. We check
+the binding rows by hand.
+
+\emph{Linear rows.} $L=1$, and
+\[
+ V_a=\tfrac7{37}+3\cdot\tfrac{10}{37}=1,\qquad
+ V_b=\tfrac2{37}+\tfrac{35}{37}=1,\qquad
+ V_c=\tfrac5{37}+4\cdot\tfrac8{37}=1 .
+\]
+So \eqref{eq:ARCHorder} and $\sum_{i\le6}is_i+v_s\le1$ hold with equality.
+Also $\tau_a=\tau_c=0$ and $\tau_b=5/37$, so $v_b=7\tau_b$. Then
+\eqref{eq:63} holds with equality on all three sides. The pair rows give
+$b+c=20/37=D$. For \eqref{eq:fourierE}, $f_a=a_3$, $f_b=0$, $f_c=c_4$, and
+$f_a+f_b+f_c=18/37\le28/37=4L-6D$. For \eqref{eq:HB3},
+$L-p_3=27/37$.
+
+\emph{Clauses.} One arm suffices. Both arms of \eqref{eq:ARCH} hold. For
+(G2), $P_2=24/37$, $Q_2=17/37$ and $L-Q_2=20/37$. For \eqref{eq:SPor} with
+$(e,y,z,\ell)=(a,b,c,2)$, $\mathsf B_{\rm sp}=V_a-V_c+c_2=0$ and
+$\mathsf A_{\rm sp}=b+c-c_2=20/37$. For \eqref{eq:cutor} with $\sigma=c$,
+$T=\{1,4\}$, $R_y=\{1,3\}$, $R_z=\{1\}$: $q=1$,
+\[
+ \begin{gathered}
+ \mathsf A_{\rm cut}=(a-a_1-a_3)+(b-b_1)+c_1+c_4=\tfrac{18}{37},\\
+ \mathsf B_{\rm cut}=(a_1+3a_3+b_1)-(c_1+4c_4)=\tfrac{39}{37}-1=\tfrac2{37}.
+ \end{gathered}
+\]
+For \eqref{eq:mo:PS23or} with $\sigma=b$, $T=\{\mathrm{tail}\}$:
+$\kappa_T=\tau_b=5/37$, $\Omega_T=v_b$, $P_{\rm mo}=a+c=30/37$, and
+$\kappa_T+P_{\rm mo}/2=20/37$. For
+\eqref{eq:mo:CS4or} with $\sigma=a$, $T=\{1\}$,
+$\mathcal H=\{b_1,b_2,c_1,c_4\}$: $\kappa_T=\Omega_T=7/37$, and
+$\kappa_T+P_{\rm mo}-\Omega_T=b+c=20/37$. For \eqref{eq:pw:POW3} with $\sigma=c$,
+$J=\{a_1,a_2,a_3,b_1\}$: $C_c=13/37$, $R_c=24/37$, $P_J=19/37$, and
+$E_{\mathfrak D}=55/74>20/37$. This is the smallest bound within
+$\mathrm{POW3}(c)$.
+\end{proof}
+
+\begin{table}[ht]
+\centering\small
+\caption{Smallest bound at $x^*$ per family. The bound of a clause is its
+largest arm. For \eqref{eq:pw:POW3}--\eqref{eq:pw:G1212} it is taken before
+intersection with \eqref{eq:pair}. The other linear rows hold.}\label{tab:wit}
+\begin{tabular}{@{}lrr@{}}
+\hline family & entries & smallest bound\\\hline
+\eqref{eq:pair} & $3$ & $20/37$\\
+\eqref{eq:HB3} & $1$ & $27/37$\\
+(G1)--(G13) & $13$ & $20/37$\\
+\eqref{eq:SPor} & $30$ & $20/37$\\
+\eqref{eq:cutor} & $1\,560\,195$ & $20/37$\\
+\eqref{eq:mo:CS4or} & $188\,595$ & $20/37$\\
+\eqref{eq:mo:PS23or} & $381$ & $20/37$\\
+$\mathrm{POW3}(a)$, $(b)$, $(c)$ & $486$, $495$, $495$ & $41/74$, $26/37$, $55/74$\\
+$\mathrm{GROUP12c}$, group on $a$; on $b$ & $1$; $1$ & $33/37$; $65/74$\\
+$\mathrm{GROUP12ab}(a)$; $(b)$ & $120$; $120$ & $21/37$; $26/37$\\
+$\mathrm{GROUP1212ab}(a)$; $(b)$ & $28$; $28$ & $21/37$; $26/37$\\
+\hline
+\end{tabular}
+\end{table}
+
+The nine $\mathrm{POW3}(a)$ descriptors with $J\supseteq\{b_1,c_1,c_4\}$ are
+valid rows. They are not in $\mathcal S$. At $x^*$ they have $P_J=15/37$,
+$E_{\mathfrak D}=39/74<20/37$ and
+$\tfrac12(E_{\mathfrak D}+R_a)=79/148<20/37$. Both arms fail at $x^*$.
+Leaving out valid rows keeps
+Theorem~\ref{thm:cert} true. The point $x^*$ lies in the installed $\mathcal S$.
+Adding the nine valid rows removes this witness; the optimum of that enlarged
+system is not asserted here. The point is not an $abc$ triple and gives no
+lower bound for $N_1(X)$.
+
+\section{Stability and the endpoint}\label{sec:end}
+
+\begin{lemma}\label{lem:stab}
+Let $\rho\ge0$ and $x\ge0$. Suppose that, with right-hand sides raised by
+$\rho$,
+\begin{itemize}
+\item every linear row of $\mathcal S$ holds at $x$;
+\item every clause of $\mathcal S$ has an arm that holds at $x$.
+\end{itemize}
+The rows $-x_k\le0$ are not relaxed. Then
+\begin{equation}\label{eq:stab}
+ D\le\frac{20}{37}+\Lambda_U\rho .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Descend the trie as in the proof of Theorem~\ref{thm:cert}, with relaxed
+arms. At the leaf, \eqref{eq:chain} with relaxed right-hand sides adds
+\[
+ \rho\sum_{i\ \text{not }-x_k\le0}\eta_i\le\Lambda_U\rho . \qedhere
+\]
+\end{proof}
+
+\begin{lemma}\label{lem:endpoint}
+Let $0<\mu\le1$. Let $Y_0=Y_0(\varepsilon_0,d)$ be the largest of
+$Y_{\rm red}$ of Section~\ref{sec:red}, $\exp(\exp(1))$,
+$Y_{\rm sv}(8,\theta)$ for $\theta\in\Theta(\varepsilon_0/2)$,
+$Y_{\rm el}(\varepsilon_0,d,\varepsilon_0/2)$ and two further thresholds. The
+first is the point beyond which the statements made for large $Y$ in
+Sections~\ref{sec:arch}--\ref{sec:moment} hold. The second is the least $Y$
+beyond which each displayed vanishing loss, including $\log_Y2^{1+h_d}$, is at
+most $\varepsilon_0/2$. It depends only on
+$\varepsilon_0$ and $d$. Let $Y\ge Y_0$, and take a
+nonempty box admissible in \eqref{eq:reduction} at scale $Y$. Then every
+linear row of $\mathcal S$ holds in a $\mu$-free form. So does at least one
+arm of every clause. Each right-hand side rises by at
+most the amount in Table~\ref{tab:rho}. In
+particular \eqref{eq:L} becomes $L\le1+3\varepsilon_0/4$. Consequently
+\begin{equation}\label{eq:rho}
+ \rho=18\varepsilon_0+o_{\varepsilon_0,d}(1)
+\end{equation}
+is admissible in Lemma~\ref{lem:stab}, and $\rho\le19\varepsilon_0$ for
+$\mu\le1$ and $Y\in[Y_0,X]$.
+\end{lemma}
+
+\begin{table}[ht]
+\centering\small
+\caption{The relaxation carried by each family of $\mathcal S$. Here
+$\varepsilon_1=\varepsilon_0$, $\rho_0=\varepsilon_0/2$ and
+$\delta=\varepsilon_0/(2d)$.}\label{tab:rho}
+\begin{tabular}{@{}p{0.31\textwidth}p{0.33\textwidth}r@{}}
+\hline family & source & raised by\\\hline
+\eqref{eq:L} & \cite[(6.1)]{BBLT} & $3\varepsilon_0/4$\\
+\eqref{eq:root}, \eqref{eq:63}, \eqref{eq:tailrows}, the $f_s$ rows of \eqref{eq:fourierE} & definitions and \eqref{eq:boxconstraints} & $0$\\
+\eqref{eq:pair} & Lemma~\ref{lem:app:pair} & $O_d(1/\log\log Y)$\\
+Appendix~\ref{app:geom} & Corollary~\ref{cor:app:geom} & $6\varepsilon_0+o_{\varepsilon_0,d}(1)$\\
+\eqref{eq:fourier}, the last row of \eqref{eq:fourierE} & Lemma~\ref{lem:app:fourier}, $D$-coefficient $6$ & $18\varepsilon_0+o_{\varepsilon_0,d}(1)$\\
+\eqref{eq:cut}, \eqref{eq:cutor} & Proposition~\ref{prop:cut} & $o_{\varepsilon_0,d}(1)$\\
+\eqref{eq:ARCHorder} & Lemma~\ref{lem:archorder} & $\varepsilon_0/2$\\
+\eqref{eq:ARCH}, each arm & Lemma~\ref{lem:archcover} & $3\varepsilon_0/2+\log_Y2^{1+h_d}$\\
+\eqref{eq:HB3} & Proposition~\ref{prop:HB3} & $\varepsilon_0+O_{\varepsilon_0}(1/\log Y)$\\
+\eqref{eq:SPor}, each arm & Proposition~\ref{prop:spacing} & $\varepsilon_0+O_d(1/\log\log Y)$\\
+\eqref{eq:pw:POW3}--\eqref{eq:pw:G1212}, each arm & Proposition~\ref{thm:pw:rows} & $2\rho_0=\varepsilon_0$\\
+\eqref{eq:mo:CS4or}, each arm & Corollary~\ref{cor:mo:rows} & $O_d(1/\log\log Y)$\\
+\eqref{eq:mo:PS23or}, each arm & Corollary~\ref{cor:mo:rows} & $\varepsilon_0/2+O_{\varepsilon_0,d}(1/\log\log Y)$\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{proof}
+Run Section~\ref{sec:red} at scale $Y$ with $\lambda$ replaced by $\mu$ and
+$\log_Y$ in place of $\log_X$ in \eqref{eq:coord}. In
+\eqref{eq:boxconstraints}, $\mu$ occurs only in the radical constraint. Its
+upper half is
+\begin{equation}\label{eq:Lmu}
+ L\le\mu+3\varepsilon_0/4\le1+3\varepsilon_0/4,
+\end{equation}
+the one row of $\mathcal S$ that depends on $\mu$. Its lower half is
+\begin{equation}\label{eq:muL}
+ \mu\le L+O_d\Bigl(\frac1{\log Y}\Bigr).
+\end{equation}
+The proof of \cite[Theorem~1.3]{BBLT} uses the weaker radical bound
+\[
+ \prod_{j\le d}A_jB_jC_j\le Y^{\mu+3\varepsilon_0}\le Y.
+\]
+This needs $\varepsilon_0\le(1-\mu)/3$, false at $\mu=1$ for every
+$\varepsilon_0>0$. It is the only use of $\mu<1$ in that proof, and the
+visible source of its $\mu$-dependent constant. We
+keep \eqref{eq:Lmu} as a relaxed row instead.
+
+By \eqref{eq:muL}, $\mu$ leaves the other rows. The other constraints of
+\eqref{eq:boxconstraints} are $\mu$-free. So \eqref{eq:root}, \eqref{eq:63},
+\eqref{eq:tailrows} and Lemma~\ref{lem:tail} are $\mu$-free and exact. So are
+the rows $f_s\ge\cdots$ of \eqref{eq:fourierE}, which define $f_s$. The
+constants of the reduction and of Appendix~\ref{app:windows} depend only on
+$\varepsilon_0$ and $d$, not on $\mu$. The condition
+$\varepsilon_0\le(1-\mu)/3$ is needed for the separate step $ABC\le Y$ in the
+proof of \cite[Theorem~1.3]{BBLT}.
+
+\emph{Pair row.} \cite[Proposition~2.3]{BBLT} has no rate in $Y$.
+Lemma~\ref{lem:app:pair} at scale $Y$ gives \eqref{eq:pair} with the factor
+$\Delta=Y^{O_d(1/\log\log Y)}$. So \eqref{eq:pair} costs
+$O_d(1/\log\log Y)$, as in Table~\ref{tab:rho}.
+
+\emph{Cut.} The proof of Proposition~\ref{prop:cut} uses only the dyadic
+ranges, \eqref{eq:box} and the fixed-$d$ lemmas. The same argument at scale
+$Y$ applies for every $0<\mu\le1$. Its divisor and root-class factors cost
+$O_d(1/\log\log Y)$.
+
+\emph{Fourier and geometry.} Lemma~\ref{lem:app:fourier} at scale $Y$
+contains no $\mu$; its $\varepsilon_0$-exponent is $3\varepsilon_0$. Our
+Fourier row is $\kappa_F$ times the logarithm of that bound, with
+\[
+ \kappa_F=\frac{[D]_{\text{row}}}{[D]_{\text{lemma}}}=\frac61
+ =\frac{[L]_{\text{row}}}{[L]_{\text{lemma}}}=\frac{4}{2/3}=\frac1{1/6}=6
+\]
+on the $D$, $L$ and root terms. So $3\varepsilon_0$ becomes $18\varepsilon_0$.
+Corollary~\ref{cor:app:geom} has $\varepsilon_0$-exponents $4\varepsilon_0$,
+$6\varepsilon_0$, and $\mu$ appears as $Y^{\mu}$ and $Y^{\mu-1}$. By
+\eqref{eq:muL}, $\mu\to L$ costs $O_d(1/\log Y)$. The rows (G1)--(G13) have
+coefficient $1$ on $D$ and $L$, so they rise by at most $6\varepsilon_0$.
+
+\emph{New rows.} Sections~\ref{sec:arch}--\ref{sec:moment} work at scale $Y$
+with $\log_Y$ coordinates. They use \eqref{eq:box}, the dyadic ranges, the
+coefficient bound and the $\mu$-free constraints of
+\eqref{eq:boxconstraints}. So their rows are $\mu$-free. Their errors are
+those of Corollary~\ref{cor:arch}, Proposition~\ref{prop:HB3} with
+$\varepsilon_1=\varepsilon_0$, Corollary~\ref{cor:spacing},
+Proposition~\ref{thm:pw:rows} with $\rho_0=\varepsilon_0/2$, and
+Corollary~\ref{cor:mo:rows} with $\delta=\varepsilon_0/(2d)$. For
+$Y\ge Y_0$ each is at most $2\varepsilon_0$. The cubic-sieve proofs use only
+$M\ge Y^{W_\sigma}$; the coefficient $n_{\sigma,0}\ge1$ is the only
+coefficient property used in that bound. The factor $Q/\varphi(Q)$ is
+accounted for in Step~7 of Proposition~\ref{prop:pw:master}. The factor six above multiplies
+only the printed $3\varepsilon_0$ of the Fourier row. No other row carries it.
+
+These are the entries of Table~\ref{tab:rho}; the largest is \eqref{eq:rho}.
+All constants depend only on $\varepsilon_0$ and $d$, not on $\mu$. The
+$Y$-dependent errors are the displayed $O_d(1/\log Y)$,
+$O_d(1/\log\log Y)$ and $o_{\varepsilon_0,d}(1)$ terms. They include the
+constants of the reduction in Section~\ref{sec:red}, of
+Lemma~\ref{lem:app:fourier} and of Corollary~\ref{cor:app:geom}.
+The $Y_0$ threshold absorbs them.
+\end{proof}
+
+By \eqref{eq:rho},
+\begin{equation}\label{eq:Lambdarho}
+ \Lambda_U\rho=\certLambdaFrac\bigl(18\varepsilon_0+o_{\varepsilon_0,d}(1)\bigr)
+ =\certLambdaRho\,\varepsilon_0+o_{\varepsilon_0,d}(1).
+\end{equation}
+The certificate has no infeasible leaf, so no infeasibility margin enters.
+
+Lemma~\ref{lem:endpoint} removes the restriction $\lambda<1$ of
+\cite[Theorem~1.3]{BBLT}. At $\mu=1$ the row \eqref{eq:L} is lost, and
+Lemma~\ref{lem:stab} prices the relaxation $\rho$ at $\Lambda_U\rho$ in the
+exponent. The constant does not depend on $\mu$. $\mathcal S$, its
+certificate and $\Lambda_U$ are free of $\varepsilon_0$ and $d$. So choosing
+$\varepsilon_0$ from $\Lambda_U$ is not circular. The parameters are chosen
+in this order:
+\[
+ \begin{gathered}
+ \varepsilon\ \longrightarrow\ \text{freeze certificate}\ \longrightarrow\ \varepsilon_0
+ \ \longrightarrow\ d=d(\varepsilon_0),\\
+ \delta=\frac{\varepsilon_0}{2d},\ \rho_0=\frac{\varepsilon_0}2,
+ \ \varepsilon_1=\varepsilon_0\ \longrightarrow\ X.
+ \end{gathered}
+\]
+The grid $\Theta(\rho_0)$ of Lemma~\ref{lem:pw:elim} is finite once $\rho_0$
+is fixed. Proposition~\ref{prop:mo:PS23} needs no tail cutoff: $d$ is fixed
+before $\delta$, and the paid blocks cost $d\delta=\varepsilon_0/2$.
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+Fix $\varepsilon>0$. Choose $\varepsilon_0>0$ with
+$\certBudget\,\varepsilon_0<\varepsilon/2$ and with folded index at least
+seven (Section~\ref{sec:fold}). This fixes $d=d(\varepsilon_0)$, then
+$\delta$, $\rho_0$ and $\varepsilon_1=\varepsilon_0$ as above. The factors
+$8^{\omega(M)}$, $(2j)^{\omega(M)}$ and $\operatorname{div}(N)^{O_d(1)}$ are
+$Y^{o(1)}$ for fixed $d$ (Lemmas~\ref{lem:qroot}, \ref{lem:divisor},
+\ref{lem:mo:kernel}); they need no budget. Dyadic constants and the count of
+boxes are inside \eqref{eq:reduction}.
+
+Let $\mu\le1$ and $Y\le X$. If $\mu\le0$, then $N^*_\mu(Y)=0$, as
+$\rad(abc)\ge1\ge c^\mu$. Let $0<\mu\le1$. If $Y<Y_0(\varepsilon_0,d)$, then
+$N^*_\mu(Y)\le Y^3\ll_{\varepsilon_0,d}1$. If $Y\ge Y_0$, then for a nonempty
+box Lemma~\ref{lem:endpoint} raises every row and arm of $\mathcal S$ by at
+most $\rho\le19\varepsilon_0$. So the stability and reduction losses are at
+most
+\[
+ 19\Lambda_U\varepsilon_0+\varepsilon_0
+ =\certBudget\,\varepsilon_0
+ <\frac\varepsilon2.
+\]
+Thus Theorem~\ref{thm:cert} and Lemma~\ref{lem:stab} give
+\begin{equation}\label{eq:boxbound}
+ \mathcal B_d\le Y^{20/37+\certLambdaNineteen\,\varepsilon_0} .
+\end{equation}
+By \eqref{eq:reduction} at scale $Y$, at a further cost $Y^{\varepsilon_0}$,
+$N^*_\mu(Y)\ll_\varepsilon Y^{20/37+\varepsilon/2}$. The constant depends
+only on $\varepsilon$. Finally \eqref{eq:dyadic} with $\lambda=1$ absorbs
+$(\log X)^2$ and the maxima into the remaining $\varepsilon/2$.
+\qed
+
+\appendix
+
+\section{BBLT estimates in the half-open convention}\label{app:windows}
+
+We prove the pair, Fourier and geometry bounds of
+\cite[Propositions~2.3, 3.1 and~4.1]{BBLT} for the boxes \eqref{eq:box}.
+The reduction \cite[Proposition~2.1]{BBLT} is rerun in
+Section~\ref{sec:red}. Work at scale $X$ with exponent $\lambda$, in a box
+satisfying \eqref{eq:boxconstraints}. Windows are $\mathcal I(S)=[S,2S)\cap\N$
+with $S\ge1$ a power of two, so $\#\mathcal I(S)=S$ and $\mathcal I(1)=\{1\}$.
+Roots equal to $1$ are allowed. Put
+\[
+ A=\prod_{i\le d}A_i,\qquad B=\prod_{i\le d}B_i,\qquad C=\prod_{i\le d}C_i,
+\]
+so $ABC=X^L$. For a side $s$ with roots $\mathfrak s_i\in\mathcal I(S_{s,i})$
+put $N_s=\prod_{i\le d}\mathfrak s_i^{\,i}$, so the side value is
+$n_{s,0}N_s$. Since $\mathfrak s_i<2S_{s,i}$ and
+$\prod_iS_{s,i}^{\,i}\le X$,
+\begin{equation}\label{eq:app:size}
+ 1\le N_s<2^{h_d}X .
+\end{equation}
+Put
+\[
+ \Delta=\max_{1\le N<2^{h_d}X}\operatorname{div}(N)^d .
+\]
+By the maximal order of $\operatorname{div}$,
+$\Delta=X^{O_d(1/\log\log X)}$ for $X\ge3$. So $\Delta\ll_{d,\delta'}X^{\delta'}$
+for every fixed $\delta'>0$. By Lemma~\ref{lem:divisor}, a product
+$\prod_{i\in I}\mathfrak s_i^{\,i}<2^{h_d}X$ with $I\subseteq[d]$ determines
+the roots $(\mathfrak s_i)_{i\in I}$ up to $\Delta$ choices. The constants
+below depend only on $d$ and $\varepsilon_0$. They do not depend on
+$\lambda$, the coefficients or the box.
+
+\begin{lemma}\label{lem:app:power}
+Let $j\ge2$ and $m\in\Z\setminus\{0\}$. Then
+\[
+ \#\{(x,y)\in\N^2:x^j-y^j=m\}\le2(j-1)\operatorname{div}(|m|).
+\]
+\end{lemma}
+
+\begin{proof}
+Put $t=x-y$. Then $t\ne0$, and $t\mid m$ since
+$x^j-y^j=t\sum_{i<j}x^{j-1-i}y^i$. So $t$ takes at most
+$2\operatorname{div}(|m|)$ values. For fixed $t$,
+$x^j-(x-t)^j$ is a polynomial in $x$ of degree $j-1\ge1$ with leading
+coefficient $jt\ne0$. So it equals $m$ for at most $j-1$ values of $x$, and
+$y=x-t$.
+\end{proof}
+
+\begin{lemma}[pair bound]\label{lem:app:pair}
+$\mathcal B_d\le\Delta\min(AB,AC,BC)$.
+\end{lemma}
+
+\begin{proof}
+Fix the $a$- and $b$-roots: exactly $AB$ choices. The equation in
+\eqref{eq:box} fixes $c_0N_c$, hence $N_c$. By \eqref{eq:app:size}, the
+$c$-roots take at most $\Delta$ values. The pairs $(a,c)$ and $(b,c)$ are
+the same, since $b_0N_b=c_0N_c-a_0N_a$ and $a_0N_a=c_0N_c-b_0N_b$.
+\end{proof}
+
+\begin{lemma}[Fourier bound]\label{lem:app:fourier}
+Let $2\le j,k,\ell\le d$ and put
+\[
+ \Pi_F=\prod_{j\mid i}A_i\prod_{k\mid i}B_i\prod_{\ell\mid i}C_i,
+\]
+the products over $i\le d$. Then
+\[
+ \mathcal B_d\le(3d)^{1/2}\Delta^{5/2}\,\frac{(ABC)^{2/3}}{\Pi_F^{1/6}}
+ \ll_{\varepsilon_0,d}X^{3\varepsilon_0}\,\frac{(ABC)^{2/3}}{\Pi_F^{1/6}} .
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Orthogonality.} Write $e(t)=e^{2\pi it}$. For a side $s$ put
+\[
+ \Sigma_s(\alpha)=\sum e(\alpha\,n_{s,0}N_s)\qquad(\alpha\in\mathbb R),
+\]
+the sum over all root tuples of $s$ in the windows of the box. The integral
+\[
+ \int_0^1\Sigma_a(\alpha)\Sigma_b(\alpha)\overline{\Sigma_c(\alpha)}\,d\alpha
+\]
+counts the root tuples with $a_0N_a+b_0N_b=c_0N_c$. Dropping the gcd
+condition, this is at least $\mathcal B_d$, and at most
+$\int_0^1|\Sigma_a\Sigma_b\Sigma_c|$. By H\"older with exponents
+$3,3,3$ and Cauchy--Schwarz,
+\begin{equation}\label{eq:app:holder}
+ \mathcal B_d\le\prod_{s=a,b,c}\Bigl(\int_0^1|\Sigma_s|^3\Bigr)^{1/3},
+ \qquad
+ \int_0^1|\Sigma_s|^3\le\Bigl(\int_0^1|\Sigma_s|^2\Bigr)^{1/2}
+ \Bigl(\int_0^1|\Sigma_s|^4\Bigr)^{1/2}.
+\end{equation}
+We treat side $a$ with $j$. Sides $b$ and $c$, with $k$ and $\ell$, are the
+same. Write $\mathbf a=(\mathfrak a_i)_{i\le d}$ and $N(\mathbf a)=N_a$.
+As $a_0\ge1$, $\int_0^1e(\alpha a_0m)\,d\alpha=\mathbf 1_{m=0}$ for $m\in\Z$.
+
+\emph{Second moment.} $\int_0^1|\Sigma_a|^2$ counts pairs
+$(\mathbf a,\mathbf a')$ with $N(\mathbf a)=N(\mathbf a')$. Choose
+$\mathbf a$ in $A$ ways; then $\mathbf a'$ takes at most $\Delta$ values. So
+\[
+ \int_0^1|\Sigma_a|^2\le A\Delta .
+\]
+
+\emph{Fourth moment.} Let $J=\{i\le d:j\mid i\}$, so $j\in J$. Split
+$\mathbf a=(\mathbf a^\circ,\mathbf a^\bullet)$ into the roots with
+$i\notin J$ and $i\in J$, and put
+\[
+ u(\mathbf a^\circ)=\prod_{i\notin J}\mathfrak a_i^{\,i},\qquad
+ W(\mathbf a^\bullet)=\prod_{i\in J}\mathfrak a_i^{\,i}.
+\]
+The tuple $\mathbf a^\circ$ runs over exactly
+$A^\circ=\prod_{i\notin J}A_i=A/\prod_{j\mid i}A_i$ values. Cauchy--Schwarz
+over $\mathbf a^\circ$ gives
+\[
+ |\Sigma_a(\alpha)|^2\le A^\circ\,\mathcal T(\alpha),\qquad
+ \mathcal T(\alpha)=\sum_{\mathbf a^\circ}\
+ \sum_{\mathbf a^\bullet,\mathbf a'^\bullet}
+ e\bigl(\alpha a_0\,u(\mathbf a^\circ)
+ (W(\mathbf a^\bullet)-W(\mathbf a'^\bullet))\bigr)\ge0 .
+\]
+Expand $|\Sigma_a|^2$ over pairs $(\mathbf a'',\mathbf a''')$ and
+integrate:
+\[
+ \int_0^1|\Sigma_a|^4\le A^\circ\int_0^1\mathcal T|\Sigma_a|^2
+ =A^\circ\,\mathcal N,
+\]
+Here $\mathcal N$ counts the tuples
+$(\mathbf a^\circ,\mathbf a^\bullet,\mathbf a'^\bullet,\mathbf a'',\mathbf a''')$
+with
+\begin{equation}\label{eq:app:4eq}
+ u(\mathbf a^\circ)\bigl(W(\mathbf a^\bullet)-W(\mathbf a'^\bullet)\bigr)
+ =N(\mathbf a''')-N(\mathbf a'').
+\end{equation}
+\emph{Zero case.} If the right side of \eqref{eq:app:4eq} is $0$, then
+$W(\mathbf a^\bullet)=W(\mathbf a'^\bullet)$. Choose
+$(\mathbf a^\circ,\mathbf a^\bullet)$ and $\mathbf a''$ in $A^2$ ways. Then
+$\mathbf a'^\bullet$ and $\mathbf a'''$ take at most $\Delta$ values each.
+This gives at most $A^2\Delta^2$ tuples.
+
+\emph{Nonzero case.} Choose $\mathbf a'',\mathbf a'''$ in $A^2$ ways, with
+right side $m_0\ne0$. By \eqref{eq:app:size}, $|m_0|<2^{h_d}X$. Each
+$\mathfrak a_i$ with $i\notin J$ divides $m_0$, so $\mathbf a^\circ$ takes at
+most $\operatorname{div}(|m_0|)^d\le\Delta$ values. Then
+$m=m_0/u(\mathbf a^\circ)\ne0$ is fixed, and $|m|<2^{h_d}X$. As $j\mid i$ for
+$i\in J$,
+\[
+ W(\mathbf a^\bullet)=x^j,\quad W(\mathbf a'^\bullet)=y^j,\qquad
+ x=\prod_{i\in J}\mathfrak a_i^{\,i/j},\quad
+ y=\prod_{i\in J}\mathfrak a_i'^{\,i/j},
+\]
+with $x,y\in\N$ and $x^j-y^j=m$. Lemma~\ref{lem:app:power} gives at most
+$2(j-1)\operatorname{div}(|m|)\le2d\Delta$ pairs $(x,y)$. Since
+$x\le x^j<2^{h_d}X$ and $y\le y^j<2^{h_d}X$, Lemma~\ref{lem:divisor} recovers
+$\mathbf a^\bullet$ from $x$ and $\mathbf a'^\bullet$ from $y$, with at most
+$\Delta$ values each. This gives at most $2dA^2\Delta^4$ tuples.
+
+Hence $\mathcal N\le3dA^2\Delta^4$ and
+\[
+ \int_0^1|\Sigma_a|^4\le3d\,\Delta^4\,\frac{A^3}{\prod_{j\mid i}A_i}.
+\]
+
+\emph{Combination.} By \eqref{eq:app:holder},
+\[
+ \int_0^1|\Sigma_a|^3\le(3d)^{1/2}\Delta^{5/2}\,
+ \frac{A^2}{\bigl(\prod_{j\mid i}A_i\bigr)^{1/2}} .
+\]
+Multiply the three sides and take the cube root. Finally
+$\Delta^{5/2}\ll_{\varepsilon_0,d}X^{3\varepsilon_0}$.
+\end{proof}
+
+Take $\log_X$, multiply by $6$, keep only $i\le6$ and choose
+$j,k,\ell\in\{2,3,5\}$. Since all coordinates are nonnegative, this gives
+the $27$ rows of \eqref{eq:fourier}, each raised by
+$18\varepsilon_0+O_{\varepsilon_0,d}(1/\log X)$.
+
+For the geometry bound we import the following lattice-point count, in the
+form used in the proof of \cite[Proposition~4.1]{BBLT}.
+
+\begin{theoremA}[{\cite[Lemma~3]{HB}}]\label{thm:app:HB}
+Let $a',b',c'$ be nonzero integers with $\gcd(a',b',c')=1$, and let
+$H_a,H_b,H_c\ge1$. The number of
+$(x,y,z)\in\Z^3$ with $\gcd(x,y,z)=1$, $a'x+b'y=c'z$ and $|x|\le H_a$,
+$|y|\le H_b$, $|z|\le H_c$ is
+\[
+ \ll1+\frac{H_aH_bH_c}{\max\{|a'|H_a,|b'|H_b,|c'|H_c\}},
+\]
+with an absolute implied constant $C_{\rm HB}$.
+\end{theoremA}
+
+\begin{lemma}[geometry bound]\label{lem:app:geom}
+Let $I,I',I''\subseteq[d]$ and put
+\[
+ \Pi_1=\prod_{i\in I}A_i\prod_{i\in I'}B_i\prod_{i\in I''}C_i,\qquad
+ \Pi_2=\prod_{i\in I}A_i^{i-1}\prod_{i\in I'}B_i^{i-1}\prod_{i\in I''}C_i^{i-1}.
+\]
+Then
+\[
+ \mathcal B_d\le C_{\rm HB}\,\Delta^3\Bigl(\frac{ABC}{\Pi_1}
+ +2^{3h_d}X^{-1+\varepsilon_0/2}\,ABC\,\Pi_2\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Variables.} For a tuple counted by $\mathcal B_d$ put
+\[
+ \begin{aligned}
+ a'&=a_0\prod_{i\notin I}\mathfrak a_i^{\,i},&
+ b'&=b_0\prod_{i\notin I'}\mathfrak b_i^{\,i},&
+ c'&=c_0\prod_{i\notin I''}\mathfrak c_i^{\,i},\\
+ x&=\prod_{i\in I}\mathfrak a_i^{\,i},&
+ y&=\prod_{i\in I'}\mathfrak b_i^{\,i},&
+ z&=\prod_{i\in I''}\mathfrak c_i^{\,i}.
+ \end{aligned}
+\]
+Then $a'x+b'y=c'z$ and $a',b',c'\ge1$. The integers $a',b',c'$ divide the
+three side values, and so do $x,y,z$. The side values are pairwise coprime by
+Lemma~\ref{lem:coprime}. So $\gcd(a',b',c')=1$ and $\gcd(x,y,z)=1$.
+
+\emph{Heights.} Put
+\[
+ H_a=2^{h_d}\prod_{i\in I}A_i^{\,i},\qquad
+ H_b=2^{h_d}\prod_{i\in I'}B_i^{\,i},\qquad
+ H_c=2^{h_d}\prod_{i\in I''}C_i^{\,i}.
+\]
+These are at least $1$. Since $\mathfrak a_i<2A_i$, $0<x<H_a$; likewise
+$y<H_b$ and $z<H_c$. As $c_0\ge1$ and $\mathfrak c_i\ge C_i$,
+\[
+ c'H_c\ge\prod_{i\notin I''}C_i^{\,i}\prod_{i\in I''}C_i^{\,i}
+ =\prod_{i\le d}C_i^{\,i}\ge X^{1-\varepsilon_0/2}
+\]
+by \eqref{eq:boxconstraints}.
+
+\emph{Count.} Fix the complementary roots $\mathfrak a_i$ $(i\notin I)$,
+$\mathfrak b_i$ $(i\notin I')$ and $\mathfrak c_i$ $(i\notin I'')$: exactly
+$ABC/\Pi_1$ choices. They fix $a',b',c'$. By Theorem~\ref{thm:app:HB}, the
+number of $(x,y,z)$ is at most
+\[
+ C_{\rm HB}\Bigl(1+\frac{H_aH_bH_c}{c'H_c}\Bigr)
+ \le C_{\rm HB}\Bigl(1+2^{3h_d}X^{-1+\varepsilon_0/2}
+ \prod_{i\in I}A_i^{\,i}\prod_{i\in I'}B_i^{\,i}\prod_{i\in I''}C_i^{\,i}\Bigr).
+\]
+Each of $x,y,z$ is less than $2^{h_d}X$. So it fixes its selected roots up to
+$\Delta$ values. Multiply, and use
+\[
+ \frac{ABC}{\Pi_1}\prod_{i\in I}A_i^{\,i}\prod_{i\in I'}B_i^{\,i}
+ \prod_{i\in I''}C_i^{\,i}=ABC\,\Pi_2 .\qedhere
+\]
+\end{proof}
+
+\begin{corollary}\label{cor:app:geom}
+For $I,I',I''\subseteq[d]$,
+\[
+ \mathcal B_d\ll_{\varepsilon_0,d}\frac{X^{\lambda+4\varepsilon_0}}{\Pi_1}
+ +X^{\lambda-1+6\varepsilon_0}\,\Pi_2 .
+\]
+\end{corollary}
+
+\begin{proof}
+By \eqref{eq:boxconstraints}, $ABC\le X^{\lambda+3\varepsilon_0/4}$, and
+$\Delta^3\ll_{\varepsilon_0,d}X^{\varepsilon_0/4}$. Lemma~\ref{lem:app:geom}
+gives
+\[
+ \mathcal B_d\ll_{\varepsilon_0,d}\frac{X^{\lambda+\varepsilon_0}}{\Pi_1}
+ +X^{\lambda-1+3\varepsilon_0/2}\,\Pi_2 ,
+\]
+which is stronger, as $X\ge1$.
+\end{proof}
+
+This is \cite[Proposition~4.1]{BBLT} in our convention, with the same
+exponents. Lemmas~\ref{lem:app:pair}--\ref{lem:app:geom} use the windows,
+\eqref{eq:box}, $n_{s,0}\ge1$ and the $\lambda$-free constraints of
+\eqref{eq:boxconstraints}. Corollary~\ref{cor:app:geom} also uses
+$ABC\le X^{\lambda+3\varepsilon_0/4}$. At scale $Y$ with $\lambda:=\mu$ they
+give the entries of Table~\ref{tab:rho} for \eqref{eq:pair},
+\eqref{eq:fourier} and (G1)--(G13).
+
+\section{The thirteen min-disjunctions}\label{app:geom}
+
+We work at scale $X$ with exponent $\lambda$; Lemma~\ref{lem:endpoint} uses
+the same derivation at scale $Y$ with $\mu$. Put $p_i=a_i+b_i+c_i$,
+$L=a+b+c$. Each row is Corollary~\ref{cor:app:geom}
+for one triple $I,I',I''\subseteq[6]$. A sum of two terms is at most twice
+the larger, so
+\[
+D\le\max(\lambda+4\varepsilon_0-P,\lambda+6\varepsilon_0-Q)
++O_{\varepsilon_0,d}(1/\log X),
+\]
+where
+$P=\sum_{i\in I}a_i+\sum_{i\in I'}b_i+\sum_{i\in I''}c_i$ and
+$Q=1-\sum_{i\in I}(i-1)a_i-\sum_{i\in I'}(i-1)b_i
+ -\sum_{i\in I''}(i-1)c_i$. With $C_{\varepsilon_0,d}$ the constant of
+Corollary~\ref{cor:app:geom}, the constant and the factor $2$ cost
+$\log(2C_{\varepsilon_0,d})/\log X=O_{\varepsilon_0,d}(1/\log X)$. By the lower
+bound in \eqref{eq:boxconstraints} and \eqref{eq:coord},
+\[
+ 2^{-O_d(1)}X^\lambda\le\prod_{j\le d}A_jB_jC_j=X^L,
+ \qquad \lambda\le L+O_{\varepsilon_0,d}(1/\log X).
+\]
+Hence
+$\min(P,Q)\le L-D+6\varepsilon_0+O_{\varepsilon_0,d}(1/\log X)$.
+The certificate uses the limiting form below, free of $\varepsilon_0$; the
+slack $6\varepsilon_0+O_{\varepsilon_0,d}(1/\log X)$ is charged in
+Lemma~\ref{lem:endpoint} and Table~\ref{tab:rho}. The choices, from the proof
+of \cite[Theorem~1.3]{BBLT}:
+\[
+\begin{array}{ll}
+ \text{row }1: & I=I'=I''=\{1,2,4\};\\
+ \text{rows }2\text{--}4: & I=I'=\{1,2\},\ I''=\{1,2,3\}\ \text{and permutations};\\
+ \text{rows }5\text{--}7: & I=\{1,2\},\ I'=I''=\{1,2,3\}\ \text{and permutations};\\
+ \text{rows }8\text{--}10: & I=I'=\{1,2\},\ I''=\{1,3\}\ \text{and permutations};\\
+ \text{rows }11\text{--}13: & I=\{1,2\},\ I'=I''=\{1,3\}\ \text{and permutations}.
+\end{array}
+\]
+Written out:
+\begin{align}
+ P_1&=p_1+p_2+p_4,& Q_1&=1-p_2-3p_4
+ \tag{G1}\label{eq:G1}\\
+ P_2&=p_1+p_2+a_3,& Q_2&=1-p_2-2a_3
+ \tag{G2}\label{eq:G2}\\
+ P_3&=p_1+p_2+b_3,& Q_3&=1-p_2-2b_3
+ \tag{G3}\label{eq:G3}\\
+ P_4&=p_1+p_2+c_3,& Q_4&=1-p_2-2c_3
+ \tag{G4}\label{eq:G4}\\
+ P_5&=p_1+p_2+a_3+b_3,& Q_5&=1-p_2-2a_3-2b_3
+ \tag{G5}\label{eq:G5}\\
+ P_6&=p_1+p_2+b_3+c_3,& Q_6&=1-p_2-2b_3-2c_3
+ \tag{G6}\label{eq:G6}\\
+ P_7&=p_1+p_2+c_3+a_3,& Q_7&=1-p_2-2c_3-2a_3
+ \tag{G7}\label{eq:G7}\\
+ P_8&=p_1+a_3+b_2+c_2,& Q_8&=1-2a_3-b_2-c_2
+ \tag{G8}\label{eq:G8}\\
+ P_9&=p_1+b_3+a_2+c_2,& Q_9&=1-2b_3-a_2-c_2
+ \tag{G9}\label{eq:G9}\\
+ P_{10}&=p_1+c_3+a_2+b_2,& Q_{10}&=1-2c_3-a_2-b_2
+ \tag{G10}\label{eq:G10}\\
+ P_{11}&=p_1+a_2+b_3+c_3,& Q_{11}&=1-a_2-2b_3-2c_3
+ \tag{G11}\label{eq:G11}\\
+ P_{12}&=p_1+b_2+a_3+c_3,& Q_{12}&=1-b_2-2a_3-2c_3
+ \tag{G12}\label{eq:G12}\\
+ P_{13}&=p_1+c_2+a_3+b_3,& Q_{13}&=1-c_2-2a_3-2b_3
+ \tag{G13}\label{eq:G13}
+\end{align}
+and each row is used as the disjunction
+$D\le L-P_j$ or $D\le L-Q_j$.
+
+
+\section{Computer checks}\label{app:ver}
+
+The paper comes with external files. They are the certificate report of
+Theorem~\ref{thm:cert} and the
+checking programs of Table~\ref{tab:sha}. The rows, witness
+\eqref{eq:wit}, and verification procedures are specified in the text. All
+arithmetic is exact. No checking program imports a numerical package or an
+LP solver.
+
+\subsection{The report}
+The file \texttt{final-report.raw.json.xz} decompresses to the report.
+\texttt{normalize\_completed\_report.py} recomputes its derived trie
+statistics; on this report its output equals its input byte for byte. The
+report is one JSON object with fields \texttt{target} ($\texttt{"20/37"}$),
+\texttt{system}, \texttt{search\_flags}, \texttt{complete}, \texttt{stats},
+\texttt{certificates}, \texttt{survivors}, \texttt{open\_stack} and
+\texttt{elapsed\_s}. The lists \texttt{survivors} and \texttt{open\_stack}
+are empty. Each certificate has exactly four fields.
+\begin{itemize}
+\item \texttt{kind}: always \texttt{"upper"}.
+\item \texttt{path}: the list of arm labels from the root to the leaf.
+\item \texttt{terms}: a list of \texttt{[row-label,"p/q"]}, multipliers
+ positive.
+\item \texttt{rhs}: the value $\sum_i\eta_i b_i$.
+\end{itemize}
+The paths form the trie of Theorem~\ref{thm:cert}. A label names one row or
+arm of $\mathcal S$ (Table~\ref{tab:rows}). The verifier rebuilds each row
+from its label and reads no stored coefficient vector. The metadata string
+\texttt{system} also contains the label \texttt{DET}. It names a row
+family outside $\mathcal S$. The verifier builds no row from it,
+and no path or multiplier in this certificate uses such a row.
+
+\begin{center}\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth}>{\raggedright\arraybackslash}p{0.60\textwidth}@{}}
+\hline program & what it checks\\\hline
+\texttt{verify\_tree\_}\penalty0\texttt{report\_clean.py} &
+ Standard library only. Strict JSON, duplicate keys rejected; target, system
+ string and flags. At each leaf: every label well formed and in
+ $\mathcal S$; every term a linear row, a row $-x_k\le0$, or an arm on the
+ path; \eqref{eq:farkas} exactly, that is $\sum_i\eta_i g_i=e_D$ and
+ $\sum_i\eta_i b_i\le20/37$; the declared \texttt{rhs}. The trie: paths
+ distinct and prefix-free; the children of each internal node are exactly
+ the arms of one clause, \eqref{eq:ARCH} included at any depth. It
+ recomputes Tables~\ref{tab:cert} and~\ref{tab:fam} and $\Lambda_U$. It
+ rejects $\certMut$ corrupted reports, among them a missing arm, a missing
+ \eqref{eq:ARCH} arm, a tampered multiplier, a row outside its path, a
+ forbidden $\mathrm{POW3}(a)$ descriptor and a prefix leaf.\\
+\texttt{verify\_tree\_}\penalty0\texttt{report.py} &
+ a second replay of \eqref{eq:farkas} and of the node counts\\
+\texttt{verify\_witness\_}\penalty0\texttt{clean.py} &
+ $x^*$ against every clause of $\mathcal S$ (Table~\ref{tab:wit}); it
+ rejects $\certWitMut$ corrupted constructors\\
+\texttt{audit\_clause\_}\penalty0\texttt{compiler.py},
+\texttt{compiler\_}\penalty0\texttt{differential\_used.py} &
+ every row used by the certificate, and every $\mathrm{POW3}$ and grouped
+ descriptor, rebuilt by the search program's compiler and compared with the
+ verifier's row\\
+\hline
+\end{tabular}
+\end{center}
+
+The driver runs these programs and writes their output:
+\begin{center}\small
+\texttt{run\_verification.sh}\quad$\longrightarrow$\quad
+\texttt{FROZEN\_VERIFICATION.stdout}.
+\end{center}
+Soundness uses the displayed row definitions and the label map in
+Table~\ref{tab:rows}. It also uses the exact Farkas identities at every leaf
+and the admissibility and trie checks of the first program. The compiler
+differential also compares the verifier's row builder with the search
+compiler. The coefficient formulas and derivations in
+Sections~\ref{sec:red}--\ref{app:geom} identify those rows with the system
+$\mathcal S$.
+
+Table~\ref{tab:rows} gives the labels. Here $s\in\{a,b,c\}$; $\sigma$ is the
+modulus or powered side; $(y,z)$ is as in Section~\ref{sec:cut}. A set
+$T\subseteq\{1,\dots,6,\mathrm{tail}\}$ is written as the integer
+$\sum_{t\in T}2^{t-1}$, with the tail counted as $t=7$. Free sets $R_y,R_z$
+are written likewise, in $[1,63]$ or $0$. Slots are written \texttt{a1}, \dots,
+\texttt{c6}.
+
+\begin{table}[ht]
+\centering\scriptsize
+\caption{Verifier labels and their sources.}\label{tab:rows}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.42\textwidth}@{\quad}>{\raggedright\arraybackslash}p{0.50\textwidth}@{}}
+\hline verifier label & row or arm\\\hline
+\texttt{L} & \eqref{eq:L}\\
+\texttt{roots<=s}, \texttt{rad-s} & \eqref{eq:root}, \eqref{eq:63}\\
+\texttt{tail7-s}, \texttt{val-s} & $v_s\ge7\tau_s$, $\sum_{i\le6}is_i+v_s\le1$ of \eqref{eq:tailrows}\\
+\texttt{pair-xy} & \eqref{eq:pair}\\
+\texttt{fourier-s-j}, $j=0,1,2$; \texttt{fourier-sum} & the rows $f_s\ge s_2+s_4+s_6$, $s_3+s_6$, $s_5$; the last row of \eqref{eq:fourierE}\\
+\texttt{HB3} & \eqref{eq:HB3}\\
+\texttt{ARCH:a<=c}, \texttt{ARCH:b<=c} & \eqref{eq:ARCHorder}\\
+\texttt{ARCH:max-a}, \texttt{ARCH:max-b} & the arms of \eqref{eq:ARCH}\\
+\texttt{G0}; \texttt{G1-s}; \texttt{G2-st}; \texttt{G3-s}; \texttt{G4-s};\newline suffix \texttt{:0}, \texttt{:1} & (G1); (G2)--(G4); (G5)--(G7), $st=ab,bc,ca$; (G8)--(G10); (G11)--(G13); the $P$ arm, the $Q$ arm\\
+\texttt{SP:e:y:z:k:0}, \texttt{:1} & The field $k$ equals the spacing exponent $\ell$; the two arms of \eqref{eq:SPor}\\
+\texttt{UN:}$\sigma$\texttt{:}$R_y$\texttt{:}$R_z$\texttt{:}$T$\texttt{:00}, \texttt{:10} & $D\le\mathsf A_{\rm cut}$, $D\le\mathsf A_{\rm cut}+\mathsf B_{\rm cut}$ of \eqref{eq:cutor}\\
+\texttt{CS4:}$\sigma$\texttt{:}$T$\texttt{:}$\mathcal H$\texttt{:W}, \texttt{:h2} & the two arms of \eqref{eq:mo:CS4or}; $T$ is the integer mask above, and $\mathcal H$ is the four comma-separated, lexicographically sorted held slots\\
+\texttt{PS:}$\sigma$\texttt{:}$T$\texttt{:half}, \texttt{:2W3} & the two arms of \eqref{eq:mo:PS23or}\\
+\texttt{POW3}$\sigma$\texttt{:}$J$\texttt{:S}, \texttt{:avg} & $D\le E_{\mathfrak D}$, $D\le\frac12(E_{\mathfrak D}+R_\sigma)$ of \eqref{eq:pw:POW3}\\
+\texttt{GROUP12c:}\dots\newline \texttt{GROUP12a:c1c2sq+}\dots\newline \texttt{GROUP12b:c1c2sq+}\dots\newline suffix \texttt{:S}, \texttt{:avg}, \texttt{:gate} & the three arms of \eqref{eq:pw:G12}; after \texttt{c1c2sq+} come three canonical singleton slots separated by \texttt{+}\\
+\texttt{GROUP1212a:b1b2sq+c1c2sq+}\dots\newline \texttt{GROUP1212b:a1a2sq+c1c2sq+}\dots\newline suffix \texttt{:S}, \texttt{:avg}, \texttt{:gate-}$s$ & the four arms of \eqref{eq:pw:G1212}; after the two fixed squared groups come two canonical singleton slots separated by \texttt{+}\\
+\texttt{nonneg:x} & $-x\le0$\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\caption{SHA-256 of the files this paper depends on.}\label{tab:sha}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.44\textwidth}@{\quad}l@{}}
+\hline file & SHA-256\\\hline
+\texttt{MANIFEST.sha256} (20/37 package) & \texttt{\shaManifestI}\\
+ & \texttt{\shaManifestII}\\
+\texttt{final-report.raw.json.xz} & \texttt{\shaReportXzI}\\
+ & \texttt{\shaReportXzII}\\
+report (decompressed, normalized) & \texttt{\shaReportI}\\
+ & \texttt{\shaReportII}\\
+\texttt{normalize\_completed\_report.py} & \texttt{\shaNormI}\\
+ & \texttt{\shaNormII}\\
+\texttt{verify\_tree\_report\_clean.py} & \texttt{\shaCleanI}\\
+ & \texttt{\shaCleanII}\\
+\texttt{verify\_tree\_report.py} & \texttt{\shaTreeI}\\
+ & \texttt{\shaTreeII}\\
+\texttt{verify\_witness\_clean.py} & \texttt{\shaWitI}\\
+ & \texttt{\shaWitII}\\
+\texttt{audit\_clause\_compiler.py} & \texttt{\shaAuditI}\\
+ & \texttt{\shaAuditII}\\
+\texttt{compiler\_differential\_used.py} & \texttt{\shaDiffI}\\
+ & \texttt{\shaDiffII}\\
+\texttt{run\_verification.sh} & \texttt{\shaRunI}\\
+ & \texttt{\shaRunII}\\
+\texttt{FROZEN\_VERIFICATION.stdout} & \texttt{\shaStdoutI}\\
+ & \texttt{\shaStdoutII}\\
+\hline
+\end{tabular}
+\end{table}
+\clearpage
+
+
+
+\section*{Statements and declarations}
+
+\textbf{Competing interests.} The author has no competing interests.
+
+\textbf{Funding.} No funding was received for this work.
+
+\textbf{Data availability.} The certificates, the checking programs of
+Appendix~\ref{app:ver} and their outputs accompany this paper. Their SHA-256
+values are in Table~\ref{tab:sha}.
+
+\begin{thebibliography}{10}
+
+\bibitem{Be}
+C.~Bernert, \emph{The exceptional set in the abc conjecture}, preprint (2025),
+arXiv:2506.13364v1.
+
+\bibitem{BBLT}
+C.~Bernert, T.~Browning, J.~D. Lichtman, and J.~Ter\"av\"ainen,
+\emph{Bounds on the exceptional set in the abc conjecture}, to appear in
+C.~R.~Math.; arXiv:2410.12234v2, revised 9 May 2026.
+
+\bibitem{BLT}
+T.~Browning, J.~D. Lichtman, and J.~Ter\"av\"ainen,
+\emph{Bounds on the exceptional set in the abc conjecture}, preprint (2024),
+arXiv:2410.12234v1; earlier version of \cite{BBLT}.
+
+\bibitem{CS}
+Todd Cochrane and Sanying Shi, \emph{The congruence $x_1x_2\equiv x_3x_4\pmod m$
+and mean values of character sums}, J. Number Theory \textbf{130} (2010),
+no.~3, 767--785,
+\url{https://doi.org/10.1016/j.jnt.2009.08.006}.
+
+\bibitem{dB}
+N.~G. de Bruijn, \emph{On the number of integers $\le x$ whose prime factors
+divide $n$}, Illinois J. Math. \textbf{6} (1962), 137--141,
+\url{https://doi.org/10.1215/ijm/1255631814}.
+
+\bibitem{GMRR}
+O.~Gorodetsky, K.~Matom\"aki, M.~Radziwi\l\l, and B.~Rodgers, \emph{On the
+variance of squarefree integers in short intervals and arithmetic
+progressions}, Geom. Funct. Anal. \textbf{31} (2021), 111--149,
+\url{https://doi.org/10.1007/s00039-021-00557-5}.
+
+\bibitem{HB}
+D.~R. Heath-Brown, \emph{Diophantine approximation with square-free numbers},
+Math. Z. \textbf{187} (1984), 335--344,
+\url{https://doi.org/10.1007/BF01161951}.
+
+\bibitem{HBcube}
+D.~R. Heath-Brown, \emph{Counting square-full solutions to $x+y=z$},
+preprint (2026), arXiv:2601.07817v1.
+
+\bibitem{IR}
+K.~Ireland and M.~Rosen, \emph{A classical introduction to modern number
+theory}, 2nd ed., Grad. Texts in Math. \textbf{84}, Springer, New York,
+1990, \url{https://doi.org/10.1007/978-1-4757-2103-4}.
+
+\bibitem{Ka}
+D.~M. Kane, \emph{On the number of ABC solutions with restricted radical sizes},
+J. Number Theory \textbf{154} (2015), 32--43,
+\url{https://doi.org/10.1016/j.jnt.2014.09.021}.
+
+\bibitem{Li}
+R.~Li, \emph{On the exceptional set in the abc conjecture}, preprint (2025),
+arXiv:2507.02885v1.
+
+\end{thebibliography}
+
+\end{document}
