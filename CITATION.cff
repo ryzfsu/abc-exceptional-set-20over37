@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc exceptional set"
+authors:
+  - family-names: Zhang
+    given-names: Ruiyi
+    affiliation: Independent Researcher
+doi: 10.5281/zenodo.23266657
+url: "https://doi.org/10.5281/zenodo.23266657"
+date-released: 2026-10-09
+preferred-citation:
+  type: article
+  title: "Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc exceptional set"
+  authors:
+    - family-names: Zhang
+      given-names: Ruiyi
+      affiliation: Independent Researcher
+  year: 2026
+  publisher:
+    name: Zenodo
+  doi: 10.5281/zenodo.23266657
+  url: "https://doi.org/10.5281/zenodo.23266657"
