@@ -2,7 +2,7 @@
 
 Ruiyi Zhang
 
-DOI: [10.5281/zenodo.23266657](https://doi.org/10.5281/zenodo.23266657)
+DOI: [10.5281/zenodo.23266656](https://doi.org/10.5281/zenodo.23266656)
 
 Let `N_1(X)` count the abc triples `(a,b,c)` in `[1,X]^3` with `rad(abc) < c`.
 The manuscript proves
@@ -45,7 +45,7 @@ Python 3 with NumPy and SciPy, and xz. The decompressed report is about 1 GB.
 
 ## Citation
 
-Ruiyi Zhang, *Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc exceptional set*, preprint, Zenodo, 2026. https://doi.org/10.5281/zenodo.23266657
+Ruiyi Zhang, *Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc exceptional set*, preprint, Zenodo, 2026. https://doi.org/10.5281/zenodo.23266656
 
 ```bibtex
 @misc{zhang2026cubicsieves,
@@ -54,7 +54,7 @@ Ruiyi Zhang, *Cubic sieves, a primitive-ratio cut and a 20/37 bound for the abc 
   year      = {2026},
   publisher = {Zenodo},
   note      = {Preprint},
-  doi       = {10.5281/zenodo.23266657},
-  url       = {https://doi.org/10.5281/zenodo.23266657}
+  doi       = {10.5281/zenodo.23266656},
+  url       = {https://doi.org/10.5281/zenodo.23266656}
 }
 ```
